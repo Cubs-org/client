@@ -12,6 +12,7 @@ import { CalendarPage } from './components/Calendar/Calendar.tsx'
 import Profile from './components/Profile/index.tsx.tsx'
 import NotFoundPage from './NotFoundPage.tsx'
 import { ModalProvider } from './contexts/modalContext.tsx'
+import Provider from './contexts/Provider.tsx'
 
 const router = createBrowserRouter([
   {
@@ -34,10 +35,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ModalProvider>
-      <Layout>
-        <RouterProvider router={router} />
-      </Layout>
-    </ModalProvider>
+      <Provider>
+        <Layout>
+          <RouterProvider router={router} />
+        </Layout>
+      </Provider>
   </React.StrictMode>,
 )
