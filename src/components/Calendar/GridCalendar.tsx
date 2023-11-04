@@ -10,16 +10,13 @@ import { FaAngleUp } from "react-icons/fa";
 import { AmountRemaingTasks } from "./AmountRemaingTasks";
 import { EditTask } from "./EditTask";
 
-import { IModal } from "../../interfaces/modal";
 import { useModal } from "../../contexts/modalContext";
 
 export const GridCalendar = ({ year, month, event, tasks }:CalendarProps) => {
     const data: string[][] = rangeGridCalendar({ year, month });
+
     // @ts-ignore
-    // const {
-    //     openModal, 
-    //     closeModal 
-    // }:IModal = useModal();
+    const { modalState:{ visible, content }, openModal, closeModal } = useModal();
 
     const handleOpenTimeline = (task: Task, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();

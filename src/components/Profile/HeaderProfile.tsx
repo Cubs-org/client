@@ -16,11 +16,11 @@ interface IUser {
 export const HeaderProfile = () => {
     const [userData, setUserData] = useState<IUser>({
         id: "",
-        name: "",
-        email: "",
-        icon: "",
-        createdAt: "",
-        updatedAt: ""
+        name: "Usuário",
+        email: "user@adress",
+        icon: "/src/assets/default-user.jpg",
+        createdAt: "00/00/0000",
+        updatedAt: "00/00/0000"
     })
     const [userFetched, setUserFetched] = useState(false);
 
@@ -43,13 +43,13 @@ export const HeaderProfile = () => {
     }
 
     return (
-        <header className="w-full h-full flex justify-between items-center gap-3">
+        <header className="w-full h-full flex flex-col-reverse sm:flex-row justify-evenly sm:justify-between items-center gap-1 sm:gap-3">
             <div className="flex flex-col">
                 <h3 
                     className="text-lg font-bold text-dark-400 bg-transparent dark:text-light-700"
                 >{userData.email}</h3>
                 <input 
-                    className="w-full rounded-md outline-none text-6xl font-bold text-dark-700 bg-transparent placeholder:text-light-300 dark:text-light-200 hover:bg-light-200 focus:outline-1 focus:ring-2 focus:ring-light-500 dark:hover:bg-dark-600 dark:focus:outline-1 dark:focus:ring-2 dark:focus:ring-dark-300 transition-all duration-300 ease-in-out" 
+                    className="w-full rounded-md outline-none sm:text-6xl text-3xl font-bold text-dark-700 bg-transparent placeholder:text-light-300 dark:text-light-200 hover:bg-light-200 focus:outline-1 focus:ring-2 focus:ring-light-500 dark:hover:bg-dark-600 dark:focus:outline-1 dark:focus:ring-2 dark:focus:ring-dark-300 transition-all duration-300 ease-in-out" 
                     placeholder="Usuário"
                     value={userData.name}
                     onChange={handleSetUserName}
@@ -59,7 +59,7 @@ export const HeaderProfile = () => {
                     }}
                 />
                 <span 
-                    className="text-dark-300 font-medium dark:text-light-800"
+                    className="text-sm sm:text-base text-dark-300 font-medium dark:text-light-800"
                 >Criado em {formatDate(userData.createdAt)}</span>
             </div>
             <div className="w-1/2">

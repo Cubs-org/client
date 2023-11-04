@@ -1,5 +1,3 @@
-'use client';
-
 import { 
   useState,
   createContext, 
@@ -9,7 +7,10 @@ import {
 const ModalContext = createContext({});
 
 const ModalProvider = ({ children }) => {
-  const [modalState, setModalState] = useState({ visible: false, content:<></> });
+  const [modalState, setModalState] = useState({ 
+    visible: false, 
+    content:<></> 
+  });
 
   const openModal = (payload) => setModalState({ ...payload, visible: true });
   const closeModal = () => setModalState({ visible: false, content:<></> });

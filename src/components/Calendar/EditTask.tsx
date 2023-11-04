@@ -45,7 +45,7 @@ export const EditTask = ({ task, onClose }:TaskProps) => {
     }
 
     // @ts-ignore
-    // const { openModal, closeModal }:IModal = useModal();
+    const { modalState:{ visible, content }, openModal, closeModal } = useModal();
     
     const handleAddMembers = () => {
         let data = getAllFormData();

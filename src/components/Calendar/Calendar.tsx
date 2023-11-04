@@ -8,8 +8,33 @@ import { adjustTasks } from "../../calendar/adjustTasks";
 import { GridCalendar } from "./GridCalendar";
 import { HeaderCalendar } from "./HeaderCalendar";
 import Loading from "../Loading";
+import { useModal } from "../../contexts/modalContext";
+import { CreateTask } from "./CreateTask";
 
-export const Calendar = ({event, tasks}: CalendarProps) => {
+export const CalendarPage = () => {
+  const [tasks, setTasks] = useState();
+
+  // @ts-ignore
+  const { modalState:{ visible, content }, openModal, closeModal } = useModal();
+
+  const response = (event) => {
+      // @ts-ignore
+      openModal && openModal({
+          content: <CreateTask event={event} onClose={closeModal} /> 
+      });
+  }
+
+  return (
+    <div className="w-full h-full flex flex-col">
+      <Calendar 
+        event={response} 
+        tasks={tasks} 
+      />
+    </div>
+  );
+}
+
+const Calendar = ({event, tasks}: CalendarProps) => {
   const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 
   const splitDt = (date:any) => {

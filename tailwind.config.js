@@ -36,7 +36,9 @@ export default {
           "light-600": "#C0C0C0",
           "light-700": "#B7B7B7",
           "light-800": "#B0B0B0",
-          "light-900": "#A7A7A7"
+          "light-900": "#A7A7A7",
+          "glass-dark": "rgba(0, 0, 0, .5)",
+          "glass-light": "rgba(255, 255, 255, .5)",
         },
         boxShadow: {
           'full': '0 0 18px rgba(0, 0, 0, 0.3)',

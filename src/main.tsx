@@ -8,9 +8,10 @@ import {
 } from "react-router-dom"
 import { Layout } from './components/Layouts/Layout.tsx'
 import App from './App.tsx'
-import { Calendar } from './components/Calendar/Calendar.tsx'
+import { CalendarPage } from './components/Calendar/Calendar.tsx'
 import Profile from './components/Profile/index.tsx.tsx'
 import NotFoundPage from './NotFoundPage.tsx'
+import { ModalProvider } from './contexts/modalContext.tsx'
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
   },
   {
       path: "/calendar",
-      element: <Calendar />
+      element: <CalendarPage />
   },
   {
       path: "/profile",
@@ -33,8 +34,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Layout>
-      <RouterProvider router={router} />
-    </Layout>
+    <ModalProvider>
+      <Layout>
+        <RouterProvider router={router} />
+      </Layout>
+    </ModalProvider>
   </React.StrictMode>,
 )

@@ -9,6 +9,8 @@ interface SignOutButtonProps {
 }
 
 const AlertSignOut = () => {
+    // @ts-ignore
+    const { modalState:{ visible, content }, openModal, closeModal } = useModal();
     return (
         <div className="w-full h-full flex flex-col gap-6">
             <h3 className="text-xl font-bold text-dark-600 dark:text-light-300">Você tem certeza que deseja sair?</h3>
@@ -17,7 +19,7 @@ const AlertSignOut = () => {
                     classNames="bg-red-400 text-light-200 px-4 hover:bg-red-500"
                 >Sair</Button>
                 <Button 
-                    // onClick={() => closeModal && closeModal()} 
+                    onClick={() => closeModal && closeModal()} 
                     classNames="bg-transparent hover:bg-light-600 text-dark-100 dark:hover:bg-dark-300 dark:text-light-200"
                 >Cancelar</Button>
             </div>
@@ -34,8 +36,7 @@ export const SignOutButton = ({ children, classNames }:SignOutButtonProps) => {
             <button 
                 className={classNames} 
                 onClick={() => openModal && openModal({
-                        content: <AlertSignOut/>,
-                        visible: true
+                        content: <AlertSignOut/>
                 })}
             >{children}</button>
         </>

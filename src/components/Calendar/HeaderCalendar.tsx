@@ -59,14 +59,8 @@ export const HeaderCalendar = ({year, date, setDate, setYear, setMonth, splitDt}
       setMonth(splitDt(date)[1]);
     }
 
-    // // @ts-ignore
-    // const { 
-    //     modalState: {
-    //         content 
-    //     }, 
-    //     openModal, 
-    //     closeModal 
-    // }:IModal = useModal();
+    // @ts-ignore
+    const { modalState:{ visible, content }, openModal, closeModal } = useModal();
 
     const handleCreateTask = () => {
         // @ts-ignore

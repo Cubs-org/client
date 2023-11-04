@@ -22,7 +22,7 @@ export const UserSettings = () => {
     return (
         <div className="w-full flex flex-col gap-1">
             {items.map((item, index) => (
-                    <>
+                    <div key={`${item}-${index}`}>
                         {item.name !== "Sair" && (
                             <a 
                                 href={item?.link || ''}
@@ -46,7 +46,7 @@ export const UserSettings = () => {
                                 </div>
                             </SignOutButton>)
                         }
-                    </>
+                    </div>
                 ))}
         </div>
     )
