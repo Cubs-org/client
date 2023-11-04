@@ -10,6 +10,7 @@ import { Layout } from './components/Layouts/Layout.tsx'
 import App from './App.tsx'
 import { Calendar } from './components/Calendar/Calendar.tsx'
 import Profile from './components/Profile/index.tsx.tsx'
+import NotFoundPage from './NotFoundPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
       path: "/profile",
       element: <Profile />
+  },
+  {
+    path: "*",
+    element: <NotFoundPage/>
   }
 ]);
 
