@@ -3,8 +3,8 @@ import clsx from "clsx";
 import { CalendarProps } from "../../interfaces/calendar";
 import { Task } from "../../interfaces/task";
 
-import rangeDifferenceBetweenDates from "../../calendar/rangeDifferenceBetweenDays";
-import rangeGridCalendar, { today } from "../../calendar/rangeGridCalendar";
+import rangeDifferenceBetweenDates from "../../utils/calendar/rangeDifferenceBetweenDays";
+import rangeGridCalendar, { today } from "../../utils/calendar/rangeGridCalendar";
 
 import { FaAngleUp } from "react-icons/fa";
 import { AmountRemaingTasks } from "./AmountRemaingTasks";

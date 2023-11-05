@@ -3,7 +3,7 @@ import { Suspense, useState } from "react";
 import { CalendarProps } from "../../interfaces/calendar";
 import { Task } from "../../interfaces/task";
 
-import { adjustTasks } from "../../calendar/adjustTasks";
+import { adjustTasks } from "../../utils/calendar/adjustTasks";
 
 import { GridCalendar } from "./GridCalendar";
 import { HeaderCalendar } from "./HeaderCalendar";
@@ -11,7 +11,7 @@ import Loading from "../Loading";
 import { useModal } from "../../contexts/modalContext";
 import { CreateTask } from "./CreateTask";
 
-export const CalendarPage = () => {
+export default function CalendarPage() {
   const [tasks, setTasks] = useState();
 
   // @ts-ignore
