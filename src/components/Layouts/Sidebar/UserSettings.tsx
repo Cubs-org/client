@@ -29,18 +29,18 @@ export const UserSettings = () => {
                                 key={`${index}-${item}`} 
                             >
                                 <div
-                                    className="flex items-center gap-2 px-2 py-1 cursor-pointer text-sm text-dark-600 hover:bg-light-300 dark:text-light-400 dark:hover:bg-dark-500">
+                                    className="flex items-center gap-2 px-2 py-1 rounded-md cursor-pointer text-sm text-dark-600 hover:bg-light-300 dark:text-light-400 dark:hover:bg-dark-500">
                                     {item.icon}
                                     <span>{item.name}</span>
                                 </div>
                             </a>
                         )}
-                        {index !== (items.length -1) && <hr className="border-light-300 dark:border-dark-100"/>}
+                        {index !== (items.length -1) && <hr className="mt-1 border-light-300 dark:border-dark-100"/>}
                         {item.name === "Sair" && (
                             <SignOutButton classNames="w-full">
                                 <div 
                                     key={`${index}-${item}`} 
-                                    className="flex items-center gap-2 px-2 py-1 cursor-pointer text-sm text-red-500 dark:text-red-400 hover:bg-light-300 dark:hover:bg-dark-500">
+                                    className="flex items-center gap-2 px-2 py-1 rounded-md cursor-pointer text-sm text-red-500 dark:text-red-400 hover:bg-light-300 dark:hover:bg-dark-500">
                                     {item.icon}
                                     <span>{item.name}</span>
                                 </div>

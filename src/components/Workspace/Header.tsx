@@ -1,33 +1,62 @@
+import { useState } from "react"
+
 import { FaArrowDownAZ, FaEllipsisVertical, FaPenToSquare, FaTableCells, FaTableList } from "react-icons/fa6"
 import { Popover } from "../Popover"
 import { FaCheck, FaRegCalendarAlt } from "react-icons/fa"
 import { Search } from "../Search"
-import { useState } from "react"
 
 const HeaderOptions = () => {
-    const optionsClassnames = "text-dark-400 data-[selected=true]:bg-purple-600 data-[selected=true]:border-[.1rem] data-[selected=true]:border-purple-300 data-[selected=true]:text-purple-300 dark: data-[selected=true]:border-purple-400 dark:data-[selected=true]:text-purple-400 dark:data-[selected=true]:bg-purple-900 flex justify-between items-center text-sm px-[.6rem] py-1 rounded-md dark:text-light-600 hover:bg-light-300 dark:hover:bg-dark-300 hover:cursor-pointer"
-    
+    const options = [
+        {
+            divider: true, 
+            name: "Visualização", 
+            items: [
+                { name: "Grade", icon: <FaTableCells /> },
+                { name: "Lista", icon: <FaTableList />}
+            ]
+        },
+        {
+            divider: true, 
+            name: "Aplicar filtros", 
+            items: [
+                { name: "Criado em", icon: <FaRegCalendarAlt /> },
+                { name: "Atualizado em", icon: <FaPenToSquare /> },
+                { name: "Alfabética", icon: <FaArrowDownAZ /> }
+            ]
+        },
+        {
+            divider: false, 
+            name: "Outras opções", 
+            items: [
+                { name: "s/participantes", icon: null },
+                { name: "c/participantes", icon: null }
+            ]
+        }
+    ]
+
+    /* userPreferencesStorage - func() => onclick(setvalue) */
+
     return (
-        <ul className="flex flex-col gap-1 text-light-900">
-            <li className="p-[.3rem] font-semibold dark:text-light-400 text-dark-700">Visualização</li> {/* applied-filters */}
-
-            <li data-selected={true} className={optionsClassnames}><div className="flex items-center gap-1"><FaTableCells />Grade</div><span data-selected={true} className="data-[selected=true]:!block hidden"><FaCheck size={8}/></span></li>
-            <li data-selected={false} className={optionsClassnames}><div className="flex items-center gap-1"><FaTableList/>Lista</div><span data-selected={false} className="data-[selected=true]:!block hidden"><FaCheck size={8}/></span></li>
-            
-            <hr className="border-dark-200" />
-
-            <li className="p-[.3rem] font-semibold dark:text-light-400 text-dark-700">Aplicar filtros</li> {/* applied-filters */}
-
-            <li data-selected={false} className={optionsClassnames}><div className="flex items-center gap-1"><FaRegCalendarAlt />Criado em</div><span data-selected={false} className="data-[selected=true]:!block hidden"><FaCheck size={8}/></span></li>
-            <li data-selected={false} className={optionsClassnames}><div className="flex items-center gap-1"><FaPenToSquare />Atualizado em</div><span data-selected={false} className="data-[selected=true]:!block hidden"><FaCheck size={8}/></span></li>
-            <li data-selected={true} className={optionsClassnames}><div className="flex items-center gap-1"><FaArrowDownAZ />Alfabética </div><span data-selected={true} className="data-[selected=true]:!block hidden"><FaCheck size={8}/></span></li>
-            
-            <hr className="border-dark-200" />
-
-            <li className="p-[.3rem] font-semibold dark:text-light-400 text-dark-700">Mais opções</li> {/* applied-filters */}
-
-            <li data-selected={false} className={optionsClassnames}><div className="flex items-center gap-1">s/participantes</div><span data-selected={false} className="data-[selected=true]:!block hidden"><FaCheck size={8}/></span></li>
-            <li data-selected={false} className={optionsClassnames}><div className="flex items-center gap-1">c/participantes</div><span data-selected={false} className="data-[selected=true]:!block hidden"><FaCheck size={8}/></span></li>
+        <ul className="flex flex-col gap-1 p-1">
+            {options.map((option, index) => (
+                <li key={index}>
+                    <p className="text-sm text-dark-600 font-semibold py-1 dark:text-light-200">{option.name}</p>
+                    <ul className="flex flex-col gap-1">
+                        {option.items.map((item, index) => (
+                            <li key={index}>
+                                <div data-selected={true} className="text-dark-400 data-[selected=true]:bg-glass-purple-l1 data-[selected=true]:border-[.1rem] data-[selected=true]:text-purple-300 data-[selected=true]:border-purple-300 dark:data-[selected=true]:border-purple-400 dark:data-[selected=true]:text-purple-200 hover:data-[selected=true]:bg-glass-purple-l2 dark:data-[selected=true]:bg-glass-purple-d1 hover:dark:data-[selected=true]:bg-glass-purple-d2 flex justify-between items-center text-sm px-[.6rem] py-1 rounded-md dark:text-light-600 hover:bg-light-300 dark:hover:bg-dark-300 hover:cursor-pointer">
+                                    <span className="flex items-center gap-2">
+                                        {item.icon}
+                                        <span>{item.name}</span>
+                                    </span>
+                                    <FaCheck className="hidden" />
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                    {option.divider && <div className="mt-2 border-b border-light-300 dark:border-dark-300"></div>}
+                </li>
+            ))}
         </ul>
     )
 }
@@ -37,7 +66,9 @@ export const Header = () => {
 
     return (
         <header className="flex justify-between items-center px-2 py-3">
-            <h1 className="md:text-3xl lg:text-4xl font-extrabold text-dark-400 dark:text-light-300">Workspace</h1>
+            <h1 
+                className="md:text-2xl lg:text-3xl font-extrabold text-dark-400 dark:text-light-300"
+            >Área de trabalho</h1>
             <div className="flex gap-2 items-center">
                 <Search 
                     type="text"

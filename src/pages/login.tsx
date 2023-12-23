@@ -1,8 +1,6 @@
 import { SignInButton } from "../components/SignInButton";
 import { FaGoogle } from "react-icons/fa";
 
-import { GoogleLogin } from '@react-oauth/google';
-
 export default function Login() {
     return (
         <div className="w-screen h-screen grid place-items-center bg-purple-500 text-light-100">

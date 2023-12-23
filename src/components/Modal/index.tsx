@@ -9,7 +9,7 @@ export const Modal = ({ children, visible, closeModal }) => {
           "hidden" : visible == false
         })} />
         <div className={
-          clsx("min-w-[450px] max-h-screen flex flex-col rounded-lg pb-2 bg-light-200 text-dark-900 dark:bg-dark-800 dark:text-light-300 shadow-2xl absolute z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2", {
+          clsx("min-w-[450px] max-h-screen flex flex-col rounded-lg pb-2 bg-light-200 text-dark-900 dark:bg-glass-dark backdrop-blur-sm dark:text-light-300 shadow-2xl absolute z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2", {
             "flex" : visible == true,
             "hidden" : visible == false
           })}>
