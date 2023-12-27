@@ -7,6 +7,7 @@ import NotFoundPage from '../../pages/NotFoundPage.tsx'
 import Login from "../../pages/login.tsx"
 
 import { Layout as Lt } from "../../components/Layouts/Layout.tsx"
+import Register from "../../pages/register.tsx"
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,11 @@ export const router = createBrowserRouter([
     {
       path: "/login",
       element: <Login />,
+    },
+    
+    {
+      path: "/register",
+      element: <Register />,
     },
     // {
     //   path: "/landing",

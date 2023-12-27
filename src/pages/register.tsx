@@ -1,18 +1,17 @@
 import { useState } from "react";
 
 import { Button } from "../components/Button";
-import { SignInButton } from "../components/SignInButton";
-
-import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
 import { BASE_URL } from "../lib/api";
 import { Link } from "react-router-dom";
 
-export default function Login() {
+export default function Register() {
 
     const [formData, setFormData] = useState({
+        name: '',
         email: '',
         password: '',
+        confirmPassword: '',
     });
 
     const handleChange = (e) => {
@@ -32,16 +31,24 @@ export default function Login() {
     return (
         <div className="w-screen h-screen grid place-items-center bg-purple-500 text-light-100">
             <div className="w-[400px] flex flex-col gap-3 items-center">
-                <h1 className="text-5xl font-bold mb-3">Login</h1>
+                <h1 className="text-5xl font-bold mb-3">Cadastrar</h1>
 
                 {/* Form */}
                 <form className="w-full flex flex-col gap-2">
                     <input 
                         type="text" 
+                        name="name"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Usuário"
+                        className="w-full px-3 py-2 rounded-md bg-purple-600 text-light-200 focus:outline-none focus:ring-2 focus:ring-purple-400 placeholder:text-purple-400"
+                    />
+                    <input 
+                        type="email" 
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="Usuário ou email"
+                        placeholder="Usuário"
                         className="w-full px-3 py-2 rounded-md bg-purple-600 text-light-200 focus:outline-none focus:ring-2 focus:ring-purple-400 placeholder:text-purple-400"
                     />
                     <input 
@@ -52,7 +59,14 @@ export default function Login() {
                         placeholder="Senha"
                         className="w-full px-3 py-2 rounded-md bg-purple-600 text-light-200 focus:outline-none focus:ring-2 focus:ring-purple-400 placeholder:text-purple-400"
                     />
-                    <Link to={`/register`} className="font-semibold text-light-100 text-xs underline text-center">Esqueceu sua senha?</Link>
+                    <input 
+                        type="password" 
+                        name="confirmPassword"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Confirmar senha"
+                        className="w-full px-3 py-2 rounded-md bg-purple-600 text-light-200 focus:outline-none focus:ring-2 focus:ring-purple-400 placeholder:text-purple-400"
+                    />
                     
                     <Button 
                         type="submit" 
@@ -61,15 +75,7 @@ export default function Login() {
                     >Entrar</Button>
                 </form>
                 
-                <small className="font-semibold text-light-100">Ou</small>
-
-                {/* Sign in with Google */}
-                <SignInButton 
-                    provider="google"
-                    classNames="w-full bg-light-200 px-3 ring-2 ring-purple-500 hover:ring-light-200 hover:bg-transparent hover:text-light-200 text-purple-500"
-                >
-                    <FaGoogle size={24}/> Entrar com o Google
-                </SignInButton>
+                <Link to={`/login`} className="font-semibold text-light-100 text-xs underline text-center">Já possui uma conta?</Link>
             </div>
         </div>
     )
