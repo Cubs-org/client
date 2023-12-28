@@ -6,6 +6,8 @@ import { Button } from "../../components/Button";
 import axios from "axios";
 import { BASE_URL } from "../../lib/api";
 import { Alert } from "../../components/Alert";
+import { SignInButton } from "../../components/SignInButton";
+import { FaGoogle } from "react-icons/fa";
 
 export default function Register() {
 
@@ -26,12 +28,15 @@ export default function Register() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // axios.post(`${BASE_URL}/loginUser`, formData)
-        console.log(formData);
+        axios.post(`${BASE_URL}/registerUser`, formData).then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        });
     };
 
     return (
-        <div className="w-screen h-screen grid place-items-center bg-purple-500 text-light-100">
+        <div className="w-full h-full grid place-items-center bg-purple-500 text-light-100">
             <div className="w-[400px] flex flex-col gap-3 items-center">
                 <h1 className="text-5xl font-bold mb-3">Cadastrar</h1>
                 {/* <Alert type="error" message="Senhas incompatíveis"/>
@@ -80,6 +85,16 @@ export default function Register() {
                 </form>
                 
                 <Link to={`/login`} className="font-semibold text-light-100 text-xs underline text-center">Já possui uma conta?</Link>
+
+                <small className="font-semibold text-light-100">Ou</small>
+
+                {/* Sign in with Google */}
+                <SignInButton 
+                    provider="google"
+                    classNames="w-full bg-light-200 px-3 ring-2 ring-purple-500 hover:ring-light-200 hover:bg-transparent hover:text-light-200 text-purple-500"
+                >
+                    <FaGoogle size={24}/> Cadastre-se com o Google
+                </SignInButton>
             </div>
         </div>
     )

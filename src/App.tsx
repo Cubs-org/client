@@ -1,27 +1,17 @@
-import { 
-  // useState, 
-  Suspense 
-} from "react"
+import { Outlet } from "react-router-dom";
+import { Nav } from "./components/Nav";
+import { Footer } from "./components/Footer";
 
-import { Kanban } from "./components/Kanban"
-import Loading from "./components/Loading"
-import { Header } from "./components/Workspace/Header"
-// import { EmojiPicker } from "../src/components/EmojiPicker"
-
-function App () {
-
-  // const [emoji, setEmoji] = useState("🚀")
-
-  return (
-      <Suspense fallback={<Loading />}>
-          <Header />
-          <Kanban />
-          {/* <EmojiPicker 
-            emoji={emoji} 
-            setEmoji={setEmoji} 
-          /> */}
-      </Suspense>
-  )
+function App() {
+    return (
+        <>
+            <Nav />
+            <div className="w-full h-[80vh]">
+              <Outlet />
+            </div>
+            <Footer />
+        </>
+    );
 }
 
-export default App
+export default App;

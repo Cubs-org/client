@@ -4,8 +4,6 @@ import { Button } from "../../components/Button";
 import { SignInButton } from "../../components/SignInButton";
 
 import { FaGoogle } from "react-icons/fa";
-import axios from "axios";
-import { BASE_URL } from "../../lib/api";
 import { Link } from "react-router-dom";
 
 export default function Login() {
@@ -30,7 +28,7 @@ export default function Login() {
     };
 
     return (
-        <div className="w-screen h-screen grid place-items-center bg-purple-500 text-light-100">
+        <div className="w-full h-full grid place-items-center bg-purple-500 text-light-100">
             <div className="w-[400px] flex flex-col gap-3 items-center">
                 <h1 className="text-5xl font-bold mb-3">Login</h1>
 

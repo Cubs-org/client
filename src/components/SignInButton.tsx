@@ -1,6 +1,5 @@
-import { useGoogleOneTapLogin, useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { Button, ButtonProps } from "./Button"
-import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../lib/api";
