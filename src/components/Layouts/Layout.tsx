@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+
 import clsx from "clsx";
 
 import { Sidebar } from "./Sidebar";
 import Loading from "../Loading";
 import { Modal } from "../Modal";
 import { useModal } from "../../contexts/modalContext";
-import { IModal } from "../../interfaces/modal";
+import { Outlet } from "react-router-dom";
 
-export const Layout = ({ children }) => {
+export const Layout = () => {
     let _layout;
     const [layout, setLayout] = useState(true);
 
@@ -37,7 +38,7 @@ export const Layout = ({ children }) => {
                             "w-full lg:w-[calc(100%-100px)]" : layout,
                             "w-full lg:w-full" : !layout,
                         })}>
-                            {children}
+                            <Outlet />
                         </div>
                     </div>
                 </div>

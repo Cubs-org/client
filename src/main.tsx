@@ -4,7 +4,6 @@ import './index.css'
 
 import { RouterProvider } from "react-router-dom"
 
-import { Layout } from './components/Layouts/Layout.tsx'
 import Provider from './contexts/Provider.tsx'
 import { router } from './utils/data/routes.tsx'
 

@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import { Button } from "../components/Button";
-import { SignInButton } from "../components/SignInButton";
+import { Button } from "../../components/Button";
+import { SignInButton } from "../../components/SignInButton";
 
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
-import { BASE_URL } from "../lib/api";
+import { BASE_URL } from "../../lib/api";
 import { Link } from "react-router-dom";
 
 export default function Login() {
@@ -52,7 +52,10 @@ export default function Login() {
                         placeholder="Senha"
                         className="w-full px-3 py-2 rounded-md bg-purple-600 text-light-200 focus:outline-none focus:ring-2 focus:ring-purple-400 placeholder:text-purple-400"
                     />
-                    <Link to={`/register`} className="font-semibold text-light-100 text-xs underline text-center">Esqueceu sua senha?</Link>
+                    <div className="w-full flex justify-evenly items-center">
+                        <Link to={`/#`} className="font-semibold text-light-100 text-xs underline text-center">Esqueceu sua senha?</Link>
+                        <Link to={`/register`} className="font-semibold text-light-100 text-xs underline text-center">Não possui uma conta ainda?</Link>
+                    </div>
                     
                     <Button 
                         type="submit" 
