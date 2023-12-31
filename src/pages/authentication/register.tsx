@@ -5,7 +5,7 @@ import { Button } from "../../components/Button";
 
 import axios from "axios";
 import { BASE_URL } from "../../lib/api";
-import { Alert } from "../../components/Alert";
+// import { Alert } from "../../components/Alert";
 import { SignInButton } from "../../components/SignInButton";
 import { FaGoogle } from "react-icons/fa";
 
@@ -36,7 +36,7 @@ export default function Register() {
     };
 
     return (
-        <div className="w-full h-full grid place-items-center bg-purple-500 text-light-100">
+        <div className="w-full h-[80vh] grid place-items-center bg-purple-500 text-light-100">
             <div className="w-[400px] flex flex-col gap-3 items-center">
                 <h1 className="text-5xl font-bold mb-3">Cadastrar</h1>
                 {/* <Alert type="error" message="Senhas incompatíveis"/>

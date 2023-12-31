@@ -1,15 +1,13 @@
+import axios from "axios";
+
 import { useGoogleLogin } from "@react-oauth/google";
 import { Button, ButtonProps } from "./Button"
-import { useEffect, useState } from "react";
-import axios from "axios";
+
 import { BASE_URL } from "../lib/api";
+import { useCookies } from "react-cookie";
 
 interface SignInButtonProps extends ButtonProps {
   provider: string;
-};
-
-interface googleResponseProps {
-  access_token: string;
 };
 
 interface IUser {
@@ -24,69 +22,67 @@ interface IUser {
 };
 
 export const SignInButton = ({ children, classNames }:SignInButtonProps) => {
+  const [cookie, setCookie] = useCookies(['token']);
 
-  const [data, setData] = useState<googleResponseProps>();
-  const [user, setUser] = useState<IUser>();
-  const [clicked, setClicked] = useState(false);
+  async function fetchData(data) {
+    if (data) {
+      try {
+        const response = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${data?.access_token}`, {
+          headers: {
+            Authorization: `Bearer ${data?.access_token}`,
+            Accept: 'application/json'
+          }
+        });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (clicked && data) {
-        try {
-          const response = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${data?.access_token}`, {
-            headers: {
-              Authorization: `Bearer ${data?.access_token}`,
-              Accept: 'application/json'
-            }
-          });
-
-          setUser(response.data);
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
+        return response.data;
+      } catch (error) {
+        console.error('Error fetching user data:', error);
       }
+    }
+  };
+
+  async function fetchUser(data: IUser) {
+
+    const user = {
+      id: data?.id,
+      email: data?.email,
+      name: data?.name,
+      icon: data?.picture,
     };
 
-    fetchData();
-  }, [data, clicked]);
-
-  useEffect(() => {
-    if (user) setClicked(false);
-
-    const fetchData = async () => {
-      if (user) {
-        try {
-          const response = await axios.post(`${BASE_URL}/registerUser`, {
-            ...user, 
-            icon: user?.picture
-          });
-
-          console.log(response);
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      }
-    };
-
-    fetchData();
-  }, [data, user]);
+    try {
+      await axios.post(`${BASE_URL}/registerUser`, user).then((response) => {
+        console.log(response.data);
+      });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
 
   const login = useGoogleLogin({
-    onSuccess: (response) => setData(response),
+    onSuccess: (response) => {
+      fetchData(response)
+        .then((user) => {
+          fetchUser(user);
+        })
+    },
     onError: () => {
       console.log('Login Failed');
     },
   });
 
-  const handleLogin = () => {
-    setClicked(true);
-    login();
+  const handleLogin = async () => {
+    try {
+      await login();
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
   }
 
   return (
     <Button 
       classNames={classNames}
-      onClick={() => handleLogin()}
+      onClick={handleLogin}
     >{children}</Button>
   )
 }

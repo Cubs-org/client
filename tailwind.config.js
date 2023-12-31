@@ -38,6 +38,8 @@ export default {
           "light-700": "#B7B7B7",
           "light-800": "#B0B0B0",
           "light-900": "#A7A7A7",
+          "primary": "#9E3ED5",
+          "secondary": "#950EE3",
           "glass-dark": "rgba(55, 55, 55, .5)",
           "glass-light": "rgba(247, 247, 247, .5)",
           "glass-purple-l1": "rgba(158, 62, 213, .8)",
