@@ -22,7 +22,7 @@ export default function Logo({ size, color }:LogoProps) {
 
     return (
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            width={size} height={size} viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xmlSpace="preserve">
+            width={size} height={size} viewBox="0 0 1000 1000" enableBackground="new 0 0 1000 1000" xmlSpace="preserve">
         <image display="none" overflow="visible" width={size} height={size} xlinkHref="data:image/jpeg;base64,/9j/4AAQSkZJRgABAgEAFAAUAAD/7AARRHVja3kAAQAEAAAAHgAA/+4AIUFkb2JlAGTAAAAAAQMA
         EAMCAwYAAAXSAAAHQQAACmr/2wCEABALCwsMCxAMDBAXDw0PFxsUEBAUGx8XFxcXFx8eFxoaGhoX
         Hh4jJSclIx4vLzMzLy9AQEBAQEBAQEBAQEBAQEABEQ8PERMRFRISFRQRFBEUGhQWFhQaJhoaHBoa

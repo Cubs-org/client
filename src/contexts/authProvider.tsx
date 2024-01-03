@@ -1,48 +1,57 @@
-import axios from "axios";
-import { 
-    createContext, useContext, useEffect, useMemo, useState
- } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { Cookies } from 'react-cookie';
 
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(null);
+  const [tokenLoaded, setTokenLoaded] = useState(false);
+  const cookies = new Cookies();
 
-    const [token, setToken] = useState<string>();
+  useEffect(() => {
+    const _token = cookies.get('token');
+    if (_token) {
+      setToken(_token);
+    }
+    setTokenLoaded(true); // Marca que o token foi carregado
+  }, []);
 
-    useEffect(() => {
-        const _token = localStorage.getItem('token');
-        if (_token) {
-            setToken(_token);
-        }
-    }, []);
+  const signIn = (newToken) => {
+    cookies.set('token', newToken);
+    setToken(newToken);
+  };
 
-    useEffect(() => {
-        if (token) {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            localStorage.setItem('token', token);
-        } else {
-            delete axios.defaults.headers.common['Authorization'];
-            localStorage.removeItem('token');
-        }
-    }, [token]);
+  const signOut = () => {
+    cookies.remove('token');
+    setToken(null);
+  };
 
-    const contextValue = useMemo(() => ({
-        token, setToken 
-    }), [token]);
+  const contextValue = useMemo(() => ({
+    token, 
+    setToken, 
+    signIn, 
+    signOut
+  }), [token]);
 
-    return (
-        <AuthContext.Provider value={contextValue}>
-            {children}
-        </AuthContext.Provider>
-    );
+  if (!tokenLoaded) {
+    // Aguarda o carregamento do token antes de renderizar qualquer coisa
+    return null;
+  }
+
+  return (
+    <AuthContext.Provider value={contextValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  return context;
 }
 
 export default AuthProvider;

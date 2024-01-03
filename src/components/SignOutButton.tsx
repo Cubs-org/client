@@ -2,6 +2,8 @@ import React from "react"
 import { IModal } from "../interfaces/modal"
 import { useModal } from "../contexts/modalContext"
 import { Button } from "./Button"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../contexts/authProvider"
 
 interface SignOutButtonProps {
     classNames?: string
@@ -11,12 +13,23 @@ interface SignOutButtonProps {
 const AlertSignOut = () => {
     // @ts-ignore
     const { modalState:{ visible, content }, openModal, closeModal } = useModal();
+
+    const { signOut }:any = useAuth();
+    const navigate = useNavigate();
+
+    const handleSignOut = () => {
+        signOut();
+        navigate("/login");
+        closeModal && closeModal();
+    }
+
     return (
         <div className="w-full h-full flex flex-col gap-6">
             <h3 className="text-xl font-bold text-dark-600 dark:text-light-300">Você tem certeza que deseja sair?</h3>
             <div className="flex items-center justify-end gap-3">
                 <Button
                     classNames="bg-red-400 text-light-200 px-4 hover:bg-red-500"
+                    onClick={handleSignOut}
                 >Sair</Button>
                 <Button 
                     onClick={() => closeModal && closeModal()} 

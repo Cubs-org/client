@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 
-import axios from "axios";
-import { BASE_URL } from "../../lib/api";
 // import { Alert } from "../../components/Alert";
 import { SignInButton } from "../../components/SignInButton";
 import { FaGoogle } from "react-icons/fa";
+import fetchUser from "../../utils/user/fetchUser";
+import { useAuth } from "../../contexts/authProvider";
 
 export default function Register() {
+
+    const { signIn }:any = useAuth();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -26,13 +28,11 @@ export default function Register() {
         });
     };
 
-    const handleLogin = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-        axios.post(`${BASE_URL}/registerUser`, formData).then((res) => {
-            console.log(res);
-        }).catch((err) => {
-            console.log(err);
-        });
+
+        const result = await fetchUser(formData) as any;
+        await signIn(result.data.token);
     };
 
     return (
@@ -80,7 +80,7 @@ export default function Register() {
                     <Button 
                         type="submit" 
                         classNames="bg-light-200 text-purple-500 hover:bg-light-300"
-                        onClick={handleLogin}
+                        onClick={handleRegister}
                     >Entrar</Button>
                 </form>
                 

@@ -39,7 +39,7 @@ export const data = {
     ],
     authenticated: [
       {
-        path: ":id",
+        path: "",
         element: <ProtectedRoute />,
         children: [
           {
@@ -47,7 +47,7 @@ export const data = {
             element: <Layout />,
             children: [
               {
-                path: "", // Acesse /:id e vá para a Workspace
+                path: ":id", // Acesse /:id e vá para a Workspace
                 element: <Workspace />
               },
               {
