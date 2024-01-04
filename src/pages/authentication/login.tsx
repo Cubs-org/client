@@ -5,8 +5,13 @@ import { SignInButton } from "../../components/SignInButton";
 
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../lib/api";
+import { useAuth } from "../../contexts/authProvider";
 
 export default function Login() {
+
+    const { signIn }:any = useAuth();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -21,10 +26,11 @@ export default function Login() {
         });
     };
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        // axios.post(`${BASE_URL}/loginUser`, formData)
-        console.log(formData);
+        
+        const result = await axios.post(`${BASE_URL}/authenticateUser`, formData);
+        signIn(result.data.user.accessToken);
     };
 
     return (
