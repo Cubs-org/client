@@ -1,26 +1,14 @@
 import { useGoogleLogin } from "@react-oauth/google";
-import { Button, ButtonProps } from "./Button"
-
-import fetchUser from "../utils/user/fetchUser";
-import fetchData from "../utils/user/fetchData";
+import { Button, ButtonProps } from "./Button";
 import { useAuth } from "../contexts/authProvider";
 import axios from "axios";
 import { BASE_URL } from "../lib/api";
+import fetchData from "../utils/user/fetchData";
+import fetchUser from "../utils/user/fetchUser";
 
 interface SignInButtonProps extends ButtonProps {
   provider: string;
-};
-
-// interface IUser {
-//   id: string;
-//   email: string;
-//   verified_email: string;
-//   name: string;
-//   given_name: string;
-//   family_name: string;
-//   picture: string;
-//   locale: string;
-// };
+}
 
 interface IResponse {
   data: {
@@ -29,33 +17,34 @@ interface IResponse {
     scope: string;
     token_type: string;
     id_token: string;
-  }
-};
+  };
+}
 
-export const SignInButton = ({ children, classNames }:SignInButtonProps) => {
-
-  const { signIn }:any = useAuth();
+export const SignInButton = ({ children, classNames }: SignInButtonProps) => {
   
+  const { signIn } = useAuth();
+
   const login = useGoogleLogin({
-    onSuccess: (response) => {
-      const res = response as IResponse | any;
-      axios.post(`${BASE_URL}/authenticateUser/oauth`, {
-        access_token: res.access_token,
-      }).then((res) => {
-        if (res.status === 200) {
-          signIn(res.data.user.accessToken);
-        } else if (res.status === 201) {
-          // const userFetched = await fetchUser(user) as any;
-          // signIn(userFetched.data.token);
-          fetchData(response)
-            .then(async (user) => {
-              const userFetched = await fetchUser(user) as any;
-              signIn(userFetched.data.token);
-            })
-        }
-      }).catch((err) => {
-        console.log(err);
-      });
+    onSuccess: async (response) => {
+      try {
+        const res = response as IResponse | any;
+        const authenticateUser = async (accessToken: string) => {
+          try {
+            const res = await axios.post(`${BASE_URL}/authenticateUser/oauth`, {
+              access_token: accessToken,
+            });
+
+            if (res.status === 200)
+              signIn(res.data.user.accessToken);
+          } catch (error) {
+            console.error('Error authenticating user:', error);
+          }
+        };
+
+        authenticateUser(res.access_token);
+      } catch (error) {
+        console.error('Error processing Google login response:', error);
+      }
     },
     onError: () => {
       console.log('Login Failed');
@@ -66,14 +55,16 @@ export const SignInButton = ({ children, classNames }:SignInButtonProps) => {
     try {
       await login();
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error('Error logging in:', error);
     }
-  }
+  };
 
   return (
-    <Button 
+    <Button
       classNames={classNames}
       onClick={handleLogin}
-    >{children}</Button>
-  )
-}
+    >
+      {children}
+    </Button>
+  );
+};

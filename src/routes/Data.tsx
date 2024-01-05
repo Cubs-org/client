@@ -6,11 +6,11 @@ import App from "../App";
 import CalendarPage from "../components/Calendar/Calendar";
 import Profile from "../components/Profile/index.tsx";
 import Home from "../pages/Home.tsx";
-import NotFoundPage from "../pages/NotFoundPage";
 import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
 import Workspace from "../pages/Workspace.tsx";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
+import NotFoundPage from "../pages/NotFoundPage.tsx";
 
 export const data = {
     notAuthenticated: [
@@ -33,7 +33,7 @@ export const data = {
               {
                 path: "*",
                 element: <NotFoundPage />
-              },
+              }
             ]
         }
     ],
@@ -57,6 +57,10 @@ export const data = {
               {
                 path: "profile",
                 element: <Profile />
+              },
+              {
+                path: "*",
+                element: <NotFoundPage />
               }
             ]
           }

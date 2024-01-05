@@ -7,6 +7,7 @@ async function fetchUser(data) {
     id: data?.id,
     email: data?.email,
     name: data?.name,
+    password: data?.password,
     icon: data?.picture,
   };
   
