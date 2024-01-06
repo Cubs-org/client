@@ -66,6 +66,5 @@ export const data = {
           }
         ]
       }
-    ],
-    admin: []
+    ]
 };

@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/authProvider";
 
 export const ProtectedRoute = () => {
 
-    const { token }:any = useAuth();
+    const { token } = useAuth();
 
     if (!token) {
         return <Navigate to={`/login`}/>

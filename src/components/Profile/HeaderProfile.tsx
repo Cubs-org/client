@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react"
 import { Avatar } from "../Avatar"
-
-import axios from "axios"
-
-interface IUser {
-    id: string;
-    name: string;
-    email: string;
-    icon: string;
-    createdAt: string;
-    updatedAt: string;
-}
+import { IUser } from "../../interfaces/user";
+import fetchAvatarImg from "../../utils/user/fetchAvatarImg";
+import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../../contexts/authProvider";
 
 
 export const HeaderProfile = () => {
+
+    const { token } = useAuth();
+    
     const [userData, setUserData] = useState<IUser>({
-        id: "",
+        id: "a1b2c3d4e5f6g7h8i9j0",
         name: "Usuário",
         email: "user@adress",
         icon: "/src/assets/default-user.jpg",
         createdAt: "00/00/0000",
         updatedAt: "00/00/0000"
     })
-    const [userFetched, setUserFetched] = useState(false);
 
     const padDate = (date: number) => String(date).padStart(2, '0')
 
@@ -42,6 +37,22 @@ export const HeaderProfile = () => {
         })
     }
 
+    const username = userData?.name as string;
+    const icon = fetchAvatarImg(userData?.icon) as string;
+
+    const [userLoaded, setUserLoaded] = useState(false);
+
+    useEffect(() => {
+        if (!userLoaded) {
+            let user
+            user = (jwtDecode(token as string));
+            user = user.user;
+            setUserData(user as IUser);
+            console.log(user);
+            setUserLoaded(true);
+        }
+    }, [userLoaded]);
+
     return (
         <header className="w-full h-full flex flex-col-reverse sm:flex-row justify-evenly sm:justify-between items-center gap-1 sm:gap-3">
             <div className="flex flex-col">
@@ -60,11 +71,12 @@ export const HeaderProfile = () => {
                 />
                 <span 
                     className="text-sm sm:text-base text-dark-300 font-medium dark:text-light-800"
-                >Criado em {formatDate(userData.createdAt)}</span>
+                >Criado em {formatDate(userData.createdAt as string)}</span>
             </div>
             <div className="w-1/2">
                 <Avatar 
-                    id={userData.id} 
+                    icon={icon}
+                    name={username}
                     disableVisibleTooltip={true} 
                     classNames="hover:filter hover:brightness-125 hover:contrast-100 hover:saturate-150 transition-all duration-300 ease-in-out"
                 />

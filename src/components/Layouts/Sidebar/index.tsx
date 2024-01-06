@@ -10,19 +10,19 @@ import { Button } from "../../Button";
 import { Popover } from "../../Popover";
 import { UserSettings } from "./UserSettings";
 
-
-import axios from "axios";
-
 import { 
     FaAngleDoubleLeft, 
     FaBars, 
     FaCalendar, 
-    FaChartBar, 
-    FaMoon, 
+    FaChartBar,
     FaNetworkWired 
 } from "react-icons/fa";
 import { Tooltip } from "../../Tooltip";
-import { FaSun } from "react-icons/fa6";
+import { IUser } from "../../../interfaces/user";
+import { useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../../../contexts/authProvider";
+import fetchAvatarImg from "../../../utils/user/fetchAvatarImg";
 
 interface ISidebar {
     layout: boolean;
@@ -30,12 +30,28 @@ interface ISidebar {
 }
 
 export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
-    const [username, setUsername] = useState("usuário")
-    const pathname = window.location.pathname
 
-    const [idUser, setIdUser] = useState("")
+    const  { token } = useAuth();
+
+    const [userData, setUserData] = useState<IUser>();
+    const [userLoaded, setUserLoaded] = useState(false);
+
+    const username = userData?.name as string;
+    const icon = fetchAvatarImg(userData?.icon) as string;
+
+    const { pathname } = useLocation();
+
     const [sidebarVisibility, setSidebarVisibility] = useState(false);
-    const [userFetched, setUserFetched] = useState(false);
+
+    useEffect(() => {
+        if (!userLoaded) {
+            let user
+            user = (jwtDecode(token as string));
+            user = user.user;
+            setUserData(user as IUser);
+            setUserLoaded(true);
+        }
+    }, [userLoaded]);
 
     const menu_option_default = "w-full lg:w-[60px] lg:h-[60px] px-3 py-2 font-bold text-dark-600 rounded-md cursor-pointer flex justify-start items-center lg:justify-center gap-3 hover:text-light-300 hover:bg-purple-500 hover:shadow-menu dark:text-light-600"
 
@@ -75,7 +91,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     "flex" : !sidebarVisibility,
                 })}>
                     <div className="w-8 h-8">
-                        <Avatar id={idUser}/>
+                        <Avatar icon={icon} disableVisibleTooltip/>
                     </div>
                 </span>
             </div>
@@ -124,7 +140,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     <Popover content={<UserSettings />} direction="right">
                         <div className={twMerge(menu_option_default)}>
                             <div className="w-6 h-6">
-                                <Avatar id={idUser}/>
+                                <Avatar icon={icon} name={userData?.name} />
                             </div>
                             <span className="block lg:hidden">{username}</span>
                         </div>

@@ -1,7 +1,9 @@
 export interface IUser {
-    user: {
-        name: string;
-        email: string;
-        image: string;
-    }
+    id?: string;
+    name: string;
+    email: string;
+    icon?: string;
+    password?: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 }

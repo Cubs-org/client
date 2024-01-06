@@ -3,11 +3,10 @@ import { Button, ButtonProps } from "./Button";
 import { useAuth } from "../contexts/authProvider";
 import axios from "axios";
 import { BASE_URL } from "../lib/api";
-import fetchData from "../utils/user/fetchData";
-import fetchUser from "../utils/user/fetchUser";
 
 interface SignInButtonProps extends ButtonProps {
   provider: string;
+  responseHandler?: (response) => void;
 }
 
 interface IResponse {
@@ -20,7 +19,7 @@ interface IResponse {
   };
 }
 
-export const SignInButton = ({ children, classNames }: SignInButtonProps) => {
+export const SignInButton = ({ children, classNames, responseHandler }: SignInButtonProps) => {
   
   const { signIn } = useAuth();
 
@@ -36,6 +35,8 @@ export const SignInButton = ({ children, classNames }: SignInButtonProps) => {
 
             if (res.status === 200)
               signIn(res.data.user.accessToken);
+            else
+              responseHandler ? responseHandler(res || "any") : console.log("No response handler");
           } catch (error) {
             console.error('Error authenticating user:', error);
           }

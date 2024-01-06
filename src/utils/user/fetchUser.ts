@@ -14,9 +14,9 @@ async function fetchUser(data) {
   try {
     const response = await axios.post(`${BASE_URL}/registerUser`, user);
 
-    return response.data;
+    throw response.data;
   } catch (error) {
-    console.error('Error fetching user data:', error);
+    return error;
   }
 }
 
