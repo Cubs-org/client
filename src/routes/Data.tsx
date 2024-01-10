@@ -32,7 +32,7 @@ export const data = {
               },
               {
                 path: "*",
-                element: <NotFoundPage />
+                element: <section className="w-full h-[80vh]"><NotFoundPage /></section>
               }
             ]
         }

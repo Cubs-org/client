@@ -1,16 +1,18 @@
+import clsx from 'clsx';
 import { InputHTMLAttributes } from 'react';
 import { FaSistrix } from 'react-icons/fa6';
 
 interface SearchProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
     type: 'text';
     iconVisible?: boolean;
+    classNames?: string;
 }
 
-export const Search = ({ iconVisible, ...props }:SearchProps) => {
+export const Search = ({ iconVisible, classNames, ...props }:SearchProps) => {
     return (
-        <div className="relative">
+        <div className={clsx("relative", classNames)}>
             <input
-                className="bg-light-200 dark:bg-dark-600 dark:text-light-600 text-dark-700 rounded-md px-3 py-2 w-full focus:ring-2 focus:ring-light-500 focus:outline-none dark:focus:ring-dark-300" 
+                className={clsx("bg-light-200 dark:bg-dark-600 dark:text-light-600 text-dark-700 rounded-md px-3 py-2 w-full focus:ring-2 focus:ring-light-500 focus:outline-none dark:focus:ring-dark-300", classNames)} 
                 placeholder="Pesquisar"
                 autoFocus
                 {...props}

@@ -86,8 +86,8 @@ export const HeaderProfile = () => {
                     classNames="hover:filter hover:brightness-125 hover:contrast-100 hover:saturate-150 transition-all duration-300 ease-in-out"
                 />
 
-                <Button classNames="group-hover:scale-100 scale-0 absolute right-0 bottom-0 w-[80px] h-[80px] rounded-full shadow-full transition-all">
-                    <FaImage size={32}/>
+                <Button classNames="text-xl md:text-3xl group-hover:scale-100 scale-0 absolute right-0 bottom-0 w-[60px] h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all">
+                    <FaImage />
                 </Button>
             </div>
         </header>

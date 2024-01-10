@@ -10,7 +10,7 @@ export const Footer = () => {
             (pathname === '/register' || pathname === '/login') ?
             "bg-purple-500 text-white" : "bg-white text-slate-900"
         ))}>
-            <span className="w-full font-medium text-right">
+            <span className="w-full font-medium text-center md:text-right text-sm md:text-base">
                 Cub's © 2023 - Todos os direitos reservados
             </span>
         </footer>

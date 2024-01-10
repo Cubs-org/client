@@ -73,6 +73,10 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
         setSidebarVisibility(!sidebarVisibility)
     }
 
+    const handleClickUser = () => {
+        window.location.href = "/profile"
+    }
+
     useEffect(() => {
 
         if (!userFetched) {
@@ -96,7 +100,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     className="text-dark-600 dark:text-light-300 hover:text-dark-700 dark:hover:text-light-200 transition-all delay-75 duration-150"
                     onClick={handleSidebarVisibility}
                 >
-                    <FaBars size={32}/>
+                    {!sidebarVisibility ? <FaBars size={32}/> : <FaAngleDoubleLeft size={32}/> }
                 </button>
                 <span className={clsx({
                     "hidden" : sidebarVisibility,
@@ -107,10 +111,10 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     </div>
                 </span>
             </div>
-            <div className={clsx("absolute top-0 w-full h-full lg:w-[80px] z-40 lg:min-h-[90vh] lg:max-h-[90vh] flex-col justify-evenly lg:justify-between items-center gap-0 lg:gap-3 lg:shadow-full rounded-2xl px-3 py-2 bg-light-100 dark:bg-dark-800", {
+            <div className={clsx("absolute top-0 w-full h-full lg:w-[80px] flex z-40 lg:min-h-[90vh] lg:max-h-[90vh] flex-col justify-evenly lg:justify-between items-center gap-0 lg:gap-3 lg:shadow-full rounded-2xl px-3 py-2 bg-light-100 dark:bg-dark-800 transition-all", {
                 "lg:-left-[100px]" : !layout,
-                "lg:!flex hidden" : !sidebarVisibility,
-                "lg:!flex flex" : sidebarVisibility,
+                "lg:translate-x-0 -translate-x-[100vw]" : !sidebarVisibility,
+                "lg:translate-x-0 translate-x-0" : sidebarVisibility,
             })}>
                 <Button 
                     classNames="w-[30px] h-[30px] rounded-full absolute top-7 -right-[15px] hidden lg:flex shadow-full"
@@ -145,8 +149,8 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     <ThemeSwitcher classNames={twMerge(menu_option_default)}>
                         <span className="block lg:hidden">Tema</span>
                     </ThemeSwitcher>
-                    <Popover content={<UserSettings />} direction="right">
-                        <div className={twMerge(menu_option_default)}>
+                    <Popover content={<UserSettings />} direction="right" classNames="md:block hidden">
+                        <div className={twMerge(menu_option_default)} onClick={handleClickUser}>
                             <div className="w-6 h-6">
                                 <Avatar icon={icon} name={username} />
                             </div>

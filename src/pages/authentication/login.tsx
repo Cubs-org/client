@@ -58,7 +58,7 @@ export default function Login() {
 
     return (
         <div className="w-full h-[80vh] grid place-items-center bg-purple-500 text-light-100">
-            <div className="w-[400px] flex flex-col gap-3 items-center">
+            <div className="w-4/5 md:w-[400px] flex flex-col gap-3 items-center">
                 <h1 className="text-5xl font-bold mb-3">Entrar</h1>
 
                 {alertData && <Alert message={alertData.message} type={alertData.type} />}

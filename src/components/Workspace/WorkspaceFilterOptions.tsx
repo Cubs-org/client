@@ -1,7 +1,7 @@
 import { FaArrowDownAZ, FaPenToSquare, FaTableCells, FaTableList } from "react-icons/fa6"
 import { FaCheck, FaRegCalendarAlt } from "react-icons/fa"
 
-export const HeaderOptions = () => {
+export const WorkspaceFilterOptions = () => {
     const options = [
         {
             divider: true, 
