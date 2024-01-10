@@ -1,25 +1,18 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { Button, ButtonProps } from "./Button";
 import { useAuth } from "../contexts/authProvider";
-import axios from "axios";
-import { BASE_URL } from "../lib/api";
+import API from "../api";
+import { IGoogleUserResponse } from "../interfaces/user";
 
 interface SignInButtonProps extends ButtonProps {
   provider: string;
-  responseHandler?: (response) => void;
 }
 
 interface IResponse {
-  data: {
-    access_token: string;
-    expires_in: number;
-    scope: string;
-    token_type: string;
-    id_token: string;
-  };
+  data: IGoogleUserResponse;
 }
 
-export const SignInButton = ({ children, classNames, responseHandler }: SignInButtonProps) => {
+export const SignInButton = ({ children, classNames }: SignInButtonProps) => {
   
   const { signIn } = useAuth();
 
@@ -29,14 +22,14 @@ export const SignInButton = ({ children, classNames, responseHandler }: SignInBu
         const res = response as IResponse | any;
         const authenticateUser = async (accessToken: string) => {
           try {
-            const res = await axios.post(`${BASE_URL}/authenticateUser/oauth`, {
+            const res = await API.post(`/authenticateUser/oauth`, {
               access_token: accessToken,
             });
 
-            if (res.status === 200)
-              signIn(res.data.user.accessToken);
-            else
-              responseHandler ? responseHandler(res || "any") : console.log("No response handler");
+            console.log(res);
+
+            if (res.data.status === 200)
+              signIn(res.data.token);
           } catch (error) {
             console.error('Error authenticating user:', error);
           }

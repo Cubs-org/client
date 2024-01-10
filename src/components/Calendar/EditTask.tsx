@@ -31,7 +31,6 @@ export const EditTask = ({ task, onClose }:TaskProps) => {
 
     const handleCompleteForm = () => {
         clean();
-        console.log("Depois", task)
     }
 
     function clean() {
@@ -135,7 +134,7 @@ export const EditTask = ({ task, onClose }:TaskProps) => {
                                 key={`${member}-${key}`}
                                 className="w-[60px] h-[60px]"
                             >
-                                <Avatar id={member.userId} />
+                                <Avatar icon="" />
                             </div>
                         ))}
                         {members.length > 7 && `+${members.length - 7}`}

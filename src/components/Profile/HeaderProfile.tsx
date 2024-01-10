@@ -2,13 +2,20 @@ import { useEffect, useState } from "react"
 import { Avatar } from "../Avatar"
 import { IUser } from "../../interfaces/user";
 import fetchAvatarImg from "../../utils/user/fetchAvatarImg";
-import { jwtDecode } from "jwt-decode";
+import { formatDate, formatUserName } from "../../utils/profilePage";
+import { SOCKET_URL } from "../../lib/api";
+import { io } from "socket.io-client";
 import { useAuth } from "../../contexts/authProvider";
-
+import { jwtDecode } from "jwt-decode";
+import getUser from "../../api/getUser";
+import { Button } from "../Button";
+import { FaImage } from "react-icons/fa6";
 
 export const HeaderProfile = () => {
 
     const { token } = useAuth();
+
+    const socket = io(SOCKET_URL);
     
     const [userData, setUserData] = useState<IUser>({
         id: "a1b2c3d4e5f6g7h8i9j0",
@@ -18,17 +25,7 @@ export const HeaderProfile = () => {
         createdAt: "00/00/0000",
         updatedAt: "00/00/0000"
     })
-
-    const padDate = (date: number) => String(date).padStart(2, '0')
-
-    const formatDate = (date: string) => {
-        const d = new Date(date)
-        return `${padDate(d.getDate())}/${padDate(d.getMonth() + 1)}/${d.getFullYear()}`
-    }
-
-    const formatUserName = (name: string) => {
-        return name.length > 16 ? `${name.slice(0, 16)}...` : name
-    }
+    const [userFetched, setUserFetched] = useState(false);
 
     const handleSetUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserData({
@@ -37,21 +34,28 @@ export const HeaderProfile = () => {
         })
     }
 
+    const handleSetUserData = () => {
+        socket.emit("setUser", userData);
+    }
+
     const username = userData?.name as string;
     const icon = fetchAvatarImg(userData?.icon) as string;
 
-    const [userLoaded, setUserLoaded] = useState(false);
-
     useEffect(() => {
-        if (!userLoaded) {
-            let user
-            user = (jwtDecode(token as string));
-            user = user.user;
-            setUserData(user as IUser);
-            console.log(user);
-            setUserLoaded(true);
+
+        if (!userFetched) {
+            const userId = (jwtDecode(token as string) as any).user.id;
+
+            getUser(userId).then(res => {
+                setUserData(res.data.user);
+                setUserFetched(true);
+            });
         }
-    }, [userLoaded]);
+
+        socket.on("getUser", (user) => {
+            setUserData(user);
+        });
+    }, [socket, userFetched]);
 
     return (
         <header className="w-full h-full flex flex-col-reverse sm:flex-row justify-evenly sm:justify-between items-center gap-1 sm:gap-3">
@@ -66,6 +70,7 @@ export const HeaderProfile = () => {
                     onChange={handleSetUserName}
                     onBlur={e => {
                         handleSetUserName(e)
+                        handleSetUserData()
                         e.target.value = formatUserName(userData.name)
                     }}
                 />
@@ -73,13 +78,17 @@ export const HeaderProfile = () => {
                     className="text-sm sm:text-base text-dark-300 font-medium dark:text-light-800"
                 >Criado em {formatDate(userData.createdAt as string)}</span>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 relative group ">
                 <Avatar 
                     icon={icon}
                     name={username}
                     disableVisibleTooltip={true} 
                     classNames="hover:filter hover:brightness-125 hover:contrast-100 hover:saturate-150 transition-all duration-300 ease-in-out"
                 />
+
+                <Button classNames="group-hover:scale-100 scale-0 absolute right-0 bottom-0 w-[80px] h-[80px] rounded-full shadow-full transition-all">
+                    <FaImage size={32}/>
+                </Button>
             </div>
         </header>
     )

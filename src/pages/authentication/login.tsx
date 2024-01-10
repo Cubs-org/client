@@ -33,7 +33,7 @@ export default function Login() {
         try {
             const result = await API.post(`/authenticateUser`, formData);
             if (result.data.status === 200){
-                signIn(result.data.user.accessToken);
+                signIn(result.data.token);
             } else {
                 setAlertData({
                     message: result.data.message,

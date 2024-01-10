@@ -19,8 +19,8 @@ const ModalProvider = ({ children }) => {
 }
 
 const useModal = () => {
-  const context = useContext(ModalContext)
-  return context
+  const context = useContext(ModalContext);
+  return context;
 }
 
 export { ModalProvider, useModal }

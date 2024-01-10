@@ -18,11 +18,15 @@ import {
     FaNetworkWired 
 } from "react-icons/fa";
 import { Tooltip } from "../../Tooltip";
-import { IUser } from "../../../interfaces/user";
 import { useLocation } from "react-router-dom";
+import fetchAvatarImg from "../../../utils/user/fetchAvatarImg";
+import { IUser } from "../../../interfaces/user";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../../contexts/authProvider";
-import fetchAvatarImg from "../../../utils/user/fetchAvatarImg";
+import getUser from "../../../api/getUser";
+import { SOCKET_URL } from "../../../lib/api";
+import { io } from "socket.io-client";
+import Logo from "../../Logo";
 
 interface ISidebar {
     layout: boolean;
@@ -31,27 +35,19 @@ interface ISidebar {
 
 export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
 
-    const  { token } = useAuth();
+    const { token } = useAuth();
+
+    const socket = io(SOCKET_URL);
 
     const [userData, setUserData] = useState<IUser>();
-    const [userLoaded, setUserLoaded] = useState(false);
+    const [userFetched, setUserFetched] = useState(false);
 
-    const username = userData?.name as string;
-    const icon = fetchAvatarImg(userData?.icon) as string;
+    const username = userData?.name;
+    const icon = fetchAvatarImg(userData?.icon);
 
     const { pathname } = useLocation();
 
     const [sidebarVisibility, setSidebarVisibility] = useState(false);
-
-    useEffect(() => {
-        if (!userLoaded) {
-            let user
-            user = (jwtDecode(token as string));
-            user = user.user;
-            setUserData(user as IUser);
-            setUserLoaded(true);
-        }
-    }, [userLoaded]);
 
     const menu_option_default = "w-full lg:w-[60px] lg:h-[60px] px-3 py-2 font-bold text-dark-600 rounded-md cursor-pointer flex justify-start items-center lg:justify-center gap-3 hover:text-light-300 hover:bg-purple-500 hover:shadow-menu dark:text-light-600"
 
@@ -76,6 +72,22 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
     const handleSidebarVisibility = () => {
         setSidebarVisibility(!sidebarVisibility)
     }
+
+    useEffect(() => {
+
+        if (!userFetched) {
+            const userId = (jwtDecode(token as string) as any).user.id;
+
+            getUser(userId).then(res => {
+                setUserData(res.data.user);
+                setUserFetched(true);
+            });
+        }
+
+        socket.on("getUser", (user) => {
+            setUserData(user);
+        });
+    }, [socket, userFetched]);
 
     return (
         <>
@@ -108,12 +120,8 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     })}/>
                 </Button>
                 <div className="w-3/5 mt-0 lg:w-[40px] lg:h-[40px] lg:mt-4 flex flex-row items-center gap-3">
-                    <img
-                        src="src/assets/cubs.svg" 
-                        alt="logo" 
-                        className="w-[60px] lg:w-full lg:h-full object-contain"
-                    />
-                    <span className="block lg:hidden text-3xl font-extrabold text-purple-400">Cub's</span>
+                    <Logo color="default" size={32}/>
+                    <span className="block lg:hidden text-3xl font-extrabold text-primary">Cub's</span>
                 </div>
                 <hr className="w-full border-1 border-light-900 dark:border-dark-100 hidden lg:block"/>
                 <div className="w-3/5 lg:w-full flex flex-col gap-2">
@@ -140,7 +148,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     <Popover content={<UserSettings />} direction="right">
                         <div className={twMerge(menu_option_default)}>
                             <div className="w-6 h-6">
-                                <Avatar icon={icon} name={userData?.name} />
+                                <Avatar icon={icon} name={username} />
                             </div>
                             <span className="block lg:hidden">{username}</span>
                         </div>

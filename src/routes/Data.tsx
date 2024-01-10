@@ -39,7 +39,7 @@ export const data = {
     ],
     authenticated: [
       {
-        path: "",
+        path: "/",
         element: <ProtectedRoute />,
         children: [
           {
@@ -55,11 +55,15 @@ export const data = {
                 element: <CalendarPage />
               },
               {
+                path: "goals",
+                element: <div>Goals</div>
+              },
+              {
                 path: "profile",
                 element: <Profile />
               },
               {
-                path: "*",
+                path: "not-found",
                 element: <NotFoundPage />
               }
             ]

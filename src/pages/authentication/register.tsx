@@ -6,10 +6,10 @@ import { Button } from "../../components/Button";
 // import { Alert } from "../../components/Alert";
 import { SignInButton } from "../../components/SignInButton";
 import { FaGoogle } from "react-icons/fa";
-import fetchUser from "../../utils/user/fetchUser";
 import { useAuth } from "../../contexts/authProvider";
 import { Alert } from "../../components/Alert";
 import { AlertProps } from "../../interfaces/alert";
+import createUser from "../../api/createUser";
 
 export default function Register() {
 
@@ -40,7 +40,7 @@ export default function Register() {
             throw new Error('As senhas não coincidem.');
           }
       
-          const result = await fetchUser(formData) as any;
+          const result = await createUser(formData) as any;
       
           if (result.status === 200) {
             await signIn(result.data.token);

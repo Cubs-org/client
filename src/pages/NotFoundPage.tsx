@@ -1,6 +1,6 @@
 function NotFoundPage() {
   return (
-    <div className="w-full h-screen grid place-items-center">
+    <div className="w-full h-full grid place-items-center">
         <div className="flex flex-col justify-center items-center">
         <svg 
             className="w-64 h-64 hover:animate-shake"

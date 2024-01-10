@@ -1,3 +1,4 @@
+import { formatUserName } from "../utils/profilePage";
 import { Tooltip } from "./Tooltip";
 
 import clsx from "clsx";
@@ -12,7 +13,7 @@ interface AvatarProps {
 
 export const Avatar = ({ name, icon, classNames, disableVisibleTooltip }:AvatarProps) => {
 
-    const username = name?.split(" ")[0] || "Usuário";
+    const username = name && formatUserName(name) || "Usuário";
     const pic = icon || "/src/assets/default-user.jpg";
 
     return (

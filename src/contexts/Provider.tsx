@@ -9,16 +9,16 @@ export default ({children}) => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string
     
     return (
-        <AuthProvider>
-            <GoogleOAuthProvider clientId={clientId}>
-                <CookiesProvider>
+        <CookiesProvider>
+            <AuthProvider>
+                <GoogleOAuthProvider clientId={clientId}>
                     <ThemeProvider>
                         <ModalProvider>
                             {children}
                         </ModalProvider>
                     </ThemeProvider>
-                </CookiesProvider>
-            </GoogleOAuthProvider>
-        </AuthProvider>
+                </GoogleOAuthProvider>
+            </AuthProvider>
+        </CookiesProvider>
     )
 }

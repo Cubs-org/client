@@ -4,6 +4,7 @@ import { Footer } from "./components/Footer";
 import { useEffect, useState } from "react";
 import { useAuth } from "./contexts/authProvider";
 import { jwtDecode } from "jwt-decode";
+import fetchWorkspace from "./api/fetchWorkspace";
 
 function App() {
 
@@ -12,14 +13,24 @@ function App() {
         data: {} as any
     });
 
-    const { token }:any = useAuth();
+    const { token } = useAuth();
 
+    async function fetchData() {
+        const user = (jwtDecode(token as string) as any).user;
+        const workspace = await fetchWorkspace(user.id);
+    
+        setAuthenticated({
+            status: true,
+            data: {
+                user,
+                workspace
+            }
+        });
+    }
+    
     useEffect(() => {
         if (token && !authenticated.status) {
-            setAuthenticated({
-                status: true,
-                data: jwtDecode(token)
-            });
+            fetchData();
         }
     }, [token, authenticated]);
 

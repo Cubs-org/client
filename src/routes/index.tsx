@@ -9,13 +9,14 @@ export const AppRoutes = () => {
 
     let routes;
     if (token) {
-        routes = data.notAuthenticated.concat(data.authenticated);
+        routes = data.authenticated;
     } else {
         routes = data.notAuthenticated;
     }
 
     const router = createBrowserRouter([
         ...routes,
+        // test-route
         {
             path: "/test",
             element: <Test />

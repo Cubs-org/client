@@ -15,7 +15,6 @@ export const AddMembers = ({ task, onClose }:AddMembers) => {
 
     const handleAddNewMembers = () => {
         task?.membership?.push({userId:"rty"})
-        console.log("Durante: ", task)
     }
 
     const handleAddMembers = () => {

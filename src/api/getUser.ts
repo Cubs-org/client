@@ -1,0 +1,19 @@
+import API from ".";
+
+async function getUser(userId: string) {
+    try {
+        const user = await API.get(`/getUser?userId=${userId}`) as any;
+
+        if (user.status !== 200) {
+            throw new Error(user.message);
+        } else if (!user.data) {
+            throw new Error(user.message);
+        }
+
+        return user;
+    } catch (error) {
+        return error;
+    }
+}
+
+export default getUser;
