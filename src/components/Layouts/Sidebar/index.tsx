@@ -124,7 +124,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     })}/>
                 </Button>
                 <div className="w-3/5 mt-0 lg:w-[40px] lg:h-[40px] lg:mt-4 flex flex-row items-center gap-3">
-                    <Logo color="default" size={32}/>
+                    <Logo color="default" size={42}/>
                     <span className="block lg:hidden text-3xl font-extrabold text-primary">Cub's</span>
                 </div>
                 <hr className="w-full border-1 border-light-900 dark:border-dark-100 hidden lg:block"/>
@@ -150,11 +150,9 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                         <span className="block lg:hidden">Tema</span>
                     </ThemeSwitcher>
                     <Popover content={<UserSettings />} direction="right" classNames="md:block hidden">
-                        <div className={twMerge(menu_option_default)} onClick={handleClickUser}>
-                            <div className="w-6 h-6">
-                                <Avatar icon={icon} name={username} />
-                            </div>
-                            <span className="block lg:hidden">{username}</span>
+                        <div className={twMerge(menu_option_default)}>
+                            <Avatar icon={icon} name={username} classNames="!w-6 rounded-full" />
+                            <span className="block lg:hidden" onClick={handleClickUser}>{username}</span>
                         </div>
                     </Popover>
                 </div>

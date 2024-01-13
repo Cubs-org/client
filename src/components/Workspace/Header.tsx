@@ -15,7 +15,7 @@ export const Header = () => {
     return (
         <header className="w-full flex flex-col-reverse gap-3 md:flex-row justify-between items-center px-2 py-3">
             
-            <div className="w-full md:w-fit">
+            <div className="w-full md:w-fit flex flex-col justify-center">
                 <h1 
                     className="text-2xl md:text-3xl font-extrabold text-dark-400 dark:text-light-300"
                 >Área de trabalho</h1>

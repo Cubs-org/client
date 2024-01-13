@@ -8,6 +8,8 @@ export interface IUser {
     updatedAt?: Date | string;
 }
 
+export interface IUserAccount extends IAccount, IUser {}
+
 export interface IUserGoogle {
     email: string;
     name: string;

@@ -1,94 +1,33 @@
-import { useEffect, useState } from "react"
-import { Avatar } from "../Avatar"
-import { IUser } from "../../interfaces/user";
-import fetchAvatarImg from "../../utils/user/fetchAvatarImg";
-import { formatDate, formatUserName } from "../../utils/profilePage";
-import { SOCKET_URL } from "../../lib/api";
-import { io } from "socket.io-client";
-import { useAuth } from "../../contexts/authProvider";
-import { jwtDecode } from "jwt-decode";
-import getUser from "../../api/getUser";
-import { Button } from "../Button";
-import { FaImage } from "react-icons/fa6";
+import clsx from "clsx";
+import { IUserAccount } from "../../interfaces/user";
+import { formatDateToPreview } from "../../utils/datetime/formatDateToPreview";
 
-export const HeaderProfile = () => {
+interface IHeaderProfileProps {
+    user: IUserAccount;
+}
 
-    const { token } = useAuth();
+export const HeaderProfile = ({ user }:IHeaderProfileProps) => {
 
-    const socket = io(SOCKET_URL);
-    
-    const [userData, setUserData] = useState<IUser>({
-        id: "a1b2c3d4e5f6g7h8i9j0",
-        name: "Usuário",
-        email: "user@adress",
-        icon: "/src/assets/default-user.jpg",
-        createdAt: "00/00/0000",
-        updatedAt: "00/00/0000"
-    })
-    const [userFetched, setUserFetched] = useState(false);
+    const userUpdatedAt = user.updatedAt as string;
 
-    const handleSetUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUserData({
-            ...userData,
-            name: e.target.value
-        })
-    }
-
-    const handleSetUserData = () => {
-        socket.emit("setUser", userData);
-    }
-
-    const username = userData?.name as string;
-    const icon = fetchAvatarImg(userData?.icon) as string;
-
-    useEffect(() => {
-
-        if (!userFetched) {
-            const userId = (jwtDecode(token as string) as any).user.id;
-
-            getUser(userId).then(res => {
-                setUserData(res.data.user);
-                setUserFetched(true);
-            });
-        }
-
-        socket.on("getUser", (user) => {
-            setUserData(user);
-        });
-    }, [socket, userFetched]);
+    // const accountPlan = user.planType as string;
+    const accountStatus = user.status;
+    const accountType = user.accountType;
+    // const accountPaymentType = user.paymentType;
 
     return (
-        <header className="w-full h-full flex flex-col-reverse sm:flex-row justify-evenly sm:justify-between items-center gap-1 sm:gap-3">
-            <div className="flex flex-col">
-                <h3 
-                    className="text-lg font-bold text-dark-400 bg-transparent dark:text-light-700"
-                >{userData.email}</h3>
-                <input 
-                    className="w-full rounded-md outline-none sm:text-6xl text-3xl font-bold text-dark-700 bg-transparent placeholder:text-light-300 dark:text-light-200 hover:bg-light-200 focus:outline-1 focus:ring-2 focus:ring-light-500 dark:hover:bg-dark-600 dark:focus:outline-1 dark:focus:ring-2 dark:focus:ring-dark-300 transition-all duration-300 ease-in-out" 
-                    placeholder="Usuário"
-                    value={userData.name}
-                    onChange={handleSetUserName}
-                    onBlur={e => {
-                        handleSetUserName(e)
-                        handleSetUserData()
-                        e.target.value = formatUserName(userData.name)
-                    }}
-                />
-                <span 
-                    className="text-sm sm:text-base text-dark-300 font-medium dark:text-light-800"
-                >Criado em {formatDate(userData.createdAt as string)}</span>
-            </div>
-            <div className="w-1/2 relative group ">
-                <Avatar 
-                    icon={icon}
-                    name={username}
-                    disableVisibleTooltip={true} 
-                    classNames="hover:filter hover:brightness-125 hover:contrast-100 hover:saturate-150 transition-all duration-300 ease-in-out"
-                />
+        <header className="w-full flex justify-between  items-center">
+            <span className="text-base font-medium text-dark-100 dark:text-light-700">
+                Editado em {formatDateToPreview(userUpdatedAt)}
+            </span>
 
-                <Button classNames="text-xl md:text-3xl group-hover:scale-100 scale-0 absolute right-0 bottom-0 w-[60px] h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all">
-                    <FaImage />
-                </Button>
+            <div className="flex items-center gap-2 hover:bg-light-200 hover:dark:bg-dark-600 px-2 py-1 rounded-md cursor-pointer">
+                <span className={clsx("w-2 h-2 rounded-full block", {
+                    "bg-green-400": accountStatus === "active",
+                    "bg-yellow-400": accountStatus === "pending",
+                    "bg-red-400": accountStatus === "inactive",
+                })} />
+                {accountStatus}/{accountType}
             </div>
         </header>
     )

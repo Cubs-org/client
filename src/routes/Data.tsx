@@ -3,14 +3,14 @@ import { Layout } from "../components/Layouts/Layout";
 
 // Pages
 import App from "../App";
-import CalendarPage from "../components/Calendar/Calendar";
-import Profile from "../components/Profile/index.tsx";
+import CalendarPage from "../pages/Calendar.tsx";
 import Home from "../pages/Home.tsx";
 import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
 import Workspace from "../pages/Workspace.tsx";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
+import Profile from "../pages/Profile.tsx";
 
 export const data = {
     notAuthenticated: [

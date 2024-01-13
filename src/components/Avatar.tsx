@@ -1,4 +1,5 @@
 import { formatUserName } from "../utils/profilePage";
+import fetchAvatarImg from "../utils/user/fetchAvatarImg";
 import { Tooltip } from "./Tooltip";
 
 import clsx from "clsx";
@@ -19,9 +20,9 @@ export const Avatar = ({ name, icon, classNames, disableVisibleTooltip }:AvatarP
     return (
         <Tooltip content={username} disableVisibleTooltip={disableVisibleTooltip}>
             <img 
-                src={pic} 
+                src={fetchAvatarImg(pic)} 
                 alt={`avatar`}
-                className={clsx("w-full h-auto rounded-full object-cover", classNames)}
+                className={clsx("w-full h-auto object-cover", classNames)}
             />
         </Tooltip>
     );

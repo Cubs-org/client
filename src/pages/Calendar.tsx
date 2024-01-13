@@ -1,15 +1,15 @@
 import { Suspense, useState } from "react";
 
-import { CalendarProps } from "../../interfaces/calendar";
-import { Task } from "../../interfaces/task";
+import { CalendarProps } from "../interfaces/calendar";
+import { Task } from "../interfaces/task";
 
-import { adjustTasks } from "../../utils/calendar/adjustTasks";
+import { adjustTasks } from "../utils/calendar/adjustTasks";
 
-import { GridCalendar } from "./GridCalendar";
-import { HeaderCalendar } from "./HeaderCalendar";
-import Loading from "../Loading";
-import { useModal } from "../../contexts/modalContext";
-import { CreateTask } from "./CreateTask";
+import { GridCalendar } from "../components/Calendar/GridCalendar";
+import { HeaderCalendar } from "../components/Calendar/HeaderCalendar";
+import Loading from "../components/Loading";
+import { useModal } from "../contexts/modalContext";
+import { CreateTask } from "../components/Calendar/CreateTask";
 
 export default function CalendarPage() {
   const [tasks, setTasks] = useState();

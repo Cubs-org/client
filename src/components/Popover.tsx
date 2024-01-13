@@ -8,9 +8,10 @@ interface PopoverProps {
     direction?: "top" | "bottom" | "left" | "right";
     classNames?: string;
     show?: boolean;
+    isModal?: boolean;
 }
 
-export const Popover = ({ children, content, direction, classNames, show }:PopoverProps) => {
+export const Popover = ({ children, content, direction, classNames, show, isModal=true }:PopoverProps) => {
 
     const [visibility, setVisibility] = useState(show ? true : false)
     const popover = useRef(null)
@@ -39,7 +40,7 @@ export const Popover = ({ children, content, direction, classNames, show }:Popov
             ref={popover}
             className="relative"
             onClick={() => setVisibility(true)}
-            onBlur={() => setVisibility(false)}
+            onBlur={() => !isModal && setVisibility(false)}
         >
             {children}
             {visibility && (
