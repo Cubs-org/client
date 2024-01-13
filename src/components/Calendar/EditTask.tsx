@@ -134,7 +134,7 @@ export const EditTask = ({ task, onClose }:TaskProps) => {
                                 key={`${member}-${key}`}
                                 className="w-[60px] h-[60px]"
                             >
-                                <Avatar icon="" />
+                                <Avatar icon={member.userId} />
                             </div>
                         ))}
                         {members.length > 7 && `+${members.length - 7}`}

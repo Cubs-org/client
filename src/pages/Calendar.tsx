@@ -12,7 +12,24 @@ import { useModal } from "../contexts/modalContext";
 import { CreateTask } from "../components/Calendar/CreateTask";
 
 export default function CalendarPage() {
-  const [tasks, setTasks] = useState();
+  // const [tasks, setTasks] = useState();
+
+  const tasks:Task[] = [
+    {
+      title: "Tarefa 1",
+      content: "Descrição da tarefa 1",
+      start: "2024-01-01",
+      end: "2024-01-01",
+      completed: false,
+      tag: {
+        color: "blue",
+        stage: "Em andamento"
+      },
+      owner: "Eu",
+      membership: [{userId: "Eu"}]
+
+    }
+  ];
 
   // @ts-ignore
   const { modalState:{ visible, content }, openModal, closeModal } = useModal();
