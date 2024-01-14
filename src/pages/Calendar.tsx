@@ -1,35 +1,16 @@
 import { Suspense, useState } from "react";
 
 import { CalendarProps } from "../interfaces/calendar";
-import { Task } from "../interfaces/task";
 
-import { adjustTasks } from "../utils/calendar/adjustTasks";
-
-import { GridCalendar } from "../components/Calendar/GridCalendar";
+import { GridMonthCalendar } from "../components/Calendar/GridMonthCalendar";
 import { HeaderCalendar } from "../components/Calendar/HeaderCalendar";
 import Loading from "../components/Loading";
 import { useModal } from "../contexts/modalContext";
 import { CreateTask } from "../components/Calendar/CreateTask";
 
 export default function CalendarPage() {
-  // const [tasks, setTasks] = useState();
-
-  const tasks:Task[] = [
-    {
-      title: "Tarefa 1",
-      content: "Descrição da tarefa 1",
-      start: "2024-01-01",
-      end: "2024-01-01",
-      completed: false,
-      tag: {
-        color: "blue",
-        stage: "Em andamento"
-      },
-      owner: "Eu",
-      membership: [{userId: "Eu"}]
-
-    }
-  ];
+  
+  const items:CalendarProps["items"] = [];
 
   // @ts-ignore
   const { modalState:{ visible, content }, openModal, closeModal } = useModal();
@@ -37,7 +18,7 @@ export default function CalendarPage() {
   const response = (event) => {
       // @ts-ignore
       openModal && openModal({
-          content: <CreateTask event={event} onClose={closeModal} /> 
+          content: <CreateTask event={event} /> 
       });
   }
 
@@ -45,13 +26,13 @@ export default function CalendarPage() {
     <div className="w-full h-full flex flex-col">
       <Calendar 
         event={response} 
-        tasks={tasks} 
+        items={items} 
       />
     </div>
   );
 }
 
-const Calendar = ({event, tasks}: CalendarProps) => {
+const Calendar = ({event, items}: CalendarProps) => {
   const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 
   const splitDt = (date:any) => {
@@ -66,8 +47,6 @@ const Calendar = ({event, tasks}: CalendarProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [year, setYear] = useState(splitDt(date)[0]);
   const [month, setMonth] = useState(splitDt(date)[1]);
-
-  const _tasks:Task[] = tasks && tasks.length > 0 ? adjustTasks(tasks) : [];
 
   return (
     <Suspense fallback={<Loading />}>
@@ -88,11 +67,11 @@ const Calendar = ({event, tasks}: CalendarProps) => {
             </div>
           ))}
         </div>
-        <GridCalendar
+        <GridMonthCalendar
           year={year} 
           month={month} 
           event={event} 
-          tasks={_tasks}
+          items={items}
         />
       </div>
     </Suspense>

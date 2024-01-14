@@ -19,20 +19,23 @@ export interface Task {
   days?: number;
   timeline?: string[];
 
-  // heritage?
+  // details
   owner: string;
-  isProject?: boolean;
-  membership?: Member[];
+  membership?: MemberData[];
 
   createdAt?: string;
   updatedAt?: string;
 };
 
 export interface Member {
-  userId: string;
-}
-
-export interface Members extends Member {
   id: string;
+  userId: string;
   taskId: string;
+};
+
+export interface MemberData {
+  name: string;
+  email: string;
+  icon: string;
+  isAdmin: boolean;
 };
