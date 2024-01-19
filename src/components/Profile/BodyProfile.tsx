@@ -26,19 +26,19 @@ export const BodyProfile = ({ socket, userData, setUserData }:IBodyProfileProps)
     }
 
     const handleSetUserData = () => {
-        socket.emit("setUser", userData);
+        socket.emit("updateUser", userData);
     }
 
     const username = userData?.name as string;
 
     return (
-        <div className="w-full md:w-4/5 md:m-auto flex flex-col-reverse flex-grow gap-1 items-center md:flex-row">
-            <div className="flex flex-col">
+        <div className="w-full md:w-4/5 md:m-auto flex flex-col-reverse flex-grow gap-3 items-center md:flex-row">
+            <div className="flex flex-col flex-grow items-center md:items-start w-4/5 md:w-full m-auto">
                 <h3 
-                    className="text-lg font-bold text-dark-400 bg-transparent dark:text-light-700"
+                    className="text-base md:text-lg font-bold text-dark-400 bg-transparent dark:text-light-700"
                 >{userData.email}</h3>
                 <input 
-                    className="w-full rounded-md outline-none sm:text-6xl text-3xl font-bold text-dark-700 bg-transparent placeholder:text-light-300 dark:text-light-200 hover:bg-light-200 focus:outline-1 focus:ring-2 focus:ring-light-500 dark:hover:bg-dark-600 dark:focus:outline-1 dark:focus:ring-2 dark:focus:ring-dark-300 transition-all duration-300 ease-in-out" 
+                    className="w-full rounded-md outline-none text-center md:text-left sm:text-6xl text-3xl font-bold text-dark-700 bg-transparent placeholder:text-light-300 dark:text-light-200 hover:bg-light-200 focus:outline-1 focus:ring-2 focus:ring-light-500 dark:hover:bg-dark-600 dark:focus:outline-1 dark:focus:ring-2 dark:focus:ring-dark-300 transition-all duration-300 ease-in-out" 
                     placeholder="Usuário"
                     value={userData.name}
                     onChange={handleSetUserName}
@@ -53,32 +53,35 @@ export const BodyProfile = ({ socket, userData, setUserData }:IBodyProfileProps)
                 >Criado em {formatDate(userData.createdAt as string)}</span>
             </div>
 
-            <div className="w-1/2 relative group ">
+            <div className="w-1/2 static md:relative group py-3 md:py-0">
                 <Avatar 
                     icon={userData.icon as string}
                     name={username}
-                    disableVisibleTooltip={true} 
+                    disableVisibleTooltip={true}
                     classNames="hover:filter hover:brightness-125 hover:contrast-100 hover:saturate-150 transition-all duration-300 ease-in-out"
+                    isCircle
                 />
 
-                <Popover 
-                    content={
-                        <ChoiceUserImage 
-                            socket={socket} 
-                            userData={userData}
-                            setUserData={setUserData}
-                        />
-                    }
-                    direction="left"
-                    show={userImageVisible}
-                    isModal
-                >
-                    <Button 
-                        classNames="text-xl md:text-3xl group-hover:scale-100 scale-0 absolute right-0 bottom-0 w-[60px] h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all"
-                        onClick={() => setUserImageVisible(!userImageVisible)}
-                    ><FaImage />
-                    </Button>
-                </Popover>
+                <div className="float-right -mt-[60px]">
+                    <Popover 
+                        content={
+                            <ChoiceUserImage 
+                                socket={socket} 
+                                userData={userData}
+                                setUserData={setUserData}
+                            />
+                        }
+                        direction="left"
+                        show={userImageVisible}
+                        isModal
+                    >
+                        <Button 
+                            classNames="text-xl md:text-3xl group-hover:scale-100 scale-0 w-[60px] h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all"
+                            onClick={() => setUserImageVisible(!userImageVisible)}
+                        ><FaImage />
+                        </Button>
+                    </Popover>
+                </div>
             </div>
         </div>
     )

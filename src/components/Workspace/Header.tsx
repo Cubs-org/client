@@ -35,11 +35,12 @@ export const Header = () => {
                     classNames="w-full md:w-[300px]"
                 />
 
-                <Popover 
-                    classNames="w-[180px] top-56 !-left-[calc(180px-1rem)]"
+                <Popover
                     direction="left" 
+                    classNames="!w-[200px]"
                     content={<WorkspaceFilterOptions />}
                     show={options}
+                    notCentered
                 >
                     <FaEllipsisVertical size={24} className="cursor-pointer" onClick={toggleOptions} />
                 </Popover>

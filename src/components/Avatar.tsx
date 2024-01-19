@@ -7,22 +7,35 @@ import clsx from "clsx";
 interface AvatarProps {
     classNames?: string;
     disableVisibleTooltip?: boolean;
+    isCircle?: boolean;
 
     name?: string;
     icon: string;
+    size?: number;
 };
 
-export const Avatar = ({ name, icon, classNames, disableVisibleTooltip }:AvatarProps) => {
+export const Avatar = ({ name, icon, classNames, disableVisibleTooltip, isCircle, size }:AvatarProps) => {
 
     const username = name && formatUserName(name) || "Usuário";
-    const pic = icon || "/src/assets/default-user.jpg";
+
+    const { image, isAnimal } = fetchAvatarImg(icon);
+    const pic = image || "/src/assets/default-user.jpg";
 
     return (
         <Tooltip content={username} disableVisibleTooltip={disableVisibleTooltip}>
             <img 
-                src={fetchAvatarImg(pic)} 
+                src={pic} 
                 alt={`avatar`}
-                className={clsx("w-full h-auto object-cover", classNames)}
+                // width={`${size}px`}
+                // height={`${size}px`}
+                style={{
+                    width: size ? `${size}px` : "100%",
+                    height: size ? `${size}px` : "100%",
+                }}
+                className={clsx("object-cover", classNames, {
+                    "rounded-full": (isCircle && !isAnimal),
+                })}
+                referrerPolicy="no-referrer"
             />
         </Tooltip>
     );

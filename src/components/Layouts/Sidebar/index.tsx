@@ -19,7 +19,6 @@ import {
 } from "react-icons/fa";
 import { Tooltip } from "../../Tooltip";
 import { useLocation } from "react-router-dom";
-import fetchAvatarImg from "../../../utils/user/fetchAvatarImg";
 import { IUser } from "../../../interfaces/user";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../../contexts/authProvider";
@@ -43,7 +42,6 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
     const [userFetched, setUserFetched] = useState(false);
 
     const username = userData?.name;
-    const icon = fetchAvatarImg(userData?.icon);
 
     const { pathname } = useLocation();
 
@@ -82,13 +80,14 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
         if (!userFetched) {
             const userId = (jwtDecode(token as string) as any).user.id;
 
+
             getUser(userId).then(res => {
                 setUserData(res.data.user);
                 setUserFetched(true);
             });
         }
 
-        socket.on("getUser", (user) => {
+        socket.on("updateUser", (user) => {
             setUserData(user);
         });
     }, [socket, userFetched]);
@@ -106,9 +105,12 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     "hidden" : sidebarVisibility,
                     "flex" : !sidebarVisibility,
                 })}>
-                    <div className="w-8 h-8">
-                        <Avatar icon={icon} disableVisibleTooltip/>
-                    </div>
+                    <Avatar 
+                        icon={userData?.icon as string} 
+                        size={24}
+                        disableVisibleTooltip 
+                        isCircle
+                    />
                 </span>
             </div>
             <div className={clsx("absolute top-0 w-full h-full lg:w-[80px] flex z-40 lg:min-h-[90vh] lg:max-h-[90vh] flex-col justify-evenly lg:justify-between items-center gap-0 lg:gap-3 lg:shadow-full rounded-2xl px-3 py-2 bg-light-100 dark:bg-dark-800 transition-all", {
@@ -135,7 +137,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                             key={`${index}-${page.name}`}>
                             <a href={page.link}>
                                 <div className={clsx(menu_option_default, {
-                                    "!text-purple-500 hover:!text-light-300": page.link == pathname,
+                                    "!text-purple-500 hover:!text-light-300 w-full": page.link == pathname,
                                 })}>
                                     {page.icon}
                                     <span className="block lg:hidden">{page.name}</span>
@@ -149,9 +151,9 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     <ThemeSwitcher classNames={twMerge(menu_option_default)}>
                         <span className="block lg:hidden">Tema</span>
                     </ThemeSwitcher>
-                    <Popover content={<UserSettings />} direction="right" classNames="md:block hidden">
-                        <div className={twMerge(menu_option_default)}>
-                            <Avatar icon={icon} name={username} classNames="!w-6 rounded-full" />
+                    <Popover content={<UserSettings />} direction="right" classNames="md:block hidden" width="100%">
+                        <div className={menu_option_default}>
+                            <Avatar icon={userData?.icon as string} name={username} size={24} isCircle />
                             <span className="block lg:hidden" onClick={handleClickUser}>{username}</span>
                         </div>
                     </Popover>

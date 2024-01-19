@@ -18,14 +18,14 @@ export const ChoiceUserImage = ({ setUserData, userData, socket }: IChoiceUserIm
             ...userData,
             icon: bixo
         })
-        socket.emit("setUser", {
+        socket.emit("updateUser", {
             ...userData,
             icon: bixo
         })
     }
 
     return (
-        <div className="w-full px-3 py-2">
+        <div className="w-[300px] px-3 py-2">
             <h3 className="text-lg font-bold text-dark-400 bg-transparent dark:text-light-700">Escolha seu bixo</h3>
             <div className="flex flex-wrap justify-center items-center gap-2">
                 {bixos.map((bixo, index) => (
