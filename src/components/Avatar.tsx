@@ -6,7 +6,7 @@ import clsx from "clsx";
 
 interface AvatarProps {
     classNames?: string;
-    disableVisibleTooltip?: boolean;
+    notDisplayUsername?: boolean;
     isCircle?: boolean;
 
     name?: string;
@@ -14,7 +14,7 @@ interface AvatarProps {
     size?: number;
 };
 
-export const Avatar = ({ name, icon, classNames, disableVisibleTooltip, isCircle, size }:AvatarProps) => {
+export const Avatar = ({ name, icon, classNames, notDisplayUsername, isCircle, size }:AvatarProps) => {
 
     const username = name && formatUserName(name) || "Usuário";
 
@@ -22,7 +22,7 @@ export const Avatar = ({ name, icon, classNames, disableVisibleTooltip, isCircle
     const pic = image || "/src/assets/default-user.jpg";
 
     return (
-        <Tooltip content={username} disableVisibleTooltip={disableVisibleTooltip}>
+        <Tooltip content={username} disabled={notDisplayUsername}>
             <img 
                 src={pic} 
                 alt={`avatar`}

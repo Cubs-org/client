@@ -7,6 +7,7 @@ import { HeaderCalendar } from "../components/Calendar/HeaderCalendar";
 import Loading from "../components/Loading";
 import { useModal } from "../contexts/modalContext";
 import { CreateTask } from "../components/Calendar/CreateTask";
+import { splitDt } from "../utils/datetime/splitDate";
 
 export default function CalendarPage() {
   
@@ -34,15 +35,6 @@ export default function CalendarPage() {
 
 const Calendar = ({event, items}: CalendarProps) => {
   const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
-
-  const splitDt = (date:any) => {
-    let year, month, day;
-    year = date.getFullYear();
-    month = date.getMonth() + 1;
-    day = date.getDate();
-
-    return [year, month, day];
-  }
   
   const [date, setDate] = useState<Date>(new Date());
   const [year, setYear] = useState(splitDt(date)[0]);

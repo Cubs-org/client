@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Check } from "../components/Check";
 import { Button } from "../components/Button";
-import { DatePicker } from "../components/DatePicker";
+import { DatePicker } from "../components/TimeControls/DatePicker";
 
 export const Test = () => {
 

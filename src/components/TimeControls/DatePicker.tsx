@@ -1,11 +1,12 @@
 import clsx from "clsx";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaCalendar } from "react-icons/fa";
 
 interface IDatePicker extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, React.AriaAttributes {
     classNames?: string;
     showIcon?: boolean;
     handleChange: (e:React.ChangeEvent<HTMLInputElement>) => void;
+    handleValue?: (value:string) => void;
 }
 
 export const DatePicker = ({ classNames, showIcon=true, handleChange, ...props }:IDatePicker) => {
@@ -24,6 +25,12 @@ export const DatePicker = ({ classNames, showIcon=true, handleChange, ...props }
 
         return dt;
     }
+
+    useEffect(() => {
+        if(props.value) {
+            setDate(props.value as string);
+        }
+    }, [props.value]);
 
     return (
         <div className="relative flex flex-row-reverse justify-between items-center bg-light-300 dark:bg-dark-600 focus:outline-light-500 p-2 rounded-md focus:outline-2 dark:focus:outline-dark-300">

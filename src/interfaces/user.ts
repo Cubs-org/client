@@ -25,6 +25,19 @@ export interface IGoogleUserResponse {
 };
 
 export interface IUserContext {
-    user: IUser | undefined;
-    setUser: (user: IUser | undefined) => void;
+    user: IUserAccount;
+    setUser: (
+        newValues: {
+            id?: string,
+            name?: string,
+            email?: string,
+            icon?: string,
+            createdAt?: Date | string,
+            updatedAt?: Date | string,
+            accountType?: string,
+            status?: string,
+            planType?: string,
+            paymentType?: string,
+        }
+    ) => void;
 }

@@ -9,8 +9,16 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import fetchWorkspace from "../../api/fetchWorkspace";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../contexts/authProvider";
+import getUser from "../../api/getUser";
+import { useUser } from "../../contexts/userContext";
+import { io } from "socket.io-client";
+import { SOCKET_URL } from "../../lib/api";
 
 export const Layout = () => {
+
+    const socket = io(SOCKET_URL);
+
+    const { setUser } = useUser();
 
     const [authenticated, setAuthenticated] = useState({
         status: false,
@@ -21,12 +29,27 @@ export const Layout = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
-    // const isValidRoute = (routes) => routes.some(route => ((route.path === pathname) || (pathname === authenticated.data.workspace.id)));
-    
+    const [userFetched, setUserFetched] = useState(false);
+
+    useEffect(() => {
+
+        if (!userFetched) {
+            const userId = (jwtDecode(token as string) as any).user.id;
+
+            getUser(userId)
+                .then(res => {
+                    setUser(res.data.user);
+                    setUserFetched(true);
+                });
+        }
+    }, [userFetched]);
+
     useEffect(() => {
         if (token && !authenticated.status) {
             const user = (jwtDecode(token as string) as any).user;
-            fetchWorkspace(user.id)
+            
+            if (user.id) {
+                fetchWorkspace(user.id)
                 .then(workspace => {
                     setAuthenticated({
                         status: true,
@@ -36,20 +59,14 @@ export const Layout = () => {
                         }
                     });
                 });
+            }
         }
 
         if (authenticated.status && pathname === "/") {
             var wksp = authenticated.data.workspace.id;
             // return <Navigate to={`/${wksp}`} />;
             navigate(`/${wksp}`);
-        } 
-        // else if (authenticated.status && !isValidRoute(data.authenticated[0].children[0].children)) {
-        //     var wksp = authenticated.data.workspace.id;
-        //     if (pathname !== wksp)
-        //         navigate("/not-found");
-        //     else
-        //         navigate("/");
-        // }
+        }
 
     }, [token, authenticated]);
     
@@ -59,6 +76,10 @@ export const Layout = () => {
     useEffect(() => {
         _layout = JSON.parse(localStorage.getItem("layout") || "true")
         setLayout(_layout)
+
+        socket.on("updateUser", (user) => {
+            setUser(user);
+        });
     }, []);
 
     const handleSetLayout = () => {

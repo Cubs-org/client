@@ -3,7 +3,7 @@ import {
     useEffect
 } from "react";
 
-import { DatePicker } from "../DatePicker";
+import { DatePicker } from "../TimeControls/DatePicker";
 import { ColorPicker } from "../ColorPicker";
 import { Button } from "../Button";
 import { useModal } from "../../contexts/modalContext";
@@ -71,15 +71,15 @@ export const CreateTask = ({ event }: ICreateTask) => {
                     <div className="flex flex-col gap-1">
                         <h3 className="text-base font-bold text-dark-500 dark:text-light-300">Início</h3>
                         <DatePicker 
-                            value={startDate} 
-                            handleSetValue={setStartDate}
+                            value={startDate}
+                            handleChange={e => setStartDate(e.target.value)}
                         />
                     </div>
                     <div className="flex flex-col gap-1">
                         <h3 className="text-base font-bold text-dark-500 dark:text-light-300">Início</h3>
                         <DatePicker 
                             value={endDate} 
-                            handleSetValue={setEndDate}
+                            handleChange={e => setStartDate(e.target.value)}
                         />
                     </div>
                 </div>

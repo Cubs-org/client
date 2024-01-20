@@ -20,7 +20,7 @@ export const UserSettings = () => {
         }
     ]
     return (
-        <div className="w-full flex flex-col gap-1">
+        <div className="w-full flex flex-col gap-1 p-1">
             {items.map((item, index) => (
                     <div key={`${item}-${index}`}>
                         {item.name !== "Sair" && (

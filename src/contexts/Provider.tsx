@@ -4,6 +4,7 @@ import { ModalProvider } from "./modalContext"
 import { ThemeProvider } from "./themeContext"
 import { CookiesProvider } from "react-cookie"
 import AuthProvider from "./authProvider"
+import { UserProvider } from "./userContext"
 
 export default ({children}) => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string
@@ -14,7 +15,9 @@ export default ({children}) => {
                 <GoogleOAuthProvider clientId={clientId}>
                     <ThemeProvider>
                         <ModalProvider>
-                            {children}
+                            <UserProvider>
+                                {children}
+                            </UserProvider>
                         </ModalProvider>
                     </ThemeProvider>
                 </GoogleOAuthProvider>

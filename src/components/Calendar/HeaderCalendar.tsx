@@ -1,16 +1,14 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import { Button } from "../Button";
 import { CreateTask } from "./CreateTask";
-import { IModal } from "../../interfaces/modal";
 import { useModal } from "../../contexts/modalContext";
-import { 
-    FaAngleLeft,
-    FaAngleRight,
-    FaAngleDoubleLeft,
-    FaAngleDoubleRight,
+import {
     FaPlus,
 } from "react-icons/fa";
+
+import { DateFilter } from "../TimeControls/Filter/DateFilter";
+import { Dropdown } from "../Dropdown";
 
 interface IHeaderCalendar {
     year: number;
@@ -19,45 +17,11 @@ interface IHeaderCalendar {
     setYear: Dispatch<SetStateAction<number>>;
     setMonth: Dispatch<SetStateAction<number>>;
     setDate: Dispatch<SetStateAction<Date>>;
-    splitDt: (Date) => void;
 }
 
-export const HeaderCalendar = ({year, date, setDate, setYear, setMonth, splitDt}:IHeaderCalendar) => {
-    const getMonthString = (month:number) => {
-        return new Date(year, month, 0).toLocaleString('pt-br', {month: 'long'});
-    }
+export const HeaderCalendar = ({date, setDate, setYear, setMonth}:IHeaderCalendar) => {
 
-    const backwardMonth = () => {
-      let dt = date;
-      dt.setMonth(date.getMonth() - 1);
-      setDate(dt);
-      setYear(splitDt(date)[0]);
-      setMonth(splitDt(date)[1]);
-    }
-    
-    const forwardMonth = () => {
-      let dt = date;
-      dt.setMonth(date.getMonth() + 1);
-      setDate(dt);
-      setYear(splitDt(date)[0]);
-      setMonth(splitDt(date)[1]);
-    }
-
-    const backwardYear = () => {
-      let dt = date;
-      dt.setFullYear(date.getFullYear() - 1);
-      setDate(dt);
-      setYear(splitDt(date)[0]);
-      setMonth(splitDt(date)[1]);
-    }
-    
-    const forwardYear = () => {
-      let dt = date;
-      dt.setFullYear(date.getFullYear() + 1);
-      setDate(dt);
-      setYear(splitDt(date)[0]);
-      setMonth(splitDt(date)[1]);
-    }
+    const [visual, setVisual] = useState<'month' | 'week' | 'day'>('month'); // ['month', 'week', 'day'
 
     // @ts-ignore
     const { modalState:{ visible, content }, openModal, closeModal } = useModal();
@@ -71,37 +35,39 @@ export const HeaderCalendar = ({year, date, setDate, setYear, setMonth, splitDt}
     }
     
     return (
-        <div className="w-[90%] md:w-full m-auto flex justify-center md:justify-between items-center py-3">
-            <div className="hidden md:block md:w-1/2">
-                <Button onClick={handleCreateTask}>
-                    <FaPlus size={16}/>
-                    Criar nova tarefa
+        <div className="w-[90%] md:w-full m-auto flex justify-between items-center py-3">
+
+            <div className="flex gap-2 items-center">
+                <Button onClick={handleCreateTask} classNames="px-3 hidden md:flex">
+                    <FaPlus size={14}/>
+                    Novo item
                 </Button>
+                <Dropdown 
+                    name="calendar-view"
+                    className="px-3 py-2 bg-transparent text-dark-100 rounded-md flex items-center gap-1 text-base font-medium outline-none ring-2 ring-light-400"
+                    items={[
+                        {
+                            name: 'Mês',
+                            onClick: () => setVisual('month')
+                        },
+                        {
+                            name: 'Semana',
+                            onClick: () => setVisual('week')
+                        },
+                        {
+                            name: 'Dia',
+                            onClick: () => setVisual('day')
+                        }
+                    ]} 
+                />
             </div>
-            <div className="w-full md:w-1/2 flex justify-between items-center gap-6">
-                <div className="flex items-center gap-1">
-                    <Button 
-                        onClick={backwardYear} 
-                    ><FaAngleDoubleLeft size={24} />
-                    </Button>
-                    <Button
-                        onClick={backwardMonth}
-                    ><FaAngleLeft size={24} />
-                    </Button>
-                </div>
-                <h1 
-                    className="md:text-2xl text-md text-dark-600 dark:text-light-100 font-black"
-                >{getMonthString(splitDt(date)[1])} de {year}</h1>
-                <div className="flex items-center gap-1">
-                    <Button
-                        onClick={forwardMonth} 
-                    ><FaAngleRight size={24} />
-                    </Button>
-                    <Button
-                        onClick={forwardYear} 
-                    ><FaAngleDoubleRight size={24} />
-                    </Button>
-                </div>
+
+            <div className="w-1/3">
+                <DateFilter 
+                    type="month" 
+                    date={date} 
+                    handles={{ setDate, setYear, setMonth }} 
+                />
             </div>
         </div>
     );

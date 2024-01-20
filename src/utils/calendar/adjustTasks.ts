@@ -1,8 +1,7 @@
-import { Task } from "@/interfaces/task";
 import rangeDifferenceBetweenDates from "./rangeDifferenceBetweenDays";
 import getDays from "./getDays";
 
-export const adjustTasks = (tasks:Task[]) => {
+export const adjustTasks = (tasks:any) => {
     tasks.forEach(task => {
       task.days = rangeDifferenceBetweenDates({
         initialDate: task.start, 

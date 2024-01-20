@@ -33,7 +33,7 @@ export const WorkspaceFilterOptions = () => {
     /* userPreferencesStorage - func() => onclick(setvalue) */
 
     return (
-        <ul className="flex flex-col gap-1 p-1">
+        <ul className="flex flex-col gap-1 p-1 px-2 py-1">
             {options.map((option, index) => (
                 <li key={index}>
                     <p className="text-sm text-dark-600 font-semibold py-1 dark:text-light-200">{option.name}</p>

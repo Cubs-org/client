@@ -1,7 +1,16 @@
-import { CalendarProps } from "@/interfaces/calendar";
+import { CalendarProps } from "../../interfaces/calendar";
 
-export default function rangeGridCalendar({ year, month }: CalendarProps) {
+function dayLimit(day: number) {
+
+  if(day > 31) return 31;
+  if(day < 1) return 1;
+
+  return day;
+}
+
+export default function rangeGridCalendar({ year, month }: any) {
   const grid: string[][] = [];
+  
   for (let i = 0; i < 6; i++) {
     grid.push([]);
   }
@@ -13,7 +22,7 @@ export default function rangeGridCalendar({ year, month }: CalendarProps) {
   const prevYear = month === 1 ? year - 1 : year;
   const prevMonthDays = new Date(prevYear, prevMonth, 0).getDate();
 
-  const totalDays = getMonthDays({ year, month });
+  const totalDays = getMonthDays({ year, month }) || 0;
   let day = 1;
   let row = 0;
 
@@ -21,11 +30,12 @@ export default function rangeGridCalendar({ year, month }: CalendarProps) {
     const col = (i - 1) % 7;
 
     if (i <= firstDayWeekday) {
+      const prevMonthDay = prevMonthDays - (firstDayWeekday - i);
       grid[row][col] = String(
         formatDate({
           year: prevYear,
           month: prevMonth,
-          day: prevMonthDays - (firstDayWeekday - i) + 1,
+          day: dayLimit(prevMonthDay),
         })
       );
     } else if (day <= totalDays) {
@@ -36,7 +46,7 @@ export default function rangeGridCalendar({ year, month }: CalendarProps) {
         formatDate({
           year: nextYear({ year, month }),
           month: nextMonth(month),
-          day: day - totalDays,
+          day: dayLimit(day - totalDays),
         })
       );
       day++;
@@ -46,6 +56,8 @@ export default function rangeGridCalendar({ year, month }: CalendarProps) {
       row++;
     }
   }
+
+
 
   return grid;
 }

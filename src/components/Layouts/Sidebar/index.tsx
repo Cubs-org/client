@@ -107,8 +107,8 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                 })}>
                     <Avatar 
                         icon={userData?.icon as string} 
-                        size={24}
-                        disableVisibleTooltip 
+                        size={32}
+                        notDisplayUsername={true}
                         isCircle
                     />
                 </span>
@@ -151,12 +151,24 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     <ThemeSwitcher classNames={twMerge(menu_option_default)}>
                         <span className="block lg:hidden">Tema</span>
                     </ThemeSwitcher>
-                    <Popover content={<UserSettings />} direction="right" classNames="md:block hidden" width="100%">
-                        <div className={menu_option_default}>
+                    <div className={menu_option_default}>
+                        
+                        <div className="flex justify-start items-center md:hidden w-full gap-3">
                             <Avatar icon={userData?.icon as string} name={username} size={24} isCircle />
                             <span className="block lg:hidden" onClick={handleClickUser}>{username}</span>
                         </div>
-                    </Popover>
+
+                        <Popover 
+                            content={<UserSettings />} 
+                            direction="right"
+                            width="100%"
+                            offset={30}
+                            classNames="w-full place-items-center hidden md:grid"
+                        >
+                            <Avatar icon={userData?.icon as string} name={username} size={24} isCircle />
+                            <span className="block lg:hidden" onClick={handleClickUser}>{username}</span>
+                        </Popover>
+                    </div>
                 </div>
             </div>
         </>
