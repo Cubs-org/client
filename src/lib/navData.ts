@@ -11,7 +11,6 @@ export const links = [
     },
     {
         name: "Mais opções",
-        path: "/more",
         child: [
             {
                 section: "Apps & Plataformas",

@@ -34,29 +34,37 @@ export const Nav = () => {
             <nav className={clsx("absolute top-0 left-0 md:relative w-full h-full flex justify-center md:justify-end items-center transition-all", {
                 "bg-purple-500 text-white": (pathname === '/register' || pathname === '/login'),
                 "bg-white text-slate-900": (pathname !== '/register' && pathname !== '/login'),
-                "-translate-y-[100vh] md:translate-y-0": !mobileMenu,
+                "-translate-y-[100vh] md:translate-y-0 overflow-hidden h-0": !mobileMenu,
                 "translate-y-0 md:translate-y-0": mobileMenu
             })}>
-                <ul className="flex flex-col md:flex-row items-center gap-3 text-base font-medium w-4/5 md:w-fit h-3/4 md:h-fit">
+                <ul className="w-4/5 md:w-fit flex flex-col md:flex-row items-center gap-3 text-base font-medium">
                     {links.map((link, key) => (
-                        <li key={`${link}-${key}`} className="w-full md:w-fit flex justify-center md:justify-right items-center">
+                        <li key={`${link}-${key}`} className="w-full md:w-fit flex items-center">
                             {link.child ? (
-                                <div className="group w-full md:border-none group">
-                                    <Link to={link.path} className="flex justify-center md:justify-left items-center gap-1 md:py-3 w-full md:w-fit flex-1">
-                                        {link.name}
-                                        <FaAngleDown size={12} />
-                                    </Link>
-                                    <ul className={clsx("relative md:absolute top-0 md:top-12 rounded-md w-full md:w-[300px] md:bg-white md:border md:border-purple-500 md:hidden flex-row gap-2 py-2 md:shadow-md md:group-hover:flex overflow-hidden h-0 group-hover:h-fit transition-all", {
-                                        "text-white" : (pathname === '/register' || pathname === '/login'),
-                                        "text-purple-500" : (pathname !== '/register' && pathname !== '/login')
+                                <div className="relative group w-full md:border-none group">
+                                    <div className={clsx("md:flex items-center gap-1 py-[10px] hidden", {
+                                        "text-white md:text-purple-500": (pathname === '/register' || pathname === '/login'),
+                                        "text-white md:text-slate-500": (pathname !== '/register' && pathname !== '/login')
                                     })}>
+                                        <span>{link.name}</span>
+                                        <FaAngleDown size={12} />
+                                    </div>
+
+                                    <ul className={clsx("relative md:absolute top-0 md:top-[42px] rounded-md w-full md:w-[300px] md:bg-white border-0 md:group-hover:border md:group-hover:border-purple-500 flex flex-col gap-2 md:shadow-md h-fit md:h-0 md:group-hover:h-fit p-0 md:group-hover:p-2 overflow-hidden transition-all duration-75")}>
                                         {link.child.map((child, key) => (
-                                            <li key={`${child}-${key}`} className={clsx("w-full md:w-fit px-3 py-1 text-sm text-center md:text-left", key !== 0 && "md:border-l md:border-purple-500")}>
-                                                <h3 className="font-bold my-[.5em]">{child.section}</h3>
+                                            <li 
+                                                key={`${child}-${key}`} 
+                                                className={clsx("w-full md:w-fit md:px-3 py-1 text-sm px-0", {
+                                                    "text-white md:text-purple-500": (pathname === '/register' || pathname === '/login'),
+                                                    "text-slate-500 md:text-purple-500": (pathname !== '/register' && pathname !== '/login')
+                                                })}
+                                                onClick={toggleMobileMenu}
+                                            >
+                                                <h2 className="text-xl md:text-[1rem] font-bold my-[.5em] md:text-purple-500">{child.section}</h2>
                                                 <ul className="flex flex-col gap-1">
                                                     {child.links.map((link, key) => (
                                                         <li key={`${link}-${key}`}>
-                                                            <Link to={link.path} className="hover:opacity-70">{link.name}</Link>
+                                                            <Link to={link.path} className="text-lg md:text-sm hover:opacity-70">{link.name}</Link>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -68,16 +76,19 @@ export const Nav = () => {
                                 <Link 
                                     to={link.path}
                                     className={
-                                        clsx((link.path === "/register" || link.path === "/login") ? (
+                                        clsx("text-lg md:text-base font-semibold", {
+                                            "mt-[32px] md:mt-0": (key + 1) === links.length - 1
+                                        }, (link.path === "/register" || link.path === "/login") ? (
                                             ((pathname === "/register" || pathname === "/login") ?
                                                 "bg-white text-purple-500 px-[15px] py-[5px] rounded-md w-full md:w-fit text-center" :
                                                 "bg-purple-500 text-white px-[15px] py-[5px] rounded-md w-full md:w-fit text-center"
                                             )
                                         ) : (pathname === "/register" || pathname === "/login") ?
                                             "text-white" :
-                                            "text-slate-900"
+                                            "text-slate-500"
                                         )
                                     }
+                                    onClick={toggleMobileMenu}
                                 >{link.name}</Link>
                             )}
                         </li>
