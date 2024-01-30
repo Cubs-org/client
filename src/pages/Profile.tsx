@@ -7,8 +7,8 @@ import { Popover } from "../components/Popover";
 import { ChoiceAnimalImage } from "../components/Profile/ChoiceAnimalImage";
 import { Avatar } from "../components/Avatar";
 import { formatDate, formatUserName } from "../utils/profilePage";
-import { Button } from "../components/Button";
 import { FaImage } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
 
@@ -24,7 +24,6 @@ export default function Profile() {
         };
 
         setUser(data);
-        handleSetUserData(data);
     }
 
     const handleChangeAvatar = (avatar: string) => {
@@ -33,10 +32,8 @@ export default function Profile() {
             icon: avatar
         };
 
-        console.log(avatar);
-
-        setUser(data);
         handleSetUserData(data);
+        setUser(data);
     }
 
     const handleSetUserData = (user) => {
@@ -45,6 +42,12 @@ export default function Profile() {
 
     const username = user?.name as string,
         avatar = user?.icon as string;
+
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setIsMobile(window.innerWidth <= 768);
+    }, []);
 
     return (
         <div className="w-full h-full flex flex-col">
@@ -62,8 +65,12 @@ export default function Profile() {
                         placeholder="Usuário"
                         value={username}
                         onChange={handleSetUserName}
-                        onBlur={e => {
-                            handleSetUserData(e)
+                        onBlur={(e) => {
+                            const data = {
+                                ...user,
+                                name: e.target.value
+                            }
+                            handleSetUserData(data)
                             e.target.value = formatUserName(username)
                         }}
                     />
@@ -86,12 +93,12 @@ export default function Profile() {
                         content={
                             <ChoiceAnimalImage event={handleChangeAvatar} />
                         }
-                        direction="left"
+                        direction={isMobile ? "bottom-start" : "left"}
                     >
-                        <Button 
-                            classNames="text-xl md:text-3xl group-hover:scale-100 scale-0 w-[60px] h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all"
+                        <span 
+                            className="flex items-center justify-center bg-primary text-xl md:text-3xl group-hover:scale-100 scale-0 min-w-[60px] min-h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all"
                         ><FaImage />
-                        </Button>
+                        </span>
                     </Popover>
                 </div>
             </div>

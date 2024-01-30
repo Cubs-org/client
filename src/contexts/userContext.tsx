@@ -28,6 +28,8 @@ const UserProvider = ({ children }) => {
             }
         }
 
+        const { name, email, icon } = newUser;
+        localStorage.setItem("user", JSON.stringify({ name, email, icon }));
         setUser(newUser);
     }
 

@@ -40,6 +40,7 @@ export default {
           "light-900": "#A7A7A7",
           "primary": "#9E3ED5",
           "secondary": "#950EE3",
+          "modal": "rgba(0, 0, 0, .7)",
           "glass-dark": "rgba(55, 55, 55, .6)",
           "glass-light": "rgba(247, 247, 247, .6)",
           "glass-purple-l1": "rgba(158, 62, 213, .8)",

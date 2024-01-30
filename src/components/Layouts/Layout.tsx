@@ -46,7 +46,13 @@ export const Layout = () => {
 
     useEffect(() => {
         if (token && !authenticated.status) {
-            const user = (jwtDecode(token as string) as any).user;
+
+
+            let user;
+            user = localStorage.getItem("user");
+
+            // console.log("UserLocal", user);
+            user = (jwtDecode(token as string) as any).user;
             
             if (user.id) {
                 fetchWorkspace(user.id)

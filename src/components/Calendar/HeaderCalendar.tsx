@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import { Button } from "../Button";
 import { CreateTask } from "./CreateTask";
@@ -8,7 +8,8 @@ import {
 } from "react-icons/fa";
 
 import { DateFilter } from "../TimeControls/Filter/DateFilter";
-import { Dropdown } from "../Dropdown";
+import { FilterDropdown } from "../FilterDropdown";
+import { useSearchParams } from "react-router-dom";
 
 interface IHeaderCalendar {
     year: number;
@@ -21,8 +22,6 @@ interface IHeaderCalendar {
 
 export const HeaderCalendar = ({date, setDate, setYear, setMonth}:IHeaderCalendar) => {
 
-    const [visual, setVisual] = useState<'month' | 'week' | 'day'>('month'); // ['month', 'week', 'day'
-
     // @ts-ignore
     const { modalState:{ visible, content }, openModal, closeModal } = useModal();
 
@@ -33,40 +32,32 @@ export const HeaderCalendar = ({date, setDate, setYear, setMonth}:IHeaderCalenda
             content: <CreateTask onClose={closeModal} />
         });
     }
+
+    const [searchParams] = useSearchParams();
+
+    const filter = searchParams.get("filter");
     
     return (
-        <div className="w-[90%] md:w-full m-auto flex justify-between items-center py-3">
+        <div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-center px-3 md:px-0 py-2">
 
-            <div className="flex gap-2 items-center">
-                <Button onClick={handleCreateTask} classNames="px-3 hidden md:flex">
+            <div className="w-full md:w-fit flex gap-2 items-center justify-between md:justify-normal">
+                <Button onClick={handleCreateTask} classNames="px-3">
                     <FaPlus size={14}/>
                     Novo item
                 </Button>
-                <Dropdown 
-                    name="calendar-view"
-                    className="px-3 py-2 bg-transparent text-dark-100 rounded-md flex items-center gap-1 text-base font-medium outline-none ring-2 ring-light-400"
-                    items={[
-                        {
-                            name: 'Mês',
-                            onClick: () => setVisual('month')
-                        },
-                        {
-                            name: 'Semana',
-                            onClick: () => setVisual('week')
-                        },
-                        {
-                            name: 'Dia',
-                            onClick: () => setVisual('day')
-                        }
-                    ]} 
+                <FilterDropdown
+                direction="right"
+                    items={["month", "week", "day"]} 
                 />
+
+                {/* ::{filter} */}
             </div>
 
-            <div className="w-1/3">
+            <div className="w-full md:w-[500px]">
                 <DateFilter 
                     type="month" 
                     date={date} 
-                    handles={{ setDate, setYear, setMonth }} 
+                    handles={{ setDate, setYear, setMonth }}
                 />
             </div>
         </div>

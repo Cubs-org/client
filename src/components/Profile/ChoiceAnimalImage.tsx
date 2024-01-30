@@ -19,7 +19,7 @@ export const ChoiceAnimalImage = ({ event }: IChoiceUserImageProps) => {
                         className="w-12 h-12 rounded-full bg-light-200 dark:bg-dark-600 cursor-pointer hover:filter hover:brightness-125 hover:contrast-100 hover:saturate-150 transition-all duration-300 ease-in-out"
                         onClick={() => event(bixo)}
                     >
-                        <Avatar icon={bixo} disableVisibleTooltip />
+                        <Avatar icon={bixo} notDisplayUsername />
                     </div>
                 ))}
             </div>
