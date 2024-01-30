@@ -26,16 +26,15 @@ export const FilterDropdown = ({ items, direction }:FilterDropdownProps) => {
             content={
                 <ul className="flex flex-row gap-1 p-1">
                     {items.map((item, key) => (
-                        <>
+                        <div key={`${key}-${item}`}>
                             {key !== 0 && <div className="w-px bg-light-300 dark:bg-dark-600"></div>}
-                            <li 
-                                key={`${key}-${item.name}`}
+                            <li
                                 className="hover:bg-light-300 dark:hover:bg-dark-600 rounded-md cursor-pointer pl-2 pr-3 py-1"
                                 onClick={() => handleFilter(key)}
                             >
                                 {item}
                             </li>
-                        </>
+                        </div>
                     ))}
                 </ul>
             }

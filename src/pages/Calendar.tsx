@@ -11,7 +11,10 @@ import { splitDt } from "../utils/datetime/splitDate";
 
 export default function CalendarPage() {
   
-  const items:CalendarProps["items"] = [];
+  const items:any = [
+    {title: "Tarefa 1", startDate: "2024-01-29", endDate: "2024-01-31", hierarchy: 4},
+    {title: "Tarefa 2", startDate: "2024-01-29", endDate: "2024-02-28", hierarchy: 4},
+  ];
 
   // @ts-ignore
   const { modalState:{ visible, content }, openModal, closeModal } = useModal();
@@ -50,7 +53,6 @@ const Calendar = ({event, items}: CalendarProps) => {
           setDate={setDate}
           setYear={setYear}
           setMonth={setMonth}
-          splitDt={splitDt}
         />
         <div className="w-full flex gap-2 mb-[5px] place-items-center p-1">
           {weekDays.map((day, key) => (

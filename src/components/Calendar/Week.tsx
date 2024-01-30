@@ -8,7 +8,6 @@ interface IWeek {
 }
 
 export const Week = ({ week, month, items, event }:IWeek) => {
-
     return (
         <div
             className="flex gap-[2px] md:gap-[5px] place-items-center flex-grow"
@@ -19,7 +18,7 @@ export const Week = ({ week, month, items, event }:IWeek) => {
                     day={day} 
                     month={month}
                     event={event} 
-                    items={items} 
+                    items={items}
                 />
             ))}
         </div>
