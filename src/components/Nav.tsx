@@ -31,30 +31,30 @@ export const Nav = () => {
             <span className="absolute top-3 right-3 z-10 block md:hidden cursor-pointer" onClick={toggleMobileMenu}>
                 {!mobileMenu ? <FaBars size={32} /> : <FaXmark size={32} />}
             </span>
-            <nav className={clsx("absolute top-0 left-0 md:relative w-full h-full flex justify-center md:justify-end items-center transition-all", {
+            <nav className={clsx("absolute top-0 left-0 md:relative w-full h-full flex justify-center md:justify-end items-center transition-all duration-[1s]", {
                 "bg-purple-500 text-white": (pathname === '/register' || pathname === '/login'),
                 "bg-white text-slate-900": (pathname !== '/register' && pathname !== '/login'),
-                "-translate-y-[100vh] md:translate-y-0 overflow-hidden h-0": !mobileMenu,
+                "-translate-y-[calc(100vh*2)] md:translate-y-0 overflow-hidden h-0 md:overflow-visible md:h-fit": !mobileMenu,
                 "translate-y-0 md:translate-y-0": mobileMenu
             })}>
                 <ul className="w-4/5 md:w-fit flex flex-col md:flex-row items-center gap-3 text-base font-medium">
                     {links.map((link, key) => (
                         <li key={`${link}-${key}`} className="w-full md:w-fit flex items-center">
                             {link.child ? (
-                                <div className="relative group w-full md:border-none group">
+                                <div className="relative group w-full">
                                     <div className={clsx("md:flex items-center gap-1 py-[10px] hidden", {
-                                        "text-white md:text-purple-500": (pathname === '/register' || pathname === '/login'),
-                                        "text-white md:text-slate-500": (pathname !== '/register' && pathname !== '/login')
+                                        "!text-white md:text-purple-500": (pathname === '/register' || pathname === '/login'),
+                                        "text-slate-500 md:text-slate-500": (pathname !== '/register' && pathname !== '/login')
                                     })}>
                                         <span>{link.name}</span>
                                         <FaAngleDown size={12} />
                                     </div>
 
-                                    <ul className={clsx("relative md:absolute top-0 md:top-[42px] rounded-md w-full md:w-[300px] md:bg-white border-0 md:group-hover:border md:group-hover:border-purple-500 flex flex-col gap-2 md:shadow-md h-fit md:h-0 md:group-hover:h-fit p-0 md:group-hover:p-2 overflow-hidden transition-all duration-75")}>
+                                    <ul className={clsx("relative md:absolute z-30 top-0 md:top-[42px] rounded-md w-full md:w-[300px] md:bg-white border-0 md:group-hover:border md:group-hover:border-red-500 flex flex-col gap-2 md:shadow-md h-fit md:h-0 md:group-hover:!h-fit p-0 md:group-hover:p-2 overflow-hidden transition-all duration-75")}>
                                         {link.child.map((child, key) => (
                                             <li 
                                                 key={`${child}-${key}`} 
-                                                className={clsx("w-full md:w-fit md:px-3 py-1 text-sm px-0", {
+                                                className={clsx("w-full md:px-3 py-1 text-sm px-0", {
                                                     "text-white md:text-purple-500": (pathname === '/register' || pathname === '/login'),
                                                     "text-slate-500 md:text-purple-500": (pathname !== '/register' && pathname !== '/login')
                                                 })}

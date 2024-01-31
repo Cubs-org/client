@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import rangeDifferenceBetweenDates from "../../utils/calendar/rangeDifferenceBetweenDays";
+import rangeDifferenceBetweenDates from "../../../utils/calendar/rangeDifferenceBetweenDays";
 
 interface ITimelineProps {
     item?: any;

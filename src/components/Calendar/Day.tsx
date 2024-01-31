@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import { today } from "../../utils/calendar/rangeGridCalendar";
-import { Timeline } from "./Timeline";
+import { Timeline } from "./Charts/MonthTimeline";
 import isSunday from "../../utils/datetime/isSunday";
 
 interface IDayProps {
