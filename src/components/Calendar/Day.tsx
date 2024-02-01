@@ -1,7 +1,6 @@
 import clsx from "clsx"
 import { today } from "../../utils/calendar/rangeGridCalendar";
 import { Timeline } from "./Charts/MonthTimeline";
-import isSunday from "../../utils/datetime/isSunday";
 
 interface IDayProps {
     day: string;
@@ -39,7 +38,7 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
                 flex-1
                 w-full h-full
                 relative
-                p-3
+                p-2
                 md:rounded-md
                 flex
                 justify-end
@@ -65,10 +64,8 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
                         item={item} 
                         width={timeline.range} 
                         index={index}
-                        onTop={
-                            isSunday(timeline.day)
-                        }
                         range={timeline.range}
+                        hierarchy={timeline.hierarchy}
                     />
                 ))
             })}

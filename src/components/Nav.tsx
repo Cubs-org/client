@@ -50,7 +50,7 @@ export const Nav = () => {
                                         <FaAngleDown size={12} />
                                     </div>
 
-                                    <ul className={clsx("relative md:absolute z-30 top-0 md:top-[42px] rounded-md w-full md:w-[300px] md:bg-white border-0 md:group-hover:border md:group-hover:border-red-500 flex flex-col gap-2 md:shadow-md h-fit md:h-0 md:group-hover:!h-fit p-0 md:group-hover:p-2 overflow-hidden transition-all duration-75")}>
+                                    <ul className={clsx("relative md:absolute z-30 top-0 md:top-[42px] rounded-md w-full md:w-[300px] md:bg-white border-0 md:group-hover:border md:group-hover:border-purple-500 flex flex-col gap-2 md:shadow-md h-fit md:h-0 md:group-hover:!h-fit p-0 md:group-hover:p-2 overflow-hidden transition-all duration-75")}>
                                         {link.child.map((child, key) => (
                                             <li 
                                                 key={`${child}-${key}`} 

@@ -12,8 +12,9 @@ import { splitDt } from "../utils/datetime/splitDate";
 export default function CalendarPage() {
   
   const items:any = [
-    {title: "Tarefa 1", startDate: "2024-01-29", endDate: "2024-01-31", hierarchy: 4},
-    {title: "Tarefa 2", startDate: "2024-01-29", endDate: "2024-02-28", hierarchy: 4},
+    {title: "Tarefa 1", startDate: "2024-01-01", endDate: "2024-01-13", hierarchy: 1, color: "red"},
+    {title: "Tarefa 2", startDate: "2024-01-13", endDate: "2024-02-28", hierarchy: 2, color: "blue"},
+    {title: "Tarefa 3", startDate: "2024-01-29", endDate: "2024-03-31", hierarchy: 3, color: "green"},
   ];
 
   // @ts-ignore
