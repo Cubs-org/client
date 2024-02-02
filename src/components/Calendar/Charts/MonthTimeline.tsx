@@ -4,22 +4,12 @@ import rangeDifferenceBetweenDates from "../../../utils/calendar/rangeDifference
 interface ITimelineProps {
     item?: any;
     width?: number;
-    index?: number;
     range?: number;
-    hierarchy?: number;
+    hierarchy: number;
+    handle: (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
-export const Timeline = ({ item, width, index, range, hierarchy }:ITimelineProps) => {
-
-    const handleOpenTimeline = (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        event.stopPropagation();
-
-        // @ts-ignore
-        openModal && openModal({
-            // @ts-ignore
-            content: <Edititem item={item} onClose={closeModal} />
-        });
-    };
+export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProps) => {
 
     const rangeDays = rangeDifferenceBetweenDates({initialDate:item.startDate, finalDate:item.endDate})
 
@@ -28,11 +18,11 @@ export const Timeline = ({ item, width, index, range, hierarchy }:ITimelineProps
             style={{ 
                 width: item && width ? `calc(${width * 100}% + ${range && ((range * 5) - 5) + "px"})` : "100%",
             }}
-            className={clsx("absolute z-10 left-0 min-w-full min-h-[15px] bg-secondary rounded-md shadow-none md:shadow-md flex items-center px-2", {
+            className={clsx("absolute z-10 left-0 min-w-full min-h-[15px] bg-secondary rounded-md shadow-none md:shadow-md flex items-center px-2 transition-all duration-[.5s]", {
                 "top-0": (hierarchy === 1),
                 "top-[calc(15px+2px)]": (hierarchy === 2),
                 "top-[calc(30px+4px)]": (hierarchy === 3),
-                "!hidden": (hierarchy === 4),
+                "flex lg:hidden": (hierarchy >= 3),
 
                 // added temporary to see the first item
                 "!bg-red-500": item?.color === "red",
@@ -40,7 +30,7 @@ export const Timeline = ({ item, width, index, range, hierarchy }:ITimelineProps
                 "!bg-green-500": item?.color === "green",
                 "!bg-yellow-500": item?.color === "yellow",
             })}
-            onClick={(event) => handleOpenTimeline(item, event)}
+            onClick={(event) => handle(item, event)}
         >
             {/* PageHeading */}
             <span 

@@ -1,6 +1,9 @@
 import clsx from "clsx"
 import { today } from "../../utils/calendar/rangeGridCalendar";
 import { Timeline } from "./Charts/MonthTimeline";
+import { useModal } from "../../contexts/modalContext";
+import { AmountRemaingTasks } from "./AmountRemaingTasks";
+import { FaAngleUp } from "react-icons/fa6";
 
 interface IDayProps {
     day: string;
@@ -11,26 +14,30 @@ interface IDayProps {
 
 export const Day = ({ day, month, event, items }:IDayProps) => {
 
-    // const handleOpenTimeline = (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    //     event.stopPropagation();
+    const { openModal } = useModal();
 
-    //     // @ts-ignore
-    //     openModal && openModal({
-    //         // @ts-ignore
-    //         content: <Edititem item={item} onClose={closeModal} />
-    //     });
-    // };
+    const handleOpenTimeline = (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.stopPropagation();
 
-    // const handlePushitems = (items:any, date:string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    //     event.stopPropagation();
+        // @ts-ignore
+        // openModal && openModal({
+        //     // @ts-ignore
+        //     content: <Edititem item={item} onClose={closeModal} />
+        // });
+        console.log("Open Timeline", item);
+    };
 
-    //     let amountitems = [] as any;
-    //     items.map(item => (item.hierarchy && item.hierarchy >= 4) && (item?.timeline?.includes(date)) && amountitems.push(item));
-    //     // @ts-ignore
-    //     openModal && openModal({
-    //         content: <AmountRemaingTasks tasks={amountitems}/>
-    //     });
-    // }
+    const handlePushitems = (items:any, date:string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.stopPropagation();
+
+        let amountitems = [] as any;
+        items.map(item => item.timeline.filter(timeline => ((timeline.day === date) && (timeline.hierarchy >= 3)) && amountitems.push(item)))
+        
+        // console.log("Amount items", amountitems);
+        openModal && openModal({
+            content: <AmountRemaingTasks items={amountitems}/>
+        });
+    }
 
     return (
         <div 
@@ -61,14 +68,21 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
                 return item?.timeline.map((timeline, index) => timeline.day === day && (
                     <Timeline 
                         key={index} 
-                        item={item} 
-                        width={timeline.range} 
-                        index={index}
+                        item={item}
+                        width={timeline.range}
                         range={timeline.range}
                         hierarchy={timeline.hierarchy}
+                        handle={handleOpenTimeline}
                     />
                 ))
             })}
+
+            {items.some(item => item?.timeline.some(timeline => timeline.day === day && timeline.hierarchy >= 3)) && (
+                <div 
+                    className="absolute z-0 left-[5px] bottom-[5px] w-fit p-1 rounded-md bg-light-400 dark:bg-dark-400 hover:bg-light-300 dark:hover:bg-dark-300"
+                    onClick={(event) => handlePushitems(items, day, event)}
+                ><FaAngleUp size={12}/></div>
+            )}
         </div>
     )
 }

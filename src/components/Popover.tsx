@@ -32,7 +32,7 @@ export const Popover = ({ children, content, direction, width, height, offset, c
                 height: height || "fit-content",
             }} className={clsx("p-0 shadow-none text-dark-600 dark:text-light-300", classNames)}>{children}</Button>
         </PopoverHandler>
-        <PopoverContent className="text-dark-700 dark:text-light-300 bg-glass-light dark:bg-glass-dark backdrop-blur-sm shadow-full">
+        <PopoverContent className="text-dark-700 dark:text-light-300 bg-glass-light dark:bg-glass-dark backdrop-blur-sm shadow-full z-10">
             {content}
         </PopoverContent>
         </PopoverContainer>

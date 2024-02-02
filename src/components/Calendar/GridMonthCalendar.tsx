@@ -12,9 +12,6 @@ export const GridMonthCalendar = ({ year, month, event, items }:CalendarProps) =
 
     addTimelinesInItems(items, data);
 
-    console.log("Items::", items);
-
-
     // @ts-ignore
     const { modalState:{ visible, content }, openModal, closeModal } = useModal();
 

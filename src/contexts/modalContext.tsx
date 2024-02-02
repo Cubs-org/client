@@ -4,7 +4,11 @@ import {
   useContext
 } from 'react'
 
-const ModalContext = createContext({})
+const ModalContext = createContext({
+  modalState: { visible: false, content:<></> },
+  openModal: (payload) => {},
+  closeModal: () => {}
+})
 
 const ModalProvider = ({ children }) => {
   const [modalState, setModalState] = useState({ 
