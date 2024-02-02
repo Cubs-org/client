@@ -12,9 +12,10 @@ import { splitDt } from "../utils/datetime/splitDate";
 export default function CalendarPage() {
   
   const items:any = [
-    {title: "Tarefa 1", startDate: "2024-01-01", endDate: "2024-01-13", hierarchy: 1, color: "red"},
-    {title: "Tarefa 2", startDate: "2024-01-13", endDate: "2024-02-28", hierarchy: 2, color: "blue"},
-    {title: "Tarefa 3", startDate: "2024-01-29", endDate: "2024-03-31", hierarchy: 3, color: "green"},
+    {title: "Rever os commits da semana passada", startDate: "2024-01-01", endDate: "2024-01-13", color: "red", createdAt: "2024-01-01 23:41:04.891", updatedAt: "2024-02-02 15:55:04.891"},
+    {title: "Estudar para as provas finais", startDate: "2024-01-01", endDate: "2024-01-13", color: "yellow", createdAt: "2024-01-01 23:41:04.892", updatedAt: "2024-02-02 15:55:04.891"},
+    {title: "Planejamento Cub's", startDate: "2024-01-13", endDate: "2024-02-28", color: "blue", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892"},
+    {title: "Tarefa 3", startDate: "2024-01-29", endDate: "2024-03-31", color: "green", createdAt: "2024-01-13 23:41:04.893", updatedAt: "2024-02-02 15:55:04.893"},
   ];
 
   // @ts-ignore

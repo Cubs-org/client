@@ -79,30 +79,30 @@ export default function Profile() {
                     >Criado em {formatDate(user.createdAt as string)}</span>
                 </div>
 
-            <div className="w-1/2 static md:relative group py-3 md:py-2">
-                <Avatar 
-                    icon={avatar}
-                    name={username}
-                    notDisplayUsername={true}
-                    classNames="hover:filter hover:brightness-125 hover:contrast-100 hover:saturate-150 transition-all duration-300 ease-in-out"
-                    isCircle
-                />
+                <div className="w-1/2 static md:relative group py-3 md:py-2">
+                    <Avatar 
+                        icon={avatar}
+                        name={username}
+                        notDisplayUsername={true}
+                        classNames="hover:filter hover:brightness-125 hover:contrast-100 hover:saturate-150 transition-all duration-300 ease-in-out"
+                        isCircle
+                    />
 
-                <div className="float-right -mt-[60px]">
-                    <Popover 
-                        content={
-                            <ChoiceAnimalImage event={handleChangeAvatar} />
-                        }
-                        direction={isMobile ? "bottom-start" : "left"}
-                    >
-                        <span 
-                            className="flex items-center justify-center bg-primary text-xl md:text-3xl group-hover:scale-100 scale-0 min-w-[60px] min-h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all"
-                        ><FaImage />
-                        </span>
-                    </Popover>
+                    <div className="float-right -mt-[60px]">
+                        <Popover 
+                            content={
+                                <ChoiceAnimalImage event={handleChangeAvatar} />
+                            }
+                            direction={isMobile ? "bottom-start" : "left"}
+                        >
+                            <span 
+                                className="flex items-center justify-center bg-primary text-xl md:text-3xl group-hover:scale-100 scale-0 min-w-[60px] min-h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all"
+                            ><FaImage />
+                            </span>
+                        </Popover>
+                    </div>
                 </div>
-            </div>
-        </div>
+                </div>
 
             {/* FooterProfile */}
             <FooterProfile />

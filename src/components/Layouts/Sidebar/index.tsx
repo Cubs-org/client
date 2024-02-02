@@ -153,7 +153,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     </ThemeSwitcher>
                     <div className={menu_option_default}>
                         
-                        <div className="flex justify-start items-center md:hidden w-full gap-3">
+                        <div className="flex justify-start items-center lg:hidden w-full gap-3">
                             <Avatar icon={userData?.icon as string} name={username} size={24} isCircle />
                             <span className="block lg:hidden" onClick={handleClickUser}>{username}</span>
                         </div>
@@ -163,7 +163,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                             direction="right"
                             width="100%"
                             offset={30}
-                            classNames="w-full place-items-center hidden md:grid"
+                            classNames="w-full place-items-center hidden lg:grid"
                         >
                             <Avatar icon={userData?.icon as string} name={username} size={24} isCircle />
                             <span className="block lg:hidden" onClick={handleClickUser}>{username}</span>

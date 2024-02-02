@@ -47,7 +47,7 @@ export const data = {
             element: <Layout />,
             children: [
               {
-                path: ":id", // Acesse /:id e vá para a Workspace
+                path: "/workspace/:id", // Acesse /:id e vá para a Workspace
                 element: <Workspace />
               },
               {
@@ -63,7 +63,7 @@ export const data = {
                 element: <Profile />
               },
               {
-                path: "not-found",
+                path: "*",
                 element: <NotFoundPage />
               }
             ]

@@ -26,7 +26,7 @@ export function addTimelinesInItems(items: any, data: any) {
                         timeline.push({
                             day,
                             range: rangeDifferenceBetweenDates({ initialDate: day, finalDate: item.endDate }),
-                            hierarchy,
+                            hierarchy
                         });
                     }
                 }
@@ -43,11 +43,21 @@ function calculateHierarchy(items: any[], currentIndex: number, currentDay: stri
 
     for (let i = 0; i < items.length; i++) {
         if (i !== currentIndex) {
+            const item = items[currentIndex];
             const otherItem = items[i];
 
             // Verifica se o outro item começou antes e está no mesmo dia
-            if (otherItem.startDate < currentDay && isDateInRange(currentDay, otherItem.startDate, otherItem.endDate)) {
+            if (
+                otherItem.startDate < item.startDate 
+                && isDateInRange(currentDay, otherItem.startDate, otherItem.endDate)
+            ) {
                 hierarchy++;
+            } else if (
+                otherItem.startDate === item.startDate
+                && isDateInRange(currentDay, otherItem.startDate, otherItem.endDate)
+            ) {
+                // Verifica se o outro item começou no mesmo dia
+                new Date(otherItem.createdAt) < new Date(item.createdAt) ? hierarchy++ : hierarchy;
             }
         }
     }

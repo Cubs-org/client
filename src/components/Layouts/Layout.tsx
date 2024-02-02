@@ -20,11 +20,6 @@ export const Layout = () => {
 
     const { setUser } = useUser();
 
-    const [authenticated, setAuthenticated] = useState({
-        status: false,
-        data: {} as any
-    });
-
     const { token } = useAuth();
     const navigate = useNavigate();
     const { pathname } = useLocation();
@@ -45,9 +40,7 @@ export const Layout = () => {
     }, [userFetched]);
 
     useEffect(() => {
-        if (token && !authenticated.status) {
-
-
+        if (token) {
             let user;
             user = localStorage.getItem("user");
 
@@ -55,31 +48,38 @@ export const Layout = () => {
             user = (jwtDecode(token as string) as any).user;
             
             if (user.id) {
+                let workspaceId, currentPath;
+
                 fetchWorkspace(user.id)
-                .then(workspace => {
-                    setAuthenticated({
-                        status: true,
-                        data: {
-                            user,
-                            workspace
+                    .then(workspace => {
+                        workspaceId = workspace.id;
+                        currentPath = pathname.split("/");
+                        currentPath.shift();
+
+                        if (workspaceId && (currentPath[0] === "workspace" || currentPath[0] === "")) {
+                            navigate(`/workspace/${workspaceId}`);
+                        }
+                    }).finally(() => {
+                        currentPath = pathname.split("/");
+                        currentPath.shift();
+                        
+                        if (
+                            (currentPath[0] === "workspace" && currentPath[1] !== workspaceId) 
+                            && (currentPath[0] !== "not-found" && currentPath[1] !== "")
+                        ) {
+                            navigate(`/not-found`);
                         }
                     });
-                });
             }
         }
 
-        if (authenticated.status && pathname === "/") {
-            var wksp = authenticated.data.workspace.id;
-            // return <Navigate to={`/${wksp}`} />;
-            navigate(`/${wksp}`);
-        }
-
-    }, [token, authenticated]);
+    }, [token]);
     
     let _layout;
     const [layout, setLayout] = useState(true);
     
     useEffect(() => {
+
         _layout = JSON.parse(localStorage.getItem("layout") || "true")
         setLayout(_layout)
 

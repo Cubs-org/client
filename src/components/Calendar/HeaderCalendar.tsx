@@ -38,7 +38,7 @@ export const HeaderCalendar = ({date, setDate, setYear, setMonth}:IHeaderCalenda
     const filter = searchParams.get("filter");
     
     return (
-        <div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-center px-3 md:px-0 py-2">
+        <div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-center px-3 md:px-3 lg:px-0 py-2">
 
             <div className="w-full md:w-fit flex gap-2 items-center justify-between md:justify-normal">
                 <Button onClick={handleCreateTask} classNames="px-3">
