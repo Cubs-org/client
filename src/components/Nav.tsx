@@ -1,17 +1,28 @@
 import clsx from "clsx";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import { links } from "../lib/navData";
 import { FaAngleDown, FaBars, FaXmark } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/authProvider";
 
 export const Nav = () => {
+
+    const { token } = useAuth();
+    const navigate = useNavigate();
 
     const { pathname } = useLocation();
 
     const [mobileMenu, setMobileMenu] = useState(false);
 
     const toggleMobileMenu = () => setMobileMenu(!mobileMenu);
+
+    useEffect(() => {
+
+        if (token)
+            navigate("/workspace");
+    }, [token]);
+        
 
     return (
         <header className={clsx("w-full h-[10vh] flex items-center justify-between px-5", (
@@ -31,7 +42,7 @@ export const Nav = () => {
             <span className="absolute top-3 right-3 z-10 block md:hidden cursor-pointer" onClick={toggleMobileMenu}>
                 {!mobileMenu ? <FaBars size={32} /> : <FaXmark size={32} />}
             </span>
-            <nav className={clsx("absolute top-0 left-0 md:relative w-full h-full flex justify-center md:justify-end items-center transition-all duration-[1s]", {
+            <nav className={clsx("absolute top-0 left-0 md:relative w-full h-full flex justify-center md:justify-end items-center", {
                 "bg-purple-500 text-white": (pathname === '/register' || pathname === '/login'),
                 "bg-white text-slate-900": (pathname !== '/register' && pathname !== '/login'),
                 "-translate-y-[calc(100vh*2)] md:translate-y-0 overflow-hidden h-0 md:overflow-visible md:h-fit": !mobileMenu,

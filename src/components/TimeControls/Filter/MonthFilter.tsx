@@ -1,7 +1,7 @@
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from "react-icons/fa"
 import { Button } from "../../Button"
 import { splitDt } from "../../../utils/datetime/splitDate";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getMonthByNumber } from "../../../utils/datetime/getMonthString";
 
 interface IMonthFilter {
@@ -14,6 +14,16 @@ interface IMonthFilter {
 }
 
 export const MonthFilter = ({ date, handles }:IMonthFilter) => {
+
+    const [mobile, setMobile] = useState(false);
+
+    useEffect(() => {
+        if (window.innerWidth < 768) {
+            setMobile(true);
+        } else {
+            setMobile(false);
+        }
+    }, []);
     
     const handleChangeMonth = (to: string) => {
         const newDate = new Date(date); // Criar uma nova instância de data a partir da data existente
@@ -39,30 +49,32 @@ export const MonthFilter = ({ date, handles }:IMonthFilter) => {
     
 
     return (
-        <div className="w-full flex justify-between items-center gap-4">
+        <div className="w-full flex justify-between items-center gap-2 lg:gap-4 text-md lg:text-xl">
             <div className="flex items-center gap-1">
                 <Button 
                     onClick={() => handleChangeYear('backward')} 
-                ><FaAngleDoubleLeft size={24} />
+                ><FaAngleDoubleLeft />
                 </Button>
                 <Button
                     onClick={() => handleChangeMonth('backward')}
-                ><FaAngleLeft size={24} />
+                ><FaAngleLeft />
                 </Button>
             </div>
 
             <span 
                 className="md:text-2xl text-md text-dark-600 dark:text-light-100 font-black"
-            >{getMonthByNumber(splitDt(date)[1])} de {String(date.getFullYear())}</span>
+            >{
+                !mobile ? getMonthByNumber(date.getMonth()) : `${getMonthByNumber(date.getMonth()).substr(0, 3)}.`
+            }{mobile ? " de " : ", "}{String(date.getFullYear())}</span>
 
             <div className="flex items-center gap-1">
                 <Button
                     onClick={() => handleChangeMonth('forward')} 
-                ><FaAngleRight size={24} />
+                ><FaAngleRight />
                 </Button>
                 <Button
                     onClick={() => handleChangeYear('forward')} 
-                ><FaAngleDoubleRight size={24} />
+                ><FaAngleDoubleRight />
                 </Button>
             </div>
         </div>

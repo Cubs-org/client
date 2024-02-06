@@ -14,7 +14,7 @@ export const Check = ({ classNames, ...props }: CheckProps) => {
     return (
         <span
             data-success={check}
-            className={twMerge("relative flex justify-center items-center rounded-md cursor-pointer text-light-400 bg-light-400 dark:bg-dark-300 data-[success=true]:!bg-green-500", classNames)}>
+            className={twMerge("relative flex justify-center items-center rounded-md cursor-pointer text-light-800 dark:text-light-900 bg-light-400 dark:bg-dark-300 data-[success=true]:!bg-green-500 data-[success=true]:!text-light-300", classNames)}>
             <input
                 type="checkbox"
                 name={props.name || "check"}

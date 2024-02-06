@@ -12,7 +12,7 @@ export const Button = ({ classNames, ...props }:ButtonProps) => (
     <button 
         type="button"
         className={twMerge(
-            "flex flex-row items-center justify-center gap-2 p-2 rounded-md font-bold bg-purple-600 hover:bg-purple-700 text-light-300",
+            "flex flex-row items-center justify-center gap-2 p-2 rounded-md font-bold bg-purple-500 hover:bg-purple-600 text-light-200",
             classNames
         )}
         {...props} 

@@ -12,13 +12,12 @@ import { splitDt } from "../utils/datetime/splitDate";
 export default function CalendarPage() {
   
   const items:any = [
-    {title: "Rever os commits da semana passada", startDate: "2024-01-01", endDate: "2024-01-29", color: "red", createdAt: "2024-01-01 23:41:04.891", updatedAt: "2024-02-02 15:55:04.891"},
-    {title: "Estudar para as provas finais", startDate: "2024-01-01", endDate: "2024-01-29", color: "yellow", createdAt: "2024-01-01 23:41:04.892", updatedAt: "2024-02-02 15:55:04.891"},
-    {title: "Planejamento Cub's", startDate: "2024-01-01", endDate: "2024-02-28", color: "blue", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892"},
-    
-    {title: "Cub's meeting", startDate: "2024-01-29", endDate: "2024-02-28", color: "green", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892"},
-    {title: "Cub's meeting (1)", startDate: "2024-01-29", endDate: "2024-02-28", color: "green", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892"},
-    {title: "Cub's meeting (2)", startDate: "2024-01-29", endDate: "2024-02-28", color: "blue", createdAt: "2024-01-13 23:44:04.896", updatedAt: "2024-02-02 15:55:04.892"},
+    {title: "Rever os commits da semana passada", startDate: "2024-01-01", endDate: "2024-01-29", color: "red", createdAt: "2024-01-01 23:41:04.891", updatedAt: "2024-02-02 15:55:04.891", completed: false},
+    {title: "Estudar para as provas finais", startDate: "2024-01-01", endDate: "2024-01-29", color: "yellow", createdAt: "2024-01-01 23:41:04.892", updatedAt: "2024-02-02 15:55:04.891", completed: true},
+    {title: "Planejamento Cub's", startDate: "2024-01-01", endDate: "2024-02-28", color: "blue", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892", completed: true},
+    {title: "Cub's meeting", startDate: "2024-01-29", endDate: "2024-02-28", color: "green", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892", completed: true},
+    {title: "Cub's meeting (1)", startDate: "2024-01-29", endDate: "2024-02-28", color: "green", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892", completed: true},
+    {title: "Cub's meeting (2)", startDate: "2024-01-29", endDate: "2024-02-28", color: "blue", createdAt: "2024-01-13 23:44:04.896", updatedAt: "2024-02-02 15:55:04.892", completed: true},
   ];
 
   // @ts-ignore

@@ -4,15 +4,12 @@ export interface Task {
   // data
   title: string;
   content?:string;
-  start: string;
-  end: string;
+  startDate: string;
+  endDate: string;
   completed: boolean;
 
   // custom || heritage
-  tag: {
-    stage?: string;
-    color: string;
-  }
+  color?: string;
 
   // mesh withup calendar
   hierarchy?:number;

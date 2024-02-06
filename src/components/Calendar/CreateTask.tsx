@@ -20,7 +20,6 @@ export const CreateTask = ({ event }: ICreateTask) => {
     const [endDate, setEndDate] = useState("");
     const [color, setColor] = useState("");
 
-    // @ts-ignore
     const { closeModal } = useModal();
 
     useEffect(() => {

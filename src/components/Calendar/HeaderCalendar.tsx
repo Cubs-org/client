@@ -11,7 +11,8 @@ import { DateFilter } from "../TimeControls/Filter/DateFilter";
 import { FilterDropdown } from "../FilterDropdown";
 import { useSearchParams } from "react-router-dom";
 import { Popover } from "../Popover";
-import { FaBullhorn, FaCalendarWeek, FaCircleCheck } from "react-icons/fa6";
+import { FaBullhorn, FaCalendarWeek, FaCircleCheck, FaFilter } from "react-icons/fa6";
+import { NewItem } from "./NewItem";
 
 interface IHeaderCalendar {
     year: number;
@@ -24,67 +25,44 @@ interface IHeaderCalendar {
 
 export const HeaderCalendar = ({date, setDate, setYear, setMonth}:IHeaderCalendar) => {
 
-    // @ts-ignore
-    const { modalState:{ visible, content }, openModal, closeModal } = useModal();
-
-    const handleCreateTask = () => {
-        // @ts-ignore
-        openModal && openModal({
-            // @ts-ignore
-            content: <CreateTask onClose={closeModal} />
-        });
-    }
-
     const [searchParams] = useSearchParams();
 
-    const filter = searchParams.get("filter");
+    const filterBy = searchParams.get("filter");
+    const view = searchParams.get("view");
+
     
     return (
-        <div className="w-full flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-center px-3 md:px-3 lg:px-0 py-2">
+        <div className="w-full flex gap-2 md:gap-0 justify-between items-center px-2 md:px-3 lg:px-0 py-2">
 
-            <div className="w-full md:w-fit flex gap-2 items-center justify-between md:justify-normal">
-                <Popover 
-                    direction="bottom-start"
+            <div className="w-fit flex gap-2 items-center justify-between md:justify-normal">
+                
+                <NewItem />
+
+                <Popover
+                    direction="right-start"
                     content={
-                        <div className="flex flex-col gap-1 p-1 min-w-[200px]">
-                            <Button 
-                                classNames="bg-transparent justify-start text-dark-300 dark:text-light-300 hover:text-light-300 hover:bg-purple-500" 
-                                onClick={handleCreateTask}
-                            >
-                                <FaCircleCheck />
-                                Tarefa
-                            </Button>
-                            
-                            <hr className="mt-1 border-light-300 dark:border-dark-100"/>
+                        <div className="flex flex-col gap-2 px-2 py-1">
+                            <FilterDropdown
+                                direction="right-start"
+                                filterName="view"
+                                items={["Mês", "Semana", "Dia"]}
+                            />
 
-                            <Button 
-                                classNames="bg-transparent justify-start text-dark-600 dark:text-light-300 hover:text-light-300 hover:bg-purple-500"
-                            >
-                                <FaCalendarWeek />
-                                Evento
-                            </Button>
-                            
-                            <hr className="mt-1 border-light-300 dark:border-dark-100"/>
-
-                            <Button 
-                                classNames="bg-transparent justify-start text-dark-300 dark:text-light-300 hover:text-light-300 hover:bg-purple-500"
-                            >
-                                <FaBullhorn />
-                                Lembrete
-                            </Button>
+                            <FilterDropdown
+                                direction="right-start"
+                                filterName="filterBy"
+                                items={["Tarefas", "Eventos", "Lembretes", "Todos"]} 
+                            />
                         </div>
                     }
                 >
-                    <span className="flex items-center gap-2 px-3 py-2 bg-primary text-light-200 text-base font-semibold rounded-md">
-                        <FaPlus size={14}/>
-                        Novo
+                    <span 
+                        className="flex gap-1 items-center text-base font-semibold bg-purple-500 text-light-100 px-3 py-2 rounded-md"
+                    >
+                        <FaFilter />
+                        <span className="hidden md:block">Filtros</span>
                     </span>
                 </Popover>
-
-                <FilterDropdown
-                direction="right"
-                    items={["month", "week", "day"]} 
-                />
 
                 {/* ::{filter} */}
             </div>

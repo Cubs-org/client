@@ -4,6 +4,7 @@ import { Timeline } from "./Charts/MonthTimeline";
 import { useModal } from "../../contexts/modalContext";
 import { AmountRemaingTasks } from "./AmountRemaingTasks";
 import { FaAngleUp } from "react-icons/fa6";
+import { EditTask } from "./EditTask";
 
 interface IDayProps {
     day: string;
@@ -19,11 +20,9 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
     const handleOpenTimeline = (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
 
-        // @ts-ignore
-        // openModal && openModal({
-        //     // @ts-ignore
-        //     content: <Edititem item={item} onClose={closeModal} />
-        // });
+        openModal({
+            content: <EditTask task={item} />
+        });
         console.log("Open Timeline", item);
     };
 

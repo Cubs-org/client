@@ -56,7 +56,10 @@ export const Layout = () => {
                         currentPath = pathname.split("/");
                         currentPath.shift();
 
-                        if (workspaceId && (currentPath[0] === "workspace" || currentPath[0] === "")) {
+                        if (
+                            workspaceId 
+                            && (currentPath[0] === "workspace" || currentPath[0] === "")
+                            || currentPath[0] === "login" || currentPath[0] === "register") {
                             navigate(`/workspace/${workspaceId}`);
                         }
                     }).finally(() => {

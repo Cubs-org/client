@@ -26,8 +26,6 @@ export const SignInButton = ({ children, classNames }: SignInButtonProps) => {
               access_token: accessToken,
             });
 
-            console.log(res);
-
             if (res.data.status === 200)
               signIn(res.data.token);
           } catch (error) {
