@@ -6,10 +6,14 @@ export function addTimelinesInItems(items: any, data: any) {
     let _items = items as any[];
 
     for (let k = 0; k < _items.length; k++) {
-        let item = _items[k];
+        let properties, item = _items[k];
         let timeline = [] as any;
 
-        if (item?.startDate && item?.endDate) {
+        properties = item.properties;
+        const start = (properties.date.start).split(' ')[0];
+        const end = (properties.date.end).split(' ')[0];
+
+        if (start && end) {
             for (let i = 0; i < data.length; i++) {
                 const week = data[i];
 
@@ -17,15 +21,15 @@ export function addTimelinesInItems(items: any, data: any) {
                     const day = week[j];
 
                     if (
-                        isDateInRange(day, item?.startDate, item?.endDate)
-                        && (isSunday(day) || item?.startDate === day)
+                        isDateInRange(day, start, end)
+                        && (isSunday(day) || start === day)
                     ) {
                         // Calcula a hierarchy com base nas tarefas que começam depois no mesmo dia
                         const hierarchy = calculateHierarchy(_items, k, day);
 
                         timeline.push({
                             day,
-                            range: rangeDifferenceBetweenDates({ initialDate: day, finalDate: item.endDate }),
+                            range: rangeDifferenceBetweenDates({ initialDate: day, finalDate: end }),
                             hierarchy
                         });
                     }
@@ -45,16 +49,18 @@ function calculateHierarchy(items: any[], currentIndex: number, currentDay: stri
         if (i !== currentIndex) {
             const item = items[currentIndex];
             const otherItem = items[i];
+            const otherItemProperties = otherItem.properties;
+            const itemProperties = item.properties;
 
             // Verifica se o outro item começou antes e está no mesmo dia
             if (
-                otherItem.startDate < item.startDate 
-                && isDateInRange(currentDay, otherItem.startDate, otherItem.endDate)
+                otherItemProperties.date.start < itemProperties.date.start 
+                && isDateInRange(currentDay, otherItemProperties.date.start, otherItemProperties.date.end)
             ) {
                 hierarchy++;
             } else if (
-                otherItem.startDate === item.startDate
-                && isDateInRange(currentDay, otherItem.startDate, otherItem.endDate)
+                otherItemProperties.date.start === itemProperties.date.start
+                && isDateInRange(currentDay, otherItemProperties.date.start, otherItemProperties.date.end)
             ) {
                 // Verifica se o outro item começou no mesmo dia
                 new Date(otherItem.createdAt) < new Date(item.createdAt) ? hierarchy++ : hierarchy;

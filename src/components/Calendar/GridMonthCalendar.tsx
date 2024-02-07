@@ -2,7 +2,6 @@ import { CalendarProps } from "../../interfaces/calendar";
 
 import rangeGridCalendar from "../../utils/calendar/rangeGridCalendar";
 
-import { useModal } from "../../contexts/modalContext";
 import { Week } from "./Week";
 import { addTimelinesInItems } from "../../utils/calendar/createTimelines";
 
@@ -12,8 +11,7 @@ export const GridMonthCalendar = ({ year, month, event, items }:CalendarProps) =
 
     addTimelinesInItems(items, data);
 
-    // @ts-ignore
-    const { modalState:{ visible, content }, openModal, closeModal } = useModal();
+    // console.log("items", items);
 
     const gridElements = data.map((week, index) => (
         <Week 
@@ -27,7 +25,7 @@ export const GridMonthCalendar = ({ year, month, event, items }:CalendarProps) =
   
     return (
         <div 
-            className="flex flex-col flex-grow gap-[2px] md:gap-[5px] overflow-x-hidden overflow-y-auto"
+            className="flex flex-col flex-grow gap-[2px] md:gap-[5px] p-1 overflow-y-scroll overflow-x-hidden scrollbar-none"
         >{gridElements}</div>
     )
 }

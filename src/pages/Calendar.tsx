@@ -12,13 +12,58 @@ import { splitDt } from "../utils/datetime/splitDate";
 export default function CalendarPage() {
   
   const items:any = [
-    {title: "Rever os commits da semana passada", startDate: "2024-01-01", endDate: "2024-01-29", color: "red", createdAt: "2024-01-01 23:41:04.891", updatedAt: "2024-02-02 15:55:04.891", completed: false},
-    {title: "Estudar para as provas finais", startDate: "2024-01-01", endDate: "2024-01-29", color: "yellow", createdAt: "2024-01-01 23:41:04.892", updatedAt: "2024-02-02 15:55:04.891", completed: true},
-    {title: "Planejamento Cub's", startDate: "2024-01-01", endDate: "2024-02-28", color: "blue", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892", completed: true},
-    {title: "Cub's meeting", startDate: "2024-01-29", endDate: "2024-02-28", color: "green", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892", completed: true},
-    {title: "Cub's meeting (1)", startDate: "2024-01-29", endDate: "2024-02-28", color: "green", createdAt: "2024-01-13 23:44:04.895", updatedAt: "2024-02-02 15:55:04.892", completed: true},
-    {title: "Cub's meeting (2)", startDate: "2024-01-29", endDate: "2024-02-28", color: "blue", createdAt: "2024-01-13 23:44:04.896", updatedAt: "2024-02-02 15:55:04.892", completed: true},
-  ];
+    {
+      title: "Rever os commits da semana passada",
+      description: "Rever os commits da semana passada",
+      properties: {
+        date: {
+          start: "2024-01-29 10:30:00.000",
+          end: "2024-02-29 10:30:00.000",
+        },
+        category: {
+          title: "task",
+          color: "red",
+        },
+        completed: false,
+      },
+      createdAt: "2024-01-01 23:41:04.891",
+      updatedAt: "2024-02-02 15:55:04.891",
+    },
+    {
+      title: "Reunião de equipe",
+      description: "Reunião semanal de equipe para revisar o progresso e definir metas.",
+      properties: {
+        date: {
+          start: "2024-02-05 10:30:00.000",
+          end: "2024-02-05 10:30:00.000",
+        },
+        category: {
+          title: "event",
+          color: "blue",
+        },
+        completed: true,
+      },
+      createdAt: "2024-01-15 10:30:00.000",
+      updatedAt: "2024-02-05 08:45:00.000",
+    },
+    {
+      title: "Lembrete: Pagar a conta de energia",
+      description: "Não esquecer de pagar a conta de energia até o final do dia.",
+      properties: {
+        date: {
+          start: "2024-02-07 10:30:00.000",
+          end: "2024-02-07 10:30:00.000",
+        },
+        category: {
+          title: "reminder",
+          color: "green",
+        },
+        completed: false,
+      },
+      createdAt: "2024-02-03 18:00:00.000",
+      updatedAt: "2024-02-03 18:00:00.000",
+    },
+  ];  
 
   // @ts-ignore
   const { modalState:{ visible, content }, openModal, closeModal } = useModal();

@@ -3,25 +3,32 @@ export interface Task {
   id?: string;
   // data
   title: string;
-  content?:string;
-  startDate: string;
-  endDate: string;
-  completed: boolean;
+  description?:string;
 
-  // custom || heritage
-  color?: string;
+  properties: {
+    date: {
+      start: string;
+      end: string;
+    };
+    // status: "pending" | "completed" | "canceled" | "in progress";
+    completed: boolean;
+    category: {
+      name: string;
+      color: string;
+    }
+  }
 
-  // mesh withup calendar
-  hierarchy?:number;
-  days?: number;
-  timeline?: string[];
+  timeline?: {
+    day: string;
+    range: number;
+    hierarchy: number;
+  }[];
 
   // details
   owner: string;
-  membership?: MemberData[];
 
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export interface Member {

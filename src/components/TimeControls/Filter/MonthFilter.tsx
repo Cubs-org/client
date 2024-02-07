@@ -64,8 +64,8 @@ export const MonthFilter = ({ date, handles }:IMonthFilter) => {
             <span 
                 className="md:text-2xl text-md text-dark-600 dark:text-light-100 font-black"
             >{
-                !mobile ? getMonthByNumber(date.getMonth()) : `${getMonthByNumber(date.getMonth()).substr(0, 3)}.`
-            }{mobile ? " de " : ", "}{String(date.getFullYear())}</span>
+                !mobile ? getMonthByNumber(date.getMonth()) : `${getMonthByNumber(date.getMonth()).substr(0, 3)}`
+            }{!mobile ? " de " : ", "}{String(date.getFullYear())}</span>
 
             <div className="flex items-center gap-1">
                 <Button

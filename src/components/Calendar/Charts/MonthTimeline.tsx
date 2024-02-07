@@ -11,7 +11,14 @@ interface ITimelineProps {
 
 export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProps) => {
 
-    const rangeDays = rangeDifferenceBetweenDates({initialDate:item.startDate, finalDate:item.endDate})
+    const properties = item?.properties;
+
+    const rangeDays = rangeDifferenceBetweenDates({
+        initialDate: properties.date.start, 
+        finalDate: properties.date.end
+    });
+
+    const category = properties?.category;
 
     return (
         <div 
@@ -22,13 +29,17 @@ export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProp
                 "top-0": (hierarchy === 1),
                 "top-[calc(15px+2px)]": (hierarchy === 2),
                 "top-[calc(30px+4px)]": (hierarchy === 3),
-                "flex lg:hidden": (hierarchy >= 3),
+                "hidden": (hierarchy >= 3),
+                "max-h-[15px] truncate": (category.title === "task" || category.title === "reminder" || category.title === "event"),
+                
+                "bg-gray-500": !category,
+
 
                 // added temporary to see the first item
-                "!bg-red-500": item?.color === "red",
-                "!bg-blue-500": item?.color === "blue",
-                "!bg-green-500": item?.color === "green",
-                "!bg-yellow-500": item?.color === "yellow",
+                "!bg-red-500": category?.color === "red",
+                "!bg-blue-500": category?.color === "blue",
+                "!bg-green-500": category?.color === "green",
+                "!bg-yellow-500": category?.color === "yellow",
             })}
             onClick={(event) => handle(item, event)}
         >

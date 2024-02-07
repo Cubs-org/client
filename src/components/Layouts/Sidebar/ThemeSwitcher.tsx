@@ -28,8 +28,8 @@ export const ThemeSwitcher = ({ children, classNames }) => {
 
     return (
         <button onClick={toggleTheme} className={classNames}>
-            <FaMoon data-theme={theme} className="text-lg block data-[theme=light]:hidden" />
-            <FaSun data-theme={theme} className="text-lg block data-[theme=dark]:hidden" />
+            <FaMoon data-theme={theme} className="text-lg block data-[theme=dark]:hidden" />
+            <FaSun data-theme={theme} className="text-lg block data-[theme=light]:hidden" />
             {children}
         </button>
     )

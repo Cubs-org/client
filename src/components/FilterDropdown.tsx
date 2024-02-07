@@ -14,7 +14,7 @@ export const FilterDropdown = ({ items, direction, filterName }:FilterDropdownPr
 
     const [index, setIndex] = useState(0);
 
-    let getDirection = direction?.split("-")[0];
+    // let getDirection = direction?.split("-")[0];
 
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -31,7 +31,7 @@ export const FilterDropdown = ({ items, direction, filterName }:FilterDropdownPr
         <Popover 
             width="100%"
             direction={direction}
-            classNames="bg-light-100 text-dark-100 dark:bg-dark-700 dark:text-light-300 rounded-md flex flex-row-reverse md:flex-row items-center justify-between gap-1 text-base font-medium outline-none ring-2 ring-light-400 dark:ring-dark-600 pl-3 pr-2 py-1"
+            classNames="text-dark-100 dark:text-light-300 rounded-md flex flex-row items-center justify-between gap-1 text-base font-medium outline-none active:ring-2 active:ring-light-400 active:dark:ring-dark-600 pl-3 pr-2 py-1"
             content={
                 <ul className={clsx("flex flex-col gap-1 p-1", {
                     // "flex-row": getDirection === "left" || getDirection === "right",
@@ -39,7 +39,7 @@ export const FilterDropdown = ({ items, direction, filterName }:FilterDropdownPr
                 })}>
                     {items.map((item, key) => (
                         <div key={`${key}-${item}`}>
-                            {key !== 0 && <div className="w-px bg-light-300 dark:bg-dark-600"></div>}
+                            {key !== 0 && <div className="w-px bg-transparent"></div>}
                             <li
                                 className="hover:bg-light-300 dark:hover:bg-dark-600 rounded-md cursor-pointer pl-2 pr-3 py-1"
                                 onClick={() => handleFilter(key)}

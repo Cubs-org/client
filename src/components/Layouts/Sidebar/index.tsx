@@ -94,7 +94,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
 
     return (
         <>
-            <div className="relative w-full p-3 z-[45] flex justify-between lg:hidden bg-light-100 dark:bg-dark-800">
+            <div className="relative w-full p-3 z-[45] flex justify-between lg:hidden bg-light-100 dark:bg-dark-900">
                 <button 
                     className="text-dark-600 dark:text-light-300 hover:text-dark-700 dark:hover:text-light-200 transition-all delay-75 duration-150"
                     onClick={handleSidebarVisibility}
@@ -113,7 +113,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     />
                 </span>
             </div>
-            <div className={clsx("absolute top-0 w-full h-full lg:w-[80px] flex z-40 lg:min-h-[90vh] lg:max-h-[90vh] flex-col justify-evenly lg:justify-between items-center gap-0 lg:gap-3 lg:shadow-full rounded-2xl px-3 py-2 bg-light-100 dark:bg-dark-800 transition-all", {
+            <div className={clsx("absolute top-0 w-full h-full lg:w-[80px] flex z-40 lg:min-h-[90vh] lg:max-h-[90vh] flex-col justify-evenly lg:justify-between items-center gap-0 lg:gap-3 lg:shadow-full rounded-2xl px-3 py-2 bg-light-100 dark:bg-dark-900 transition-all", {
                 "lg:-left-[100px]" : !layout,
                 "lg:translate-x-0 -translate-x-[100vw]" : !sidebarVisibility,
                 "lg:translate-x-0 translate-x-0" : sidebarVisibility,

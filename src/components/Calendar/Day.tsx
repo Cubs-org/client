@@ -42,7 +42,7 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
         <div 
             className={`
                 flex-1
-                w-full h-full
+                w-full min-h-full
                 relative
                 p-2
                 md:rounded-md
@@ -53,7 +53,7 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
                 ring-1
                 ring-light-500
                 dark:ring-dark-800
-                ${+day.split('-')[1] !== month ? "bg-light-300 dark:bg-dark-300" : "bg-light-200 dark:bg-dark-600 hover:bg-light-300 dark:hover:bg-dark-700"}
+                ${+day.split('-')[1] !== month ? "bg-light-300 dark:bg-dark-700" : "bg-light-200 dark:bg-dark-800 hover:bg-light-300 dark:hover:bg-dark-700"}
             `}
             onClick={() => event && event(day)}
         >

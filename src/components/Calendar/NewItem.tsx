@@ -1,5 +1,5 @@
 import { FaBullhorn, FaCalendarWeek, FaCircleCheck } from "react-icons/fa6"
-import { FaPlus } from "react-icons/fa"
+import { BsPlus } from "react-icons/bs"
 import { Popover } from "../Popover"
 import { Button } from "../Button"
 import { useModal } from "../../contexts/modalContext";
@@ -36,14 +36,14 @@ export const NewItem = () => {
                                 {opt.label}
                             </Button>
                         
-                            {_i !== options.length && (<hr className="mt-1 border-light-300 dark:border-dark-100"/>)}
+                            {_i !== (options.length - 1) && (<hr className="mt-1 border-light-300 dark:border-dark-100"/>)}
                         </div>
                     ))}
                 </div>
             }
         >
-            <span className="flex items-center gap-2 px-3 py-2 bg-purple-500 text-light-100 text-base font-semibold rounded-md">
-                <FaPlus />
+            <span className="flex p-1 md:p-2 md:pr-3 gap-1 items-center bg-purple-500 hover:bg-purple-600 text-light-100 text-base font-semibold rounded-md">
+                <BsPlus size={24} />
                 <span className="hidden md:block">Novo</span>
             </span>
         </Popover>

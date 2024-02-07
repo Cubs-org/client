@@ -19,14 +19,16 @@ export const EditTask = ({ task }:TaskProps) => {
 
     const { closeModal } = useModal();
 
-    const [color, setColor] = useState(task?.color || "blue");
+    const properties = task.properties;
+
+    const [color, setColor] = useState(properties?.category.color || "blue");
 
     const [formData, setFormData] = useState({
         title: task.title,
-        content: task.content,
-        start: task.startDate,
-        end: task.endDate,
-        completed: task.completed,
+        content: task.description,
+        start: properties.date.start,
+        end: properties.date.end,
+        completed: properties.completed,
         owner: task.owner,
         color: color
     });

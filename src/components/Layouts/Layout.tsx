@@ -13,6 +13,7 @@ import getUser from "../../api/getUser";
 import { useUser } from "../../contexts/userContext";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../../lib/api";
+import Loading from "../Loading";
 
 export const Layout = () => {
 
@@ -25,6 +26,7 @@ export const Layout = () => {
     const { pathname } = useLocation();
 
     const [userFetched, setUserFetched] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
 
@@ -34,6 +36,7 @@ export const Layout = () => {
             getUser(userId)
                 .then(res => {
                     setUser(res.data.user);
+                }).finally(() => {
                     setUserFetched(true);
                 });
         }
@@ -62,7 +65,7 @@ export const Layout = () => {
                             || currentPath[0] === "login" || currentPath[0] === "register") {
                             navigate(`/workspace/${workspaceId}`);
                         }
-                    }).finally(() => {
+                    }).then(() => {
                         currentPath = pathname.split("/");
                         currentPath.shift();
                         
@@ -72,7 +75,9 @@ export const Layout = () => {
                         ) {
                             navigate(`/not-found`);
                         }
-                    });
+                    }).finally(() => {
+                        setLoading(true);
+                    })
             }
         }
 
@@ -104,11 +109,11 @@ export const Layout = () => {
             <div className={clsx("relative lg:absolute w-full h-full lg:w-[95%] lg:h-[90vh] flex flex-col lg:flex-row items-center justify-between lg:gap-3")}>
                 <Modal visible={visible} closeModal={closeModal}>{content}</Modal>
                 <Sidebar layout={layout} handleSetLayout={handleSetLayout}/>
-                <div className={clsx("relative lg:absolute right-0 h-full lg:p-4 lg:shadow-full lg:rounded-2xl text-dark-600 dark:text-light-200 bg-light-100 dark:bg-dark-800 transition-all overflow-hidden", {
+                <div className={clsx("relative lg:absolute right-0 h-full lg:p-4 lg:shadow-full lg:rounded-2xl text-dark-600 dark:text-light-200 bg-light-100 dark:bg-dark-900 transition-all overflow-hidden", {
                     "w-full lg:w-[calc(100%-100px)]" : layout,
                     "w-full lg:w-full" : !layout,
                 })}>
-                    <Outlet />
+                    {!loading ? <Loading /> : <Outlet />}
                 </div>
             </div>
         </div>
