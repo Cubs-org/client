@@ -26,6 +26,17 @@ export const DatePicker = ({ classNames, showIcon=true, handleChange, ...props }
         return dt;
     }
 
+    const formatTime = (time:string) => {
+        return time.trim().substring(0, 5);
+    }
+
+    const formatDateToInput = (date:string) => {
+        let dt:any = date.split(" ");
+        let dateFormatted = `${formatDate(dt[0])} às ${formatTime(dt[1])}`;
+
+        return dateFormatted;
+    }
+
     useEffect(() => {
         if(props.value) {
             setDate(props.value as string);
@@ -36,7 +47,7 @@ export const DatePicker = ({ classNames, showIcon=true, handleChange, ...props }
         <div className="relative flex flex-row-reverse justify-between items-center bg-light-300 dark:bg-dark-800 focus:outline-light-500 p-2 rounded-md focus:outline-2 dark:focus:outline-dark-300">
             <input 
                 ref={picker}
-                type="date"
+                type="datetime-local"
                 onChange={(e) => {
                     handleChange(e);
                     setDate(e.target.value)
@@ -49,7 +60,7 @@ export const DatePicker = ({ classNames, showIcon=true, handleChange, ...props }
 
             <input 
                 type="text" 
-                value={formatDate(date)}
+                value={formatDateToInput(date)}
                 placeholder="00/00/0000"
                 className={
                     clsx("relative flex-1 w-[10ch] bg-light-300 dark:bg-dark-800 placeholder-light-900 dark:placeholder-dark-100 font-bold outline-none", {

@@ -2,12 +2,12 @@ import { useState } from "react";
 
 import { ColorPicker } from "../ColorPicker";
 import { Button } from "../Button";
-import { Avatar } from "../Avatar";
+// import { Avatar } from "../Avatar";
 import { Check } from "../Check";
 // import { Alert } from "../Alert";
 
 import { Task } from "../../interfaces/task";
-import { AddMembers } from "../AddMembers";
+// import { AddMembers } from "../AddMembers";
 import { DatePicker } from "../TimeControls/DatePicker";
 import { useModal } from "../../contexts/modalContext";
 
@@ -21,7 +21,7 @@ export const EditTask = ({ task }:TaskProps) => {
 
     const properties = task.properties;
 
-    const [color, setColor] = useState(properties?.category.color || "blue");
+    const [color, setColor] = useState(properties?.itemType.color || "blue");
 
     const [formData, setFormData] = useState({
         title: task.title,

@@ -16,15 +16,15 @@ export default function CalendarPage() {
       title: "Rever os commits da semana passada",
       description: "Rever os commits da semana passada",
       properties: {
-        date: {
+        "date": {
           start: "2024-01-29 10:30:00.000",
           end: "2024-02-29 10:30:00.000",
         },
-        category: {
+        "itemType": {
           title: "task",
           color: "red",
         },
-        completed: false,
+        "completed": false,
       },
       createdAt: "2024-01-01 23:41:04.891",
       updatedAt: "2024-02-02 15:55:04.891",
@@ -33,15 +33,15 @@ export default function CalendarPage() {
       title: "Reunião de equipe",
       description: "Reunião semanal de equipe para revisar o progresso e definir metas.",
       properties: {
-        date: {
+        "date": {
           start: "2024-02-05 10:30:00.000",
           end: "2024-02-05 10:30:00.000",
         },
-        category: {
+        "itemType": {
           title: "event",
           color: "blue",
         },
-        completed: true,
+        "completed": true,
       },
       createdAt: "2024-01-15 10:30:00.000",
       updatedAt: "2024-02-05 08:45:00.000",
@@ -50,15 +50,32 @@ export default function CalendarPage() {
       title: "Lembrete: Pagar a conta de energia",
       description: "Não esquecer de pagar a conta de energia até o final do dia.",
       properties: {
-        date: {
+        "date": {
           start: "2024-02-07 10:30:00.000",
           end: "2024-02-07 10:30:00.000",
         },
-        category: {
+        "itemType": {
           title: "reminder",
           color: "green",
         },
-        completed: false,
+        "completed": false,
+      },
+      createdAt: "2024-02-03 18:00:00.000",
+      updatedAt: "2024-02-03 18:00:00.000",
+    },
+    {
+      title: "Hábitos",
+      description: "",
+      properties: {
+        "date": {
+          start: "2024-02-12 00:00:00.000",
+          end: "2024-02-12 00:00:00.000",
+        },
+        "category": {
+          title: "reminder",
+          color: "green",
+        },
+        "completed": false,
       },
       createdAt: "2024-02-03 18:00:00.000",
       updatedAt: "2024-02-03 18:00:00.000",

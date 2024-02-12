@@ -87,7 +87,7 @@ export const Nav = () => {
                                 <Link 
                                     to={link.path}
                                     className={
-                                        clsx("text-lg md:text-base font-semibold", {
+                                        clsx("text-lg md:text-base font-medium", {
                                             "mt-[32px] md:mt-0": (key + 1) === links.length - 1
                                         }, (link.path === "/register" || link.path === "/login") ? (
                                             ((pathname === "/register" || pathname === "/login") ?

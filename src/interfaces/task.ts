@@ -12,8 +12,8 @@ export interface Task {
     };
     // status: "pending" | "completed" | "canceled" | "in progress";
     completed: boolean;
-    category: {
-      name: string;
+    itemType: {
+      title: string;
       color: string;
     }
   }
