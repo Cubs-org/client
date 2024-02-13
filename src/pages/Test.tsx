@@ -9,7 +9,7 @@ export const Test = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form);
+        (form);
     }
 
     const handleChange = (e) => {

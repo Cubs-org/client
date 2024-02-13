@@ -47,7 +47,6 @@ export const Layout = () => {
             let user;
             user = localStorage.getItem("user");
 
-            // console.log("UserLocal", user);
             user = (jwtDecode(token as string) as any).user;
             
             if (user.id) {

@@ -18,24 +18,24 @@ interface TaskProps {
 export const EditTask = ({ task }:TaskProps) => {
 
     const { closeModal } = useModal();
+    let _task = task as any;
 
-    const properties = task.properties;
+    const properties = _task.properties;
 
-    const [color, setColor] = useState(properties?.itemType.color || "blue");
+    const [color, setColor] = useState(properties?.find((p) => p.type === "calendar").data.color || "blue");
 
     const [formData, setFormData] = useState({
         title: task.title,
-        content: task.description,
-        start: properties.date.start,
-        end: properties.date.end,
-        completed: properties.completed,
-        owner: task.owner,
+        content: properties?.find((p) => p.type === "text").data.value,
+        start: properties?.find((p) => p.type === "datetime").data.start,
+        end: properties?.find((p) => p.type === "datetime").data.end,
+        completed: properties?.find((p) => p.type === "checkbox").data.value,
+        owner: _task.owner,
         color: color
     });
 
     const handleCompleteForm = () => {
         clean();
-        console.log("Depois", task)
     }
 
     function clean() {

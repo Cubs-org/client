@@ -2,7 +2,7 @@ import isSunday from "../datetime/isSunday";
 import isDateInRange from "./isDateInRange";
 import rangeDifferenceBetweenDates from "./rangeDifferenceBetweenDays";
 
-export function addTimelinesInItems(items: any, data: any) {
+export function createTimelines(items: any, data: any) {
     let _items = items as any[];
 
     for (let k = 0; k < _items.length; k++) {
@@ -10,8 +10,11 @@ export function addTimelinesInItems(items: any, data: any) {
         let timeline = [] as any;
 
         properties = item.properties;
-        const start = (properties.date.start).split(' ')[0];
-        const end = (properties.date.end).split(' ')[0];
+
+        // const start = (properties.date.start).split(' ')[0];
+        // const end = (properties.date.end).split(' ')[0];
+        const datetimeProperty = properties.find((p: any) => p.type === "datetime").data;
+        const [start, end] = [datetimeProperty.start.split(" ")[0], datetimeProperty.end.split(" ")[0]]
 
         if (start && end) {
             for (let i = 0; i < data.length; i++) {
@@ -22,14 +25,14 @@ export function addTimelinesInItems(items: any, data: any) {
 
                     if (
                         isDateInRange(day, start, end)
-                        && (isSunday(day) || start === day)
+                        && (isSunday(day) || start.split(" ")[0] === day)
                     ) {
                         // Calcula a hierarchy com base nas tarefas que começam depois no mesmo dia
                         const hierarchy = calculateHierarchy(_items, k, day);
 
                         timeline.push({
                             day,
-                            range: rangeDifferenceBetweenDates({ initialDate: day, finalDate: end }),
+                            range: rangeDifferenceBetweenDates({ initialDate: day, finalDate: end.split(" ")[0]}),
                             hierarchy
                         });
                     }
@@ -52,15 +55,23 @@ function calculateHierarchy(items: any[], currentIndex: number, currentDay: stri
             const otherItemProperties = otherItem.properties;
             const itemProperties = item.properties;
 
+            // datetimePropertyFromCurrentItem
+            const dpfci = itemProperties.find((p: any) => p.type === "datetime").data,
+                startfc = dpfci.start;
+
+            // datetimePropertyFromOtherItem
+            const dpfoi = otherItemProperties.find((p: any) => p.type === "datetime").data,
+                startfo = dpfoi.start;
+
             // Verifica se o outro item começou antes e está no mesmo dia
             if (
-                otherItemProperties.date.start < itemProperties.date.start 
-                && isDateInRange(currentDay, otherItemProperties.date.start, otherItemProperties.date.end)
+                startfo.split(" ")[0] < startfc.split(" ")[0]
+                && isDateInRange(currentDay, startfo.split(" ")[0], dpfoi.end.split(" ")[0])
             ) {
                 hierarchy++;
             } else if (
-                otherItemProperties.date.start === itemProperties.date.start
-                && isDateInRange(currentDay, otherItemProperties.date.start, otherItemProperties.date.end)
+                startfo.split(" ")[0] === startfc.split(" ")[0]
+                && isDateInRange(currentDay, startfo.split(" ")[0], dpfoi.end.split(" ")[0])
             ) {
                 // Verifica se o outro item começou no mesmo dia
                 new Date(otherItem.createdAt) < new Date(item.createdAt) ? hierarchy++ : hierarchy;

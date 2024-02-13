@@ -13,73 +13,40 @@ export default function CalendarPage() {
   
   const items:any = [
     {
-      title: "Rever os commits da semana passada",
-      description: "Rever os commits da semana passada",
-      properties: {
-        "date": {
-          start: "2024-01-29 10:30:00.000",
-          end: "2024-02-29 10:30:00.000",
-        },
-        "itemType": {
-          title: "task",
-          color: "red",
-        },
-        "completed": false,
-      },
-      createdAt: "2024-01-01 23:41:04.891",
-      updatedAt: "2024-02-02 15:55:04.891",
-    },
-    {
-      title: "Reunião de equipe",
-      description: "Reunião semanal de equipe para revisar o progresso e definir metas.",
-      properties: {
-        "date": {
-          start: "2024-02-05 10:30:00.000",
-          end: "2024-02-05 10:30:00.000",
-        },
-        "itemType": {
-          title: "event",
-          color: "blue",
-        },
-        "completed": true,
-      },
-      createdAt: "2024-01-15 10:30:00.000",
+      title: "Projeto Cub's",
+      owner: "",
+      properties: [
+        { id: "", name: "Descrição", type: "text", data: { value: "Reunião com o cliente para discutir sobre o novo projeto" } },
+        { id: "", name: "Data", type: "datetime", data: { start: "2024-01-25 00:00:00.000", end: "2024-01-25 23:59:00.000" } },
+        { id: "", name: "event", type: "calendar", data: { color: "yellow" } },
+        { id: "", name: "status", type: "checkbox", data: { value: true} },
+      ],
+      createdAt: "2024-01-25 10:30:00.000",
       updatedAt: "2024-02-05 08:45:00.000",
     },
     {
-      title: "Lembrete: Pagar a conta de energia",
-      description: "Não esquecer de pagar a conta de energia até o final do dia.",
-      properties: {
-        "date": {
-          start: "2024-02-07 10:30:00.000",
-          end: "2024-02-07 10:30:00.000",
-        },
-        "itemType": {
-          title: "reminder",
-          color: "green",
-        },
-        "completed": false,
-      },
-      createdAt: "2024-02-03 18:00:00.000",
-      updatedAt: "2024-02-03 18:00:00.000",
+      title: "Projeto Cub's (2)",
+      owner: "",
+      properties: [
+        { id: "", name: "Descrição", type: "text", data: { value: "Reunião com o cliente para discutir sobre o novo projeto" } },
+        { id: "", name: "Data", type: "datetime", data: { start: "2024-02-16 00:00:00.000", end: "2024-02-16 23:59:00.000" } },
+        { id: "", name: "status", type: "checkbox", data: { value: true } },
+      ],
+      createdAt: "2024-01-25 10:30:00.001",
+      updatedAt: "2024-02-16 08:45:00.001",
     },
     {
-      title: "Hábitos",
-      description: "",
-      properties: {
-        "date": {
-          start: "2024-02-12 00:00:00.000",
-          end: "2024-02-12 00:00:00.000",
-        },
-        "category": {
-          title: "reminder",
-          color: "green",
-        },
-        "completed": false,
-      },
-      createdAt: "2024-02-03 18:00:00.000",
-      updatedAt: "2024-02-03 18:00:00.000",
-    },
+      title: "Projeto Cub's (3)",
+      owner: "",
+      properties: [
+        { id: "", name: "Descrição", type: "text", data: { value: "Reunião com o cliente para discutir sobre o novo projeto" } },
+        { id: "", name: "Data", type: "datetime", data: { start: "2024-01-02 00:00:00.000", end: "2024-01-25 23:59:00.000" } },
+        { id: "", name: "event", type: "calendar", data: { color: "yellow" } },
+        { id: "", name: "status", type: "checkbox", data: { value: false} },
+      ],
+      createdAt: "2024-01-25 10:30:00.001",
+      updatedAt: "2024-02-05 08:45:00.001",
+    }
   ];  
 
   // @ts-ignore

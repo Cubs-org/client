@@ -39,7 +39,7 @@ export const SignInButton = ({ children, classNames }: SignInButtonProps) => {
       }
     },
     onError: () => {
-      console.log('Login Failed');
+      ('Login Failed');
     },
   });
 

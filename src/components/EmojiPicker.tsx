@@ -22,7 +22,6 @@ interface EmojiPickerProps {
 export const EmojiPicker = ({ emoji, setEmoji, classNames }:EmojiPickerProps) => {
 
     const handleSetEmoji = (e: Emoji) => {
-        // console.log(e)
         setEmoji(e.native)
     }
 
@@ -30,8 +29,7 @@ export const EmojiPicker = ({ emoji, setEmoji, classNames }:EmojiPickerProps) =>
 
     return (
         <div className={clsx("bg-red-500", classNames)}>
-            <Popover 
-                show={visible} 
+            <Popover
                 content={
                     <Picker
                         data={data} 

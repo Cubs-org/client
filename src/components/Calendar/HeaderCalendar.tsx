@@ -20,7 +20,6 @@ export const HeaderCalendar = ({date, setDate, setYear, setMonth}:IHeaderCalenda
 
     // const filterBy = searchParams.get("filter");
     // const view = searchParams.get("view");
-
     
     return (
         <div className="w-full flex gap-2 md:gap-0 justify-between items-center px-2 md:px-3 lg:px-0 py-2">

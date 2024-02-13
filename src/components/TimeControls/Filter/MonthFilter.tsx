@@ -46,7 +46,6 @@ export const MonthFilter = ({ date, handles }:IMonthFilter) => {
         handles.setYear(splitDt(newDate)[0]);
         handles.setMonth(splitDt(newDate)[1]);
     }
-    
 
     return (
         <div className="w-full flex justify-between items-center gap-2 lg:gap-4 text-md lg:text-xl">
@@ -64,7 +63,7 @@ export const MonthFilter = ({ date, handles }:IMonthFilter) => {
             <span 
                 className="md:text-2xl text-md text-dark-600 dark:text-light-100 font-black"
             >{
-                !mobile ? getMonthByNumber(date.getMonth()) : `${getMonthByNumber(date.getMonth()).substr(0, 3)}`
+                !mobile ? getMonthByNumber(date.getMonth() + 1) : `${getMonthByNumber(date.getMonth() + 1).substr(0, 3)}`
             }{!mobile ? " de " : ", "}{String(date.getFullYear())}</span>
 
             <div className="flex items-center gap-1">

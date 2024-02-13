@@ -14,13 +14,17 @@ export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProp
 
     const properties = item?.properties;
 
+    const datetimeProperty = properties.find((p: any) => p.type === "datetime").data,
+        start = datetimeProperty.start,
+        end = datetimeProperty.end;
+
     const rangeDays = rangeDifferenceBetweenDates({
-        initialDate: properties.date.start, 
-        finalDate: properties.date.end
+        initialDate: start.split(" ")[0], 
+        finalDate: end.split(" ")[0]
     });
 
-    const category = properties?.itemType;
-    const isFiltered = (["task", "event", "reminder"].includes(category?.title));
+    const timelineProps = properties?.find((p: any) => p.type === "calendar");
+    const isFiltered = (["task", "event", "reminder"].includes(timelineProps?.name));
 
     return (
         <div 
@@ -38,10 +42,10 @@ export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProp
 
 
                 // added temporary to see the first item
-                "!bg-red-500": category?.color === "red",
-                "!bg-blue-500": category?.color === "blue",
-                "!bg-green-500": category?.color === "green",
-                "!bg-yellow-500": category?.color === "yellow",
+                "!bg-red-500": timelineProps?.data?.color === "red",
+                "!bg-blue-500": timelineProps?.data?.color === "blue",
+                "!bg-green-500": timelineProps?.data?.color === "green",
+                "!bg-yellow-500": timelineProps?.data?.color === "yellow",
             })}
             onClick={(event) => handle(item, event)}
         >

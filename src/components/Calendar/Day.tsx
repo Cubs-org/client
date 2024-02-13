@@ -23,7 +23,6 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
         openModal({
             content: <EditTask task={item} />
         });
-        console.log("Open Timeline", item);
     };
 
     const handlePushitems = (items:any, date:string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -32,7 +31,6 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
         let amountitems = [] as any;
         items.map(item => item.timeline.filter(timeline => ((timeline.day === date) && (timeline.hierarchy >= 3)) && amountitems.push(item)))
         
-        // console.log("Amount items", amountitems);
         openModal && openModal({
             content: <AmountRemaingTasks items={amountitems}/>
         });
@@ -44,7 +42,6 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
                 flex-1
                 w-full
                 min-h-full
-                h-[260px]
                 relative
                 p-2
                 md:rounded-md

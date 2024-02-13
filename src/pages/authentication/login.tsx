@@ -101,7 +101,7 @@ export default function Login() {
                 <SignInButton 
                     provider="google"
                     classNames="w-full bg-light-200 px-3 ring-2 ring-purple-500 hover:ring-light-200 hover:bg-transparent hover:text-light-200 text-purple-500"
-                    // responseHandler={(res) => console.log("Erro:", res)}
+                    // responseHandler={(res) => ("Erro:", res)}
                 >
                     <FaGoogle size={24}/> Entrar com o Google
                 </SignInButton>
