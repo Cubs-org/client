@@ -11,7 +11,8 @@ export const GridMonthCalendar = ({ year, month, event, items }:CalendarProps) =
 
     createTimelines(items, data);
 
-    console.log(items);
+    // console.log("data:",data);
+    // console.log("itens:", items);
 
     const gridElements = data.map((week, index) => (
         <Week 

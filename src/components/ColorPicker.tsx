@@ -1,9 +1,8 @@
 import clsx from "clsx";
-import { Dispatch, SetStateAction } from "react";
 
 interface IColorPicker {
     color: string;
-    handleSetColor: Dispatch<SetStateAction<string>>;
+    handleSetColor: (color:string) => void;
 };
 
 const colors = [

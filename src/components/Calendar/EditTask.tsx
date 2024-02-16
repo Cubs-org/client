@@ -22,8 +22,6 @@ export const EditTask = ({ task }:TaskProps) => {
 
     const properties = _task.properties;
 
-    const [color, setColor] = useState(properties?.find((p) => p.type === "calendar").data.color || "blue");
-
     const [formData, setFormData] = useState({
         title: task.title,
         content: properties?.find((p) => p.type === "text").data.value,
@@ -31,10 +29,16 @@ export const EditTask = ({ task }:TaskProps) => {
         end: properties?.find((p) => p.type === "datetime").data.end,
         completed: properties?.find((p) => p.type === "checkbox").data.value,
         owner: _task.owner,
-        color: color
+        color: properties?.find((p) => p.type === "calendar").data.color || "blue"
     });
 
+    const formatDatetime = (datetime:string) => {
+        let date = datetime.split(" ");
+        return `${date[0]}T${date[1]}`;
+    }
+
     const handleCompleteForm = () => {
+        console.log("formData:", formData);
         clean();
     }
 
@@ -60,6 +64,13 @@ export const EditTask = ({ task }:TaskProps) => {
     //     // @ts-ignore
     //     openModal({content: <AddMembers task={data} onClose={closeModal} />})
     // }
+
+    const handleSetColor = (color:string) => {
+        setFormData({
+            ...formData,
+            color
+        });
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -94,8 +105,8 @@ export const EditTask = ({ task }:TaskProps) => {
                 {/* ColorPicker->select a color */}
                 <div className="w-3/6">
                     <ColorPicker 
-                        color={color}
-                        handleSetColor={setColor}
+                        color={formData.color}
+                        handleSetColor={handleSetColor}
                     />
                 </div>
                 {/* DatePicker->select a date */}
@@ -103,14 +114,14 @@ export const EditTask = ({ task }:TaskProps) => {
                     <div className="flex flex-col gap-1">
                     <h3 className="text-base font-bold text-dark-500 dark:text-light-300">Início</h3>
                         <DatePicker 
-                            value={formData.start} 
+                            value={formatDatetime(formData.start)} 
                             handleChange={handleChange}
                         />
                     </div>
                     <div className="flex flex-col gap-1">
                     <h3 className="text-base font-bold text-dark-500 dark:text-light-300">Fim</h3>
                         <DatePicker 
-                            value={formData.end} 
+                            value={formatDatetime(formData.end)} 
                             handleChange={handleChange}
                         />
                     </div>

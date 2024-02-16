@@ -12,40 +12,61 @@ import { splitDt } from "../utils/datetime/splitDate";
 export default function CalendarPage() {
   
   const items:any = [
+    // {
+    //   title: "Projeto Cub's",
+    //   owner: "",
+    //   properties: [
+    //     { id: "", name: "Descrição", type: "text", data: { value: "Reunião com o cliente para discutir sobre o novo projeto" } },
+    //     { id: "", name: "Data", type: "datetime", data: { start: "2024-01-25 00:00:00.000", end: "2024-02-25 23:59:00.000" } },
+    //     { id: "", name: "event", type: "calendar", data: { color: "yellow" } },
+    //     { id: "", name: "status", type: "checkbox", data: { value: true} },
+    //   ],
+    //   createdAt: "2024-01-25 10:30:00.000",
+    //   updatedAt: "2024-02-05 08:45:00.000",
+    // },
+    // {
+    //   title: "@Hoje",
+    //   owner: "",
+    //   properties: [
+    //     // { id: "", name: "Treinar", type: "checkbox", data: { value: true } },
+    //     // { id: "", name: "Estudar e meditar", type: "checkbox", data: { value: true } },
+    //     // { id: "", name: "Tomar 2l de água", type: "checkbox", data: { value: true } },
+    //     { id: "", name: "Data", type: "datetime", data: { start: "2024-02-16 00:00:00.000", end: "2024-02-16 23:59:00.000" } },
+    //     { id: "", name: "Tags", type: "multi-select", data: { 
+    //         items: [
+    //           { name: "Saúde", color: "green" },
+    //           { name: "Trabalho", color: "pink" },
+    //           { name: "Estudos", color: "blue" },
+    //           { name: "Lazer", color: "indigo" }
+    //         ] 
+    //       } 
+    //     },
+    //     { id: "", name: "Categoria", type: "select", data: { 
+    //       items: [
+    //         { name: "Saúde", color: "green" },
+    //         { name: "Trabalho", color: "yellow" },
+    //         { name: "Estudos", color: "blue" },
+    //         { name: "Lazer", color: "orange" }
+    //       ],
+    //       value: "Saúde"
+    //     } 
+    //   },
+    //   ],
+    //   createdAt: "2024-01-25 10:30:00.001",
+    //   updatedAt: "2024-02-16 08:45:00.001",
+    // },
     {
-      title: "Projeto Cub's",
+      title: "Teste",
       owner: "",
       properties: [
         { id: "", name: "Descrição", type: "text", data: { value: "Reunião com o cliente para discutir sobre o novo projeto" } },
-        { id: "", name: "Data", type: "datetime", data: { start: "2024-01-25 00:00:00.000", end: "2024-01-25 23:59:00.000" } },
-        { id: "", name: "event", type: "calendar", data: { color: "yellow" } },
-        { id: "", name: "status", type: "checkbox", data: { value: true} },
+        { id: "", name: "Data", type: "datetime", data: { start: "2024-02-02 00:00:00.001", end: "2024-02-03 23:59:00.000" } },
+      { id: "", name: "status", type: "status", data: { value: "Não iniciado" } },
+      { id: "", name: "status", type: "status", data: { value: "Em andamento" } },
+      { id: "", name: "status", type: "status", data: { value: "Concluído" } },
       ],
-      createdAt: "2024-01-25 10:30:00.000",
-      updatedAt: "2024-02-05 08:45:00.000",
-    },
-    {
-      title: "Projeto Cub's (2)",
-      owner: "",
-      properties: [
-        { id: "", name: "Descrição", type: "text", data: { value: "Reunião com o cliente para discutir sobre o novo projeto" } },
-        { id: "", name: "Data", type: "datetime", data: { start: "2024-02-16 00:00:00.000", end: "2024-02-16 23:59:00.000" } },
-        { id: "", name: "status", type: "checkbox", data: { value: true } },
-      ],
-      createdAt: "2024-01-25 10:30:00.001",
-      updatedAt: "2024-02-16 08:45:00.001",
-    },
-    {
-      title: "Projeto Cub's (3)",
-      owner: "",
-      properties: [
-        { id: "", name: "Descrição", type: "text", data: { value: "Reunião com o cliente para discutir sobre o novo projeto" } },
-        { id: "", name: "Data", type: "datetime", data: { start: "2024-01-02 00:00:00.000", end: "2024-01-25 23:59:00.000" } },
-        { id: "", name: "event", type: "calendar", data: { color: "yellow" } },
-        { id: "", name: "status", type: "checkbox", data: { value: false} },
-      ],
-      createdAt: "2024-01-25 10:30:00.001",
-      updatedAt: "2024-02-05 08:45:00.001",
+      createdAt: "2024-02-18 10:30:00.001",
+      updatedAt: "2024-03-05 08:45:00.001",
     }
   ];  
 
@@ -53,9 +74,9 @@ export default function CalendarPage() {
   const { modalState:{ visible, content }, openModal, closeModal } = useModal();
 
   const response = (event) => {
-      // @ts-ignore
+      var dt = event.concat("T00:00:00.000");
       openModal && openModal({
-          content: <CreateTask event={event} /> 
+          content: <CreateTask event={dt} /> 
       });
   }
 
