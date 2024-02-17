@@ -36,8 +36,8 @@ export const CreateTask = ({ event }: ICreateTask) => {
     useEffect(() => {
         event && setFormData({
             ...formData,
-            start: event.start,
-            end: event.end
+            start: event,
+            end: event
         });
     }, [event]);
 

@@ -39,7 +39,9 @@ export const Header = () => {
                     direction="bottom-start"
                     content={<WorkspaceFilterOptions />}
                 >
-                    <FaEllipsisVertical size={24} className="cursor-pointer" onClick={toggleOptions} />
+                    <div className="w-fit p-2">
+                        <FaEllipsisVertical size={24} className="cursor-pointer" onClick={toggleOptions} />
+                    </div>
                 </Popover>
 
 

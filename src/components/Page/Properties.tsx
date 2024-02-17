@@ -4,6 +4,7 @@ import { Progress } from "../Progress";
 import { RadialProgressBar } from "../RadialProgressBar";
 import clsx from "clsx";
 import { Avatar } from "../Avatar";
+import parseFormula from "../../utils/page/parseFormula";
 
 export const Properties = ({ properties }) => {
 
@@ -33,7 +34,7 @@ export const Properties = ({ properties }) => {
                 case "checkbox":
                     return (
                         <div key={`${prop.name}-${index}`} className="w-full flex gap-1 items-center">
-                            <input type="checkbox" checked={prop.data.value} className="w-4 h-4 rounded-md border-2 border-light-200 dark:border-dark-600" />
+                            <input type="checkbox" checked={prop.data.value} className="w-4 h-4 rounded-md border-2 border-light-200 dark:border-dark-600" readOnly />
                             <span className="text-xs font-normal">{prop.name}</span>
                         </div>
                     );
@@ -77,7 +78,7 @@ export const Properties = ({ properties }) => {
                 case "select":
                     const color = prop.data.items.find((item) => item.value === prop.data.name)?.color;
                     return (
-                        <div key={`${prop.name}-${index}`} className={clsx("text-xs font-medium text-light-200 px-2 py-1 rounded-md", {
+                        <div key={`${prop.name}-${index}`} className={clsx("w-fit text-sm font-medium text-light-200 px-2 py-1 rounded-md", {
                             "bg-red-500": color === "red",
                             "bg-green-500": color === "green",
                             "bg-blue-500": color === "blue",
@@ -111,6 +112,24 @@ export const Properties = ({ properties }) => {
                                     {item.name}
                                 </span>
                             ))}
+                        </div>
+                    );
+                case "formula":
+                    const { text, color: formulaColor } = parseFormula(prop.data.value);
+                    return (
+                        <div key={index} className={clsx("text-xs font-medium", {
+                            "text-red-500": formulaColor === "red",
+                            "text-green-500": formulaColor === "green",
+                            "text-blue-500": formulaColor === "blue",
+                            "text-yellow-500": formulaColor === "yellow",
+                            "text-orange-500": formulaColor === "orange",
+                            "text-purple-500": formulaColor === "purple",
+                            "text-pink-500": formulaColor === "pink",
+                            "text-indigo-500": formulaColor === "indigo",
+                            "text-gray-500": formulaColor === "gray",
+                            "text-light-500": formulaColor === "light",
+                        })}>
+                            {text}
                         </div>
                     );
             }

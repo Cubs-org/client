@@ -150,7 +150,6 @@ export const EditTask = ({ task }:TaskProps) => {
                 <div className="flex justify-between">
                     <span className="flex items-center gap-2 font-semibold">
                         <Check
-                            classNames="w-[30px] h-[30px] data-[success=true]:!bg-green-500"
                             checked={formData.completed}
                             onChange={handleChange}
                         />

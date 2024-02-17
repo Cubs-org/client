@@ -12,7 +12,7 @@ export const Search = ({ iconVisible, classNames, ...props }:SearchProps) => {
     return (
         <div className={clsx("relative", classNames)}>
             <input
-                className={clsx("bg-light-200 dark:bg-dark-600 dark:text-light-600 text-dark-700 rounded-md px-3 py-2 w-full focus:ring-2 focus:ring-light-500 focus:outline-none dark:focus:ring-dark-300", classNames)} 
+                className={clsx("bg-light-200 dark:bg-dark-800 dark:text-light-600 text-dark-700 rounded-md px-3 py-2 w-full focus:ring-2 focus:ring-light-500 focus:outline-none dark:focus:ring-dark-300", classNames)} 
                 placeholder="Pesquisar"
                 autoFocus
                 {...props}

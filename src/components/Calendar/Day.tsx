@@ -20,9 +20,13 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
     const handleOpenTimeline = (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
 
-        openModal({
-            content: <EditTask task={item} />
-        });
+        const isCalendar = item?.properties?.find(prop => prop.type === "calendar");
+
+        if (isCalendar) {
+            openModal({
+                content: <EditTask task={item} />
+            });
+        }
     };
 
     const handlePushitems = (items:any, date:string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
