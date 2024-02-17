@@ -115,7 +115,8 @@ export const Properties = ({ properties }) => {
                         </div>
                     );
                 case "formula":
-                    const { text, color: formulaColor } = parseFormula(prop.data.value);
+                    const formula = eval(prop.data.value);
+                    const { text, color: formulaColor } = parseFormula(formula);
                     return (
                         <div key={index} className={clsx("text-xs font-medium", {
                             "text-red-500": formulaColor === "red",

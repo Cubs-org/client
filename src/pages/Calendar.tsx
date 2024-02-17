@@ -69,7 +69,8 @@ export default function CalendarPage() {
           ],
           value: "Salário"
         } },
-        { id: "", name: "Preview", type: "formula", data: { value: eval("(2 > 1.999) ? 'text=+ R$10.000,00;color=green' : 'text=- R$10.000,00;color=red'") } },
+        { id: "", name: "Preview", type: "formula", data: { 
+          value: "(['cama', 'sofa', 'cadeira'].includes('sofa'))?'text=+ R$10.000,00;color=green':'text=- R$10.000,00;color=red'" } },
         { id: "", name: "Recebido", type: "checkbox", data: { value: true } },
         
       ],
