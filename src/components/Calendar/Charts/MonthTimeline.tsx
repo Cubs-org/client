@@ -8,9 +8,10 @@ interface ITimelineProps {
     range?: number;
     hierarchy: number;
     handle: (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    isPage?: boolean;
 }
 
-export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProps) => {
+export const Timeline = ({ item, width, range, hierarchy, handle, isPage=false }:ITimelineProps) => {
 
     const properties = item?.properties;
 
@@ -33,9 +34,10 @@ export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProp
             }}
             className={clsx("absolute z-10 left-0 min-w-full min-h-[15px] rounded-md shadow-none md:shadow-md text-black flex items-center px-2 transition-all duration-[.5s]", {
                 "top-0": (hierarchy === 1),
-                "top-[calc(15px+2px)]": (hierarchy === 2),
-                "top-[calc(30px+4px)]": (hierarchy === 3),
-                "hidden": (hierarchy >= 3),
+                "top-[calc(15px+2px)]": (hierarchy === 2) && !isPage,
+                "top-[calc(30px+4px)]": (hierarchy === 3) && !isPage,
+                "hidden": (hierarchy >= 3) && !isPage,
+
                 "max-h-[15px] truncate": isFiltered,
                 
                 "px-2 py-3 !shadow-none": !isFiltered,
@@ -46,6 +48,10 @@ export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProp
                 "!bg-blue-500": timelineProps?.data?.color === "blue",
                 "!bg-green-500": timelineProps?.data?.color === "green",
                 "!bg-yellow-500": timelineProps?.data?.color === "yellow",
+                "!bg-pink-500": timelineProps?.data?.color === "pink",
+                "!bg-orange-500": timelineProps?.data?.color === "orange",
+                "!bg-purple-500": timelineProps?.data?.color === "purple",
+                "!bg-indigo-500": timelineProps?.data?.color === "indigo",
             })}
             onClick={(event) => handle(item, event)}
         >

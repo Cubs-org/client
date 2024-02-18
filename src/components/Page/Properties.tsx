@@ -76,7 +76,7 @@ export const Properties = ({ properties }) => {
                         </div>
                     );
                 case "select":
-                    const color = prop.data.items.find((item) => item.value === prop.data.name)?.color;
+                    const color = prop.data.items.find((item) => prop.data.value === item.name)?.color;
                     return (
                         <div key={`${prop.name}-${index}`} className={clsx("w-fit text-sm font-medium text-light-200 px-2 py-1 rounded-md", {
                             "bg-red-500": color === "red",

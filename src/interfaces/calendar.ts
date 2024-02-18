@@ -13,6 +13,7 @@ export interface CalendarProps {
   num?: number;
   event?: (e: any) => void;
   items?: CalendarItems | [];
+  isPage?: boolean;
 }
 
 export interface DateProps {

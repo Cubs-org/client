@@ -11,9 +11,10 @@ interface IDayProps {
     event?: (date:string) => void;
     items?: any;
     month?: number;
+    isPage?: boolean;
 }
 
-export const Day = ({ day, month, event, items }:IDayProps) => {
+export const Day = ({ day, month, event, items, isPage=false }:IDayProps) => {
 
     const { openModal } = useModal();
 
@@ -50,6 +51,7 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
                 p-2
                 md:rounded-md
                 flex
+                flex-col
                 justify-end
                 items-end
                 cursor-pointer
@@ -60,12 +62,6 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
             `}
             onClick={() => event && event(day)}
         >
-            <span className={clsx("w-6 h-6 text-xs font-medium grid place-items-center rounded-md", {
-                "bg-purple-500 text-light-100 font-semibold": today === day,
-            })}>
-                {+day.split("-")[2]}
-            </span>
-
             {items.map(item => {
                 return item?.timeline.map((timeline, index) => timeline.day === day && (
                     <Timeline 
@@ -75,6 +71,7 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
                         range={timeline.range}
                         hierarchy={timeline.hierarchy}
                         handle={handleOpenTimeline}
+                        isPage={isPage}
                     />
                 ))
             })}
@@ -85,6 +82,12 @@ export const Day = ({ day, month, event, items }:IDayProps) => {
                     onClick={(event) => handlePushitems(items, day, event)}
                 ><FaAngleUp size={12}/></div>
             )}
+
+            <span className={clsx("w-6 h-6 text-xs font-medium grid place-items-center rounded-md", {
+                            "bg-purple-500 text-light-100 font-semibold": today === day,
+                        })}>
+                {+day.split("-")[2]}
+            </span>
         </div>
     )
 }
