@@ -19,6 +19,7 @@ export const EditTask = ({ task }:TaskProps) => {
 
     const { closeModal } = useModal();
     let _task = task as any;
+    const type = _task.properties.find((p) => p.type === "calendar").name;
 
     const properties = _task.properties;
 
@@ -84,7 +85,7 @@ export const EditTask = ({ task }:TaskProps) => {
     return (
         <div className="w-full flex flex-col gap-2">
             <h1 className="text-2xl font-black text-dark-600 dark:text-light-100">
-                Editar tarefa
+                Editar {type === "task" ? "tarefa" : "evento"}
             </h1>
             <div className="flex flex-col w-full gap-3">
                 <input 
@@ -152,6 +153,7 @@ export const EditTask = ({ task }:TaskProps) => {
                         <Check
                             checked={formData.completed}
                             onChange={handleChange}
+                            classNames="p-2"
                         />
                         Status
                     </span>

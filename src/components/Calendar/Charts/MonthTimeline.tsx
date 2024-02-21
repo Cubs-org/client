@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import rangeDifferenceBetweenDates from "../../../utils/calendar/rangeDifferenceBetweenDays";
-import { TimelineProperties } from "./TimelineProperties";
+import { CSSProperties } from "react";
 
 interface ITimelineProps {
     item?: any;
@@ -8,10 +8,9 @@ interface ITimelineProps {
     range?: number;
     hierarchy: number;
     handle: (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    isPage?: boolean;
 }
 
-export const Timeline = ({ item, width, range, hierarchy, handle, isPage=false }:ITimelineProps) => {
+export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProps) => {
 
     const properties = item?.properties;
 
@@ -27,16 +26,18 @@ export const Timeline = ({ item, width, range, hierarchy, handle, isPage=false }
     const timelineProps = properties?.find((p: any) => p.type === "calendar");
     const isFiltered = (["task", "event", "reminder"].includes(timelineProps?.name));
 
+    let style:CSSProperties = {
+        width: item && width ? `calc(${width * 100}% + ${range && ((range * 5) - 5) + "px"})` : "100%",
+    };
+
     return (
         <div 
-            style={{ 
-                width: item && width ? `calc(${width * 100}% + ${range && ((range * 5) - 5) + "px"})` : "100%",
-            }}
+            style={style}
             className={clsx("absolute z-10 left-0 min-w-full min-h-[15px] rounded-md shadow-none md:shadow-md text-black flex items-center px-2 transition-all duration-[.5s]", {
                 "top-0": (hierarchy === 1),
-                "top-[calc(15px+2px)]": (hierarchy === 2) && !isPage,
-                "top-[calc(30px+4px)]": (hierarchy === 3) && !isPage,
-                "hidden": (hierarchy >= 3) && !isPage,
+                "top-[calc(15px+2px)]": (hierarchy === 2),
+                "top-[calc(30px+4px)]": (hierarchy === 3),
+                "hidden": (hierarchy >= 3),
 
                 "max-h-[15px] truncate": isFiltered,
                 
@@ -56,13 +57,11 @@ export const Timeline = ({ item, width, range, hierarchy, handle, isPage=false }
             onClick={(event) => handle(item, event)}
         >
             {/* PageHeading */}
-            {isFiltered ? <span 
+            {isFiltered && <span 
                 className={clsx("text-xs font-medium", {
                     "dark:text-light-300 !text-sm": !isFiltered,
                 })}
-            >{item.title} @ {rangeDays}d</span> : (
-                <TimelineProperties item={item} />
-            )}
+            >{item.title} @ {rangeDays}d</span>}
         </div>
     )
 }

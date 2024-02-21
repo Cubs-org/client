@@ -9,6 +9,7 @@ import parseFormula from "../../utils/page/parseFormula";
 export const Properties = ({ properties }) => {
 
     const renderProps = () => {
+        properties.sort((a, b) => a.data.loadOrder - b.data.loadOrder);
         return properties?.map((prop, index) => {
             switch (prop.type) {
                 case "text":

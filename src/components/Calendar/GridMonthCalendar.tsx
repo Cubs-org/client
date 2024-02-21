@@ -5,6 +5,7 @@ import rangeGridCalendar from "../../utils/calendar/rangeGridCalendar";
 import { Week } from "./Week";
 import { createTimelines } from "../../utils/calendar/createTimelines";
 import clsx from "clsx";
+// import isDateInRange from "../../utils/calendar/isDateInRange";
 
 export const GridMonthCalendar = ({ year, month, event, items, isPage=false }:CalendarProps) => {
 
@@ -20,7 +21,12 @@ export const GridMonthCalendar = ({ year, month, event, items, isPage=false }:Ca
     
             week.forEach(day => {
                 const dayItems = (items as any[]).filter(item =>
-                    item.timeline.some(timeline => timeline.day === day)
+                    item.timeline.some(
+                        timeline => (
+                            timeline.day === day &&
+                            item.properties.find(prop => prop.type === "datetime").data.end.split(" ")[0] !== day
+                        )
+                    )
                 );
     
                 dayItems.forEach(item => {
@@ -34,8 +40,8 @@ export const GridMonthCalendar = ({ year, month, event, items, isPage=false }:Ca
 
     adjustWeekHeight(data);
 
-    console.log(_weekHeight);
-
+    // console.log(items);
+    
 
     const gridElements = data.map((week, index) => (
         <Week 
@@ -52,8 +58,9 @@ export const GridMonthCalendar = ({ year, month, event, items, isPage=false }:Ca
   
     return (
         <div 
-            className={clsx("flex flex-col flex-grow gap-[2px] md:gap-[5px] p-1 scrollbar-none overflow-y-scroll overflow-x-hidden", {
-                "md:scrollbar scrollbar-thumb-light-300 dark:scrollbar-thumb-dark-700 scrollbar-track-transparent": isPage
+            className={clsx("flex flex-col gap-[2px] md:gap-[5px] p-1 scrollbar-none overflow-y-scroll overflow-x-hidden", {
+                "md:scrollbar scrollbar-thumb-light-300 dark:scrollbar-thumb-dark-700 scrollbar-track-transparent": isPage,
+                "flex-grow" : !isPage
             })}
         >{gridElements}</div>
     )

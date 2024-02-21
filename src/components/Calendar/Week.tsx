@@ -10,36 +10,37 @@ interface IWeek {
     index?: number;
 }
 
-type Height = string | number | undefined;
+// type Height = string | number | undefined;
 
 export const Week = ({ week, month, items, event, isPage = false, weekHeight, index }: IWeek) => {
     
-    let h:Height, style = {};
+    let style = {};
 
-    if (isPage) {
-        let height:Height;
-        h = weekHeight?.find(week => week.index === index)?.h;
-        height = h ? `${((h + 1)*40)}px` : "100px";
-        style = { 
-            minHeight: height,
-            // backgroundColor: height !== "100px" ? "#0f0" : "#f00"
-        };
+    // if (isPage) {
+    //     let height:Height;
+    //     h = weekHeight?.find(week => week.index === index)?.h;
+    //     height = h ? `${((h + 1)*40)}px` : "100px";
+    //     style = { 
+    //         minHeight: height,
+    //         backgroundColor: height !== "100px" ? "#0f0" : "#f00"
+    //     };
+    // }
+
+
+    // console.log(weekHeight);
+    const hasItem = weekHeight?.find(week => week.index === index)?.h;
+
+    if (isPage && !hasItem) {
+        style = {
+            minHeight: "100px",
+            // backgroundColor: "#0f0"
+        }
     }
-
-    /*
-        Eu estava pensando aqui e me surgiu uma ideia 
-        para resolver o problema do hierarchy para tasks 
-        que tenham propriedades. A ideia é que se a task
-        tiver hierarchy 1, top = 0, mas a partir do proximo, 
-        a task receberá um valor `prevTptalProperties` que
-        será a soma de todas as propriedades das tasks anteriores.
-    */
-
 
     return (
         <div
-            className="flex gap-[2px] flex-grow md:gap-[5px] place-items-center"
             style={style}
+            className="flex gap-[2px] flex-grow md:gap-[5px] place-items-center"
         >
             {week.map((day, _i) => (
                 <Day
