@@ -1,5 +1,5 @@
 import { Button } from "./Button";
-import { EditTask } from "./Calendar/EditTask";
+import { EditTask } from "./Calendar/EditItem";
 import { IModal } from "../interfaces/modal";
 import { Task } from "../interfaces/task";
 import { useModal } from "../contexts/modalContext";

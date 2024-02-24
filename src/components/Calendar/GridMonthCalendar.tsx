@@ -5,6 +5,7 @@ import rangeGridCalendar from "../../utils/calendar/rangeGridCalendar";
 import { Week } from "./Week";
 import { createTimelines } from "../../utils/calendar/createTimelines";
 import clsx from "clsx";
+import { useSearchParams } from "react-router-dom";
 
 interface Items {
     id: string;
@@ -12,9 +13,20 @@ interface Items {
     properties: any[];
     timeline?: { day: string; range: number }[];
     totalProperties?: {index: number, h: number}[];
+    onNewItemCreated: (item: any) => void;
 }
 
-export const GridMonthCalendar = ({ year, month, event, items, isPage=false }:CalendarProps) => {
+export const GridMonthCalendar = ({ year, month, event, items, isPage=false, onNewItemCreated }:CalendarProps) => {
+
+    const [searchParams] = useSearchParams();
+
+    const filterBy = searchParams.get("filterBy");
+    let filter = filterBy === "Tarefas" ? "task" : filterBy === "Eventos" ? "event" : "all";
+    let _items = items as Items[];
+    _items = _items.filter(item => {
+        if (filter === "all") return item;
+        return item.properties.some(prop => prop.type === "calendar" && prop.title === filter);
+    });
 
     const data: string[][] = rangeGridCalendar({ year, month });
     let _weekHeight = [] as any;
@@ -47,19 +59,17 @@ export const GridMonthCalendar = ({ year, month, event, items, isPage=false }:Ca
 
     adjustWeekHeight(data);
 
-    // console.log(items);
-    
-
     const gridElements = data.map((week, index) => (
         <Week 
             key={`${week}-${index}`} 
             week={week}
             month={month}
             event={event}
-            items={items}
+            items={_items}
             isPage={isPage}
             weekHeight={_weekHeight}
             index={index}
+            onNewItemCreated={onNewItemCreated}
         />
     ));
   

@@ -35,6 +35,7 @@ export const Calendar = ({ event, items, onNewItemCreated, isPage=false }: Calen
                 event={event}
                 items={items}
                 isPage={isPage}
+                onNewItemCreated={onNewItemCreated}
             />
         </div>
     );

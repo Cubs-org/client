@@ -61,7 +61,7 @@ export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProp
                 className={clsx("text-xs font-medium", {
                     "dark:text-light-300 !text-sm": !isFiltered,
                 })}
-            >{item.title} @ {rangeDays}d</span>}
+            >{item.title || "Sem título"} @ {Math.round(rangeDays)}d</span>}
         </div>
     )
 }

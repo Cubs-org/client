@@ -23,10 +23,13 @@ export const AmountRemaingTasks = ({ items }:IRemaingTasks) => {
                                     "!bg-blue-500": color === "blue",
                                     "!bg-green-500": color === "green",
                                     "!bg-yellow-500": color === "yellow",
+                                    "!bg-purple-500": color === "purple",
+                                    "!bg-pink-500": color === "pink",
+                                    "!bg-indigo-500": color === "indigo",
                                 })}
                             />
                             <h2 className="text-base font-black px-3 py-1 rounded-md text-dark-700 dark:text-light-200">
-                                {item.title}
+                                {item.title || "Sem título"}
                             </h2>
                         </div>
                         {/* {item?.membership && (

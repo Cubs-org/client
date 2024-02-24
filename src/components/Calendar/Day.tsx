@@ -4,7 +4,7 @@ import { Timeline } from "./Charts/MonthTimeline";
 import { useModal } from "../../contexts/modalContext";
 import { AmountRemaingTasks } from "./AmountRemaingTasks";
 import { FaAngleUp } from "react-icons/fa6";
-import { EditTask } from "./EditTask";
+import { EditItem } from "./EditItem";
 import { CustomTimeline } from "./Charts/CustomTimeline";
 import isDateInRange from "../../utils/calendar/isDateInRange";
 
@@ -14,9 +14,10 @@ interface IDayProps {
     items?: any;
     month?: number;
     isPage?: boolean;
+    onNewItemCreated: (item: any) => void;
 }
 
-export const Day = ({ day, month, event, items, isPage=false }:IDayProps) => {
+export const Day = ({ day, month, event, items, isPage=false, onNewItemCreated }:IDayProps) => {
 
     const { openModal } = useModal();
 
@@ -27,7 +28,7 @@ export const Day = ({ day, month, event, items, isPage=false }:IDayProps) => {
 
         if (isCalendar) {
             openModal({
-                content: <EditTask task={item} />
+                content: <EditItem task={item} onNewItemCreated={onNewItemCreated} />
             });
         }
     };

@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 import { SOCKET_URL } from "../lib/api";
 import { useEffect, useState } from "react";
 import { useUser } from "../contexts/userContext";
+import Loading from "../components/Loading";
 
 export default function CalendarPage() {
 
@@ -158,11 +159,11 @@ export default function CalendarPage() {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <Calendar 
+      {!loading ? <Calendar 
         event={response} 
         items={items}
         onNewItemCreated={updateTasks}
-      />
+      /> : <Loading />}
     </div>
   );
 }

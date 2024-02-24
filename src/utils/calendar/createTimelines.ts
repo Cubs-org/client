@@ -29,6 +29,21 @@ export function createTimelines(items: any, data: any) {
                     ) {
                         // Calcula a hierarchy com base nas tarefas que começam depois no mesmo dia
                         const hierarchy = calculateHierarchy(_items, k, day);
+                        if (hierarchy >= 3 && end.split(" ")[0] !== day) {
+                            let dt = new Date(day);
+
+                            dt.setDate(dt.getDate() + 1);
+
+                            let _day = dt.toISOString().split("T")[0];
+
+                            let newHierarchy = calculateHierarchy(_items, k, _day);
+                            
+                            timeline.push({
+                                day: _day,
+                                range: rangeDifferenceBetweenDates({ initialDate: day, finalDate: end.split(" ")[0]}),
+                                hierarchy: newHierarchy
+                            });
+                        }
 
                         timeline.push({
                             day,
