@@ -7,7 +7,15 @@ import {
 const ThemeContext = createContext({})
 
 const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState("light")
+
+    let prefer;
+    if (window.matchMedia) {
+        prefer = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light"
+    } else {
+        prefer = "light"
+    }
+
+    const [theme, setTheme] = useState(prefer);
 
     return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>
 }

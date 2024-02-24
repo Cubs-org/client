@@ -24,7 +24,7 @@ export const CustomTimeline = ({ item, isFirst, handle }:ITimelineProps) => {
     // const timelineProps = properties?.find((p: any) => p.type === "calendar");
 
     let style:CSSProperties = {
-        width: (item && rangeDays && isFirst) ? `calc(${rangeDays * 100}% + ${rangeDays*10}px)` : "100%",
+        width: (item && rangeDays && isFirst) ? `calc(${rangeDays * 100}% + ${((rangeDays-1)*5) + ((rangeDays-1)*16)}px)` : "100%",
         zIndex: isFirst ? 30 : 0,
         opacity: isFirst ? 1 : 0,
     };
