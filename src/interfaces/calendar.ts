@@ -14,6 +14,7 @@ export interface CalendarProps {
   event?: (e: any) => void;
   items?: CalendarItems | [];
   isPage?: boolean;
+  onNewItemCreated?: (item: any) => void;
 }
 
 export interface DateProps {

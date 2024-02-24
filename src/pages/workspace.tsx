@@ -55,7 +55,9 @@ function Workspace () {
           data={{title: "Projetos", subdata: [
             {id: "1", title: "Projeto 1", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
             {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "3", title: "Projeto 3", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
+            {id: "3", title: "Projeto 3", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
+              {id: "1", type: "text", title: "Nome", data: { value:"Lucas" }, trash: false},
+            ]},
           ]}} 
           search={search} 
           // notDisplayTitle 

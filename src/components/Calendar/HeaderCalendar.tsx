@@ -12,9 +12,10 @@ interface IHeaderCalendar {
     setYear: Dispatch<SetStateAction<number>>;
     setMonth: Dispatch<SetStateAction<number>>;
     setDate: Dispatch<SetStateAction<Date>>;
+    onNewItemCreated: (data: any) => void;
 }
 
-export const HeaderCalendar = ({date, setDate, setYear, setMonth}:IHeaderCalendar) => {
+export const HeaderCalendar = ({date, setDate, setYear, setMonth, onNewItemCreated}:IHeaderCalendar) => {
 
     // const [searchParams] = useSearchParams();
 
@@ -26,7 +27,7 @@ export const HeaderCalendar = ({date, setDate, setYear, setMonth}:IHeaderCalenda
 
             <div className="w-fit flex gap-2 items-center justify-between md:justify-normal">
                 
-                <NewItem />
+                <NewItem onNewItemCreated={onNewItemCreated} />
 
                 <FilterVisualization />
 

@@ -14,7 +14,7 @@ export function createTimelines(items: any, data: any) {
         // const start = (properties.date.start).split(' ')[0];
         // const end = (properties.date.end).split(' ')[0];
         const datetimeProperty = properties.find((p: any) => p.type === "datetime").data;
-        const [start, end] = [datetimeProperty.start.split(" ")[0], datetimeProperty.end.split(" ")[0]]
+        const [start, end] = [datetimeProperty.start.split("T")[0], datetimeProperty.end.split("T")[0]]
 
         if (start && end) {
             for (let i = 0; i < data.length; i++) {

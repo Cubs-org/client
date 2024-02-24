@@ -3,21 +3,27 @@ import { BsPlus } from "react-icons/bs"
 import { Popover } from "../Popover"
 import { Button } from "../Button"
 import { useModal } from "../../contexts/modalContext";
-import { CreateTask } from "./CreateTask";
+import { CreateNewItem } from "./CreateNewItem";
 
-export const NewItem = () => {
+export const NewItem = ({ onNewItemCreated }) => {
 
     const { openModal } = useModal();
 
     const handleCreateTask = () => {
         openModal && openModal({
-            content: <CreateTask />
+            content: <CreateNewItem type="task" onNewItemCreated={onNewItemCreated} />
+        });
+    }
+
+    const handleCreateEvent = () => {
+        openModal && openModal({
+            content: <CreateNewItem type="event" onNewItemCreated={onNewItemCreated} />
         });
     }
 
     const options = [
         {icon: <FaCircleCheck />, label: "Tarefa", onClick: handleCreateTask},
-        {icon: <FaCalendarWeek />, label: "Evento", onClick: () => {}},
+        {icon: <FaCalendarWeek />, label: "Evento", onClick: handleCreateEvent},
         {icon: <FaBullhorn />, label: "Lembrete", onClick: () => {}}
     ];
 

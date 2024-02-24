@@ -24,7 +24,7 @@ export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProp
     });
 
     const timelineProps = properties?.find((p: any) => p.type === "calendar");
-    const isFiltered = (["task", "event", "reminder"].includes(timelineProps?.name));
+    const isFiltered = (["task", "event", "reminder"].includes(timelineProps?.title));
 
     let style:CSSProperties = {
         width: item && width ? `calc(${width * 100}% + ${range && ((range * 5) - 5) + "px"})` : "100%",

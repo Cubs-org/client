@@ -13,6 +13,6 @@ export interface PagePropertiesProps {
     id: string;
     type: string;
     title: string;
-    data: JSON;
+    data: Object; 
     trash: boolean;
 }

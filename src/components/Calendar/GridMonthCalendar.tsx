@@ -5,7 +5,14 @@ import rangeGridCalendar from "../../utils/calendar/rangeGridCalendar";
 import { Week } from "./Week";
 import { createTimelines } from "../../utils/calendar/createTimelines";
 import clsx from "clsx";
-// import isDateInRange from "../../utils/calendar/isDateInRange";
+
+interface Items {
+    id: string;
+    title: string;
+    properties: any[];
+    timeline?: { day: string; range: number }[];
+    totalProperties?: {index: number, h: number}[];
+}
 
 export const GridMonthCalendar = ({ year, month, event, items, isPage=false }:CalendarProps) => {
 
@@ -20,11 +27,11 @@ export const GridMonthCalendar = ({ year, month, event, items, isPage=false }:Ca
             let totalProperties = 0;
     
             week.forEach(day => {
-                const dayItems = (items as any[]).filter(item =>
-                    item.timeline.some(
+                const dayItems = (items as Items[]).filter(item =>
+                    item.timeline && item.timeline.some(
                         timeline => (
                             timeline.day === day &&
-                            item.properties.find(prop => prop.type === "datetime").data.end.split(" ")[0] !== day
+                            item.properties.find(prop => prop.type === "datetime").data.end.split("T")[0] !== day
                         )
                     )
                 );
