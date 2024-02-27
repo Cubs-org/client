@@ -59,7 +59,7 @@ export const GridMonthCalendar = ({ year, month, event, items, isPage=false, onN
 
     adjustWeekHeight(data);
 
-    const gridElements = data.map((week, index) => (
+    const gridElements = data.map((week, index) => onNewItemCreated && (
         <Week 
             key={`${week}-${index}`} 
             week={week}

@@ -25,6 +25,7 @@ export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProp
 
     const timelineProps = properties?.find((p: any) => p.type === "calendar");
     const isFiltered = (["task", "event", "reminder"].includes(timelineProps?.title));
+    const isCompleted = item?.properties?.find((p: any) => p.type === "checkbox")?.data?.value;
 
     let style:CSSProperties = {
         width: item && width ? `calc(${width * 100}% + ${range && ((range * 5) - 5) + "px"})` : "100%",
@@ -43,6 +44,7 @@ export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProp
                 
                 "px-2 py-3 !shadow-none": !isFiltered,
 
+                "line-through" : isCompleted,
 
                 // added temporary to see the first item
                 "!bg-red-500": timelineProps?.data?.color === "red",

@@ -28,7 +28,7 @@ export const Day = ({ day, month, event, items, isPage=false, onNewItemCreated }
 
         if (isCalendar) {
             openModal({
-                content: <EditItem task={item} onNewItemCreated={onNewItemCreated} />
+                content: <EditItem task={item} onUpdateAnyTask={onNewItemCreated} />
             });
         }
     };
@@ -39,8 +39,8 @@ export const Day = ({ day, month, event, items, isPage=false, onNewItemCreated }
         let amountitems = [] as any;
         items.map(item => item.timeline.filter(timeline => ((timeline.day === date) && (timeline.hierarchy >= 3)) && amountitems.push(item)))
         
-        openModal && openModal({
-            content: <AmountRemaingTasks items={amountitems}/>
+        openModal({
+            content: <AmountRemaingTasks items={amountitems} onUpdateAnyTask={onNewItemCreated}/>
         });
     }
 

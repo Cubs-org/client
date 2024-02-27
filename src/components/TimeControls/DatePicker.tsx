@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 import { FaCalendar } from "react-icons/fa";
+import { formatToDateInput } from "../../utils/datetime/formatToDateInput";
 
 interface IDatePicker extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, React.AriaAttributes {
     classNames?: string;
@@ -41,7 +42,7 @@ export const DatePicker = ({ classNames, showIcon=true, handleChange, value, ...
                     handleChange(e);
                     setDate(e.target.value)
                 }}
-                value={date} // Make sure the value is controlled
+                value={formatToDateInput(date)}
                 name={props.name || "date"}
                 className="absolute bg-transparent text-transparent w-full flex-1 h-full cursor-pointer"
                 {...props}

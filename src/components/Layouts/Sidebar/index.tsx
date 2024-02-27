@@ -113,7 +113,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     />
                 </span>
             </div>
-            <div className={clsx("absolute top-0 w-full h-full lg:w-[80px] flex z-40 lg:min-h-[90vh] lg:max-h-[90vh] flex-col justify-evenly lg:justify-between items-center gap-0 lg:gap-3 lg:shadow-full rounded-2xl px-3 py-2 bg-light-100 dark:bg-dark-900 transition-all", {
+            <div className={clsx("absolute top-0 w-full h-screen rounded-none lg:w-[80px] flex z-40 lg:min-h-[90vh] lg:max-h-[90vh] flex-col justify-evenly lg:justify-between items-center gap-0 lg:gap-3 lg:shadow-full lg:rounded-2xl px-3 py-2 bg-light-100 dark:bg-dark-900 transition-all", {
                 "lg:-left-[100px]" : !layout,
                 "lg:translate-x-0 -translate-x-[100vw]" : !sidebarVisibility,
                 "lg:translate-x-0 translate-x-0" : sidebarVisibility,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 
@@ -9,7 +9,7 @@ interface CheckProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<H
 
 export const Check = ({ classNames, ...props }: CheckProps) => {
 
-    const [check, setCheck] = useState(props.checked || false);
+    const [check, setCheck] = useState(props.checked);
 
     return (
         <span
@@ -18,7 +18,7 @@ export const Check = ({ classNames, ...props }: CheckProps) => {
             <input
                 type="checkbox"
                 name={props.name || "check"}
-                checked={props.checked}
+                checked={check}
                 className="absolute w-full h-full opacity-0 cursor-pointer"
                 onClick={() => setCheck(!check)}
                 {...props}
