@@ -1,7 +1,7 @@
 export interface PageProps {
     id: string;
     title: string;
-    owner: string;
+    ownerId: string;
     createdAt: string;
     updatedAt: string;
     trash: boolean;
@@ -9,10 +9,14 @@ export interface PageProps {
     properties?: PagePropertiesProps[];
 }
 
+type Data = {
+    value?: string;
+} & Object;
+
 export interface PagePropertiesProps {
     id: string;
     type: string;
     title: string;
-    data: Object; 
+    data: Data; 
     trash: boolean;
 }

@@ -53,40 +53,18 @@ function Workspace () {
         <DatabaseView 
           view="grid" 
           data={{title: "Projetos", subdata: [
-            {id: "1", title: "Projeto 1", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
-            {id: "2", title: "Projeto 2", owner: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false},
+            {id: "1", title: "Projeto 1", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
+                {id: "1", type: "text", title: "Descrição", data: {value: "Valor 1"}, trash: false},
+                {id: "1", type: "formula", title: "Data", data: {value: "true && `text=@Hoje: ${new Date().toLocaleDateString()};color=blue`"}, trash: false},
+            ]},
+            {id: "2", title: "Projeto 2", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
+                {id: "1", type: "text", title: "Descrição", data: {value: "Valor 2"}, trash: false},
+                {id: "1", type: "formula", title: "Data", data: {value: "true && `text=@Hoje: ${new Date().toLocaleDateString()};color=yellow`"}, trash: false},
+            ]},
           ]}} 
           search={search} 
-          // notDisplayTitle 
+        //   notDisplayTitle 
         />
-
-        
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit cupiditate aut perferendis, voluptatum odit culpa iure architecto vero nihil nulla perspiciatis id rerum quas, aliquam ut soluta! Repellendus, officiis quos?</p>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Natus sint saepe magni! Quidem, sapiente optio. Earum adipisci nulla hic. Eaque fugiat ex aliquid ipsa ipsam mollitia velit pariatur, veritatis ea! Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit nam necessitatibus adipisci saepe accusantium numquam! Commodi, provident. Incidunt sunt eveniet quaerat, vero, dolor soluta amet assumenda rem ipsam consequuntur sed?</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit cupiditate aut perferendis, voluptatum odit culpa iure architecto vero nihil nulla perspiciatis id rerum quas, aliquam ut soluta! Repellendus, officiis quos?</p>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Natus sint saepe magni! Quidem, sapiente optio. Earum adipisci nulla hic. Eaque fugiat ex aliquid ipsa ipsam mollitia velit pariatur, veritatis ea! Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit nam necessitatibus adipisci saepe accusantium numquam! Commodi, provident. Incidunt sunt eveniet quaerat, vero, dolor soluta amet assumenda rem ipsam consequuntur sed?</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit cupiditate aut perferendis, voluptatum odit culpa iure architecto vero nihil nulla perspiciatis id rerum quas, aliquam ut soluta! Repellendus, officiis quos?</p>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Natus sint saepe magni! Quidem, sapiente optio. Earum adipisci nulla hic. Eaque fugiat ex aliquid ipsa ipsam mollitia velit pariatur, veritatis ea! Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit nam necessitatibus adipisci saepe accusantium numquam! Commodi, provident. Incidunt sunt eveniet quaerat, vero, dolor soluta amet assumenda rem ipsam consequuntur sed?</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit cupiditate aut perferendis, voluptatum odit culpa iure architecto vero nihil nulla perspiciatis id rerum quas, aliquam ut soluta! Repellendus, officiis quos?</p>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Natus sint saepe magni! Quidem, sapiente optio. Earum adipisci nulla hic. Eaque fugiat ex aliquid ipsa ipsam mollitia velit pariatur, veritatis ea! Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit nam necessitatibus adipisci saepe accusantium numquam! Commodi, provident. Incidunt sunt eveniet quaerat, vero, dolor soluta amet assumenda rem ipsam consequuntur sed?</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit cupiditate aut perferendis, voluptatum odit culpa iure architecto vero nihil nulla perspiciatis id rerum quas, aliquam ut soluta! Repellendus, officiis quos?</p>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Natus sint saepe magni! Quidem, sapiente optio. Earum adipisci nulla hic. Eaque fugiat ex aliquid ipsa ipsam mollitia velit pariatur, veritatis ea! Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit nam necessitatibus adipisci saepe accusantium numquam! Commodi, provident. Incidunt sunt eveniet quaerat, vero, dolor soluta amet assumenda rem ipsam consequuntur sed?</p>
       </div>
   )
 }

@@ -1,9 +1,17 @@
+import { 
+    useEffect, 
+    useState 
+} from "react";
+
 import { FaPlus } from "react-icons/fa6";
 import { PageProps } from "../../interfaces/page";
 import { Button } from "../Button";
 import { BsFilterRight } from "react-icons/bs";
 import { CgBoard, CgViewDay, CgViewGrid } from "react-icons/cg";
 import clsx from "clsx";
+import { useSearchParams } from "react-router-dom";
+import { randomUUID } from "crypto";
+import { Table } from "./Table";
 
 interface IDatabaseViewProps {
     search: string;
@@ -17,15 +25,22 @@ interface DatabaseView {
     subdata: PageProps[];
 }
 
+interface ViewProps {
+    id?: number;
+    name: string;
+    icon: JSX.Element;
+    preferences?: JSON;
+}
+
 export const DatabaseView = ({ data, notDisplayTitle = false }: IDatabaseViewProps) => {
 
-    const views = [
+    const views:ViewProps[] = [
         {
-            name: "Grid",
+            name: "Grade",
             icon: <CgViewDay size={18} />
         },
         {
-            name: "Table",
+            name: "Tabela",
             icon: <CgViewGrid size={18} />
         },
         {
@@ -34,22 +49,48 @@ export const DatabaseView = ({ data, notDisplayTitle = false }: IDatabaseViewPro
         }
     ];
 
+    let tmp = views[1];
+
+    const [availableView, setAvailableView] = useState<ViewProps[]>([{id:1,...tmp}]);
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const currentView = searchParams.get("view");
+
+    const handleSetView = (view: string) => setSearchParams({ view });
+
+    const handleAddView = () => {
+        const newId = availableView.length + 1;
+        setAvailableView([...availableView, {id:newId, ...views[1]}]);
+    }
+
     return (
         <div className="w-full h-full relative">
             <div
-                className={clsx("w-full flex justify-between",
+                className={clsx("w-full flex justify-between mb-3",
                     // "sticky top-14 left-0 right-0 px-2 py-1 bg-glass-light backdrop-blur-md dark:bg-glass-dark ring-1 ring-light-500 dark:ring-dark-500 rounded-md"
                 )}>
                     <div className="flex gap-2 items-center">
 
-                        {views.map((view, index) => (
-                            <span key={index} className="flex gap-1 items-center px-2 py-0.5 ring-1 ring-light-500 dark:ring-dark-100 rounded-md">
+                        {availableView.map((view, index) => (
+                            <span key={index} className={clsx("flex gap-1 items-center px-2 py-0.5 ring-1 ring-light-500 dark:ring-dark-100 rounded-md", {
+                                "bg-light-300 dark:bg-dark-800 text-dark-100 dark:text-light-300": currentView === view.id?.toString(),
+                                "hover:bg-light-300 dark:hover:bg-dark-300 cursor-pointer": currentView !== view.id?.toString()
+                            })} 
+                            onClick={() => {
+                                if ( view.id)
+                                    handleSetView(view.id.toString())
+                            }}
+                            >
                                 {view.icon}
                                 {view.name}
                             </span>
                         ))}
 
-                        <Button classNames="ml-2 p-2 bg-transparent hover:bg-light-300 dark:hover:bg-dark-300 text-dark-100 dark:text-light-300">
+                        <Button 
+                            classNames="ml-2 p-2 bg-transparent hover:bg-light-300 dark:hover:bg-dark-300 text-dark-100 dark:text-light-300"
+                            onClick={handleAddView}
+                        >
                             <FaPlus size={18} />
                         </Button>
                     </div>
@@ -67,15 +108,9 @@ export const DatabaseView = ({ data, notDisplayTitle = false }: IDatabaseViewPro
                     </div>
             </div>
 
-            {(!notDisplayTitle && data && 'title' in data) && <h1 className="text-xl font-bold my-2">{data.title}</h1>}
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {data && 'subdata' in data && data.subdata.map((page, index) => (
-                    <div key={index} className="w-full bg-light-300 dark:bg-dark-800 p-4 rounded-md">
-                        <h1 className="text-lg font-bold">{page.title}</h1>
-                        <p className="text-sm text-dark-400 dark:text-light-700">Criado por {page.owner}</p>
-                    </div>
-                ))}
-            </div>
+            {(!notDisplayTitle && data && 'title' in data) && <h1 className="text-xl font-bold mb-3">{data.title}</h1>}
+
+            <Table data={data} />
         </div>
     );
 };
