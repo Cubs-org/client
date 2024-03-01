@@ -8,8 +8,8 @@ export const Table = ({ data }) => {
             <div className="flex flex-col items-center gap-1 flex-grow">
                 <table className="w-full rounded-md overflow-hidden ring-1 ring-light-400 dark:ring-dark-700">
                     <thead className="w-full bg-light-300 dark:bg-dark-800 p-4 rounded-md">
-                        <tr className="text-left ring-1 ring-light-400 dark:ring-dark-700 px-3 py-1">
-                            <th scope="col">
+                        <tr>
+                            <th scope="col" className="cursor-not-allowed text-left ring-1 ring-light-400 dark:ring-dark-700 px-2 py-1">
                                 <span className="w-full flex gap-2 items-center px-2 py-1">
                                     {renderIcon(data.type)}
                                     Título

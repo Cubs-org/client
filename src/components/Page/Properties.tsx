@@ -4,7 +4,7 @@ import { Progress } from "../Progress";
 import { RadialProgressBar } from "../RadialProgressBar";
 import clsx from "clsx";
 import { Avatar } from "../Avatar";
-import parseFormula from "../../utils/page/parseFormula";
+import parseFormula from "../../utils/page/formulaProperty/parseFormula";
 
 export const Properties = ({ properties }) => {
 

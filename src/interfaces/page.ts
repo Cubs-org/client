@@ -10,9 +10,11 @@ export interface PageProps {
 }
 
 type Data = {
-    value?: string;
+    value?: string | number | boolean | string[];
     start?: string;
     end?: string;
+    items?: {name:string;color:string}[];
+    tags?: {name:string;color:string}[];
 } & Object;
 
 export interface PagePropertiesProps {

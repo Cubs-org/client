@@ -55,25 +55,26 @@ function Workspace () {
           data={{title: "Projetos", subdata: [
             {id: "1", title: "Projeto 1", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
                 {id: "1", type: "text", title: "Descrição", data: {value: "Valor 1"}, trash: false},
-                {id: "1", type: "number", title: "Valor 1", data: {value: "1"}, trash: false},
-                {id: "1", type: "number", title: "Valor 2", data: {value: "1"}, trash: false},
-                {id: "1", type: "formula", title: "Resultado", data: {value: "let n1=Number('|Valor 1|');let n2=Number('|Valor 2|');'text='+`Valor 1 + Valor 2 = ${n1+n2}`+';color=yellow'"}, trash: false},
-            ]},
-            {id: "2", title: "Projeto 2", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
-                {id: "1", type: "text", title: "Descrição", data: {value: "Valor 2"}, trash: false},
-                {id: "1", type: "number", title: "Valor 1", data: {value: "2"}, trash: false},
-                {id: "1", type: "number", title: "Valor 2", data: {value: "2"}, trash: false},
-                {id: "1", type: "formula", title: "Resultado", data: {value: "let n1=Number('|Valor 1|');let n2=Number('|Valor 2|');'text='+`Valor 1 + Valor 2 = ${n1+n2}`+';color=yellow'"}, trash: false},
-            ]},
-            {id: "3", title: "Projeto 3", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
-                {id: "1", type: "text", title: "Descrição", data: {value: "Valor 3"}, trash: false},
-                {id: "1", type: "number", title: "Valor 1", data: {value: "3"}, trash: false},
-                {id: "1", type: "number", title: "Valor 2", data: {value: "3"}, trash: false},
-                {id: "1", type: "formula", title: "Resultado", data: {value: "let n1=Number('|Valor 1|');let n2=Number('|Valor 2|');'text='+`Valor 1 + Valor 2 = ${n1+n2}`+';color=yellow'"}, trash: false},
+                {id: "1", type: "datetime", title: "Data", data: {start: "2024-02-29 00:00:00.000", end: "2024-03-01 00:00:00.000"}, trash: false},
+                {id: "1", type: "select", title: "Categoria", data: { value: "Despesas", items:[
+                    {name: "Salário", color: "green"},
+                    {name: "Despesas", color: "red"},
+                    {name: "Investimentos", color: "blue"},
+                ]}, trash: false},
+                {id: "1", type: "multiselect", title: "Tags", data: { tags: [
+                    {name: "Salário", color: "green"},
+                    {name: "Investimentos", color: "blue"},
+                ], items:[
+                    {name: "Salário", color: "green"},
+                    {name: "Despesas", color: "red"},
+                    {name: "Investimentos", color: "blue"},
+                ]}, trash: false},
+                {id: "1", type: "formula", title: "Resultado", data: {value: "'AAA'"}, trash: false},
+                {id: "1", type: "checkbox", title: "Feito", data: {value: true}, trash: false}
             ]},
           ]}} 
           search={search} 
-        //   notDisplayTitle 
+          notDisplayTitle 
         />
       </div>
   )

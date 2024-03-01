@@ -1,83 +1,19 @@
 import clsx from "clsx";
-import parseFormula from "../../../utils/page/parseFormula";
+import parseFormula from "../../../utils/page/formulaProperty/parseFormula";
 import { PageProps } from "../../../interfaces/page";
-import { formatDateToPreview } from "../../../utils/datetime/formatDateToPreview";
+import { getPropRelationFromFormula } from "../../../utils/page/formulaProperty/relations";
 
 interface FormulaProps {
     value: string;
-    rowPage: PageProps;
+    pageData: PageProps;
 }
 
-export const Formula = ({ value, rowPage }:FormulaProps) => {
-    // const formulaValue = eval(value);
-    // const { text, color: formulaColor } = parseFormula(formulaValue);
+export const Formula = ({ value, pageData }:FormulaProps) => {
 
-    const getPropertyValue = (rowPage:PageProps, relationName) => {
-        let relationValue;
-
-        if (relationName === "Título")
-            relationValue = rowPage.title;
-        else if (relationName === "Criado em")
-            relationValue = rowPage.createdAt;
-        else if (relationName === "Atualizado em")
-            relationValue = rowPage.updatedAt;
-        else if (relationName === "Deletado")
-            relationValue = rowPage.trash;
-        else{
-            if (rowPage.properties) {
-                const property = rowPage.properties.find(property => property.title === relationName);
-                switch (property?.type) {
-                    case "text":
-                        relationValue = property?.data?.value;
-                        break;
-                    case "number":
-                        relationValue = property?.data?.value;
-                        break;
-                    case "formula":
-                        relationValue = eval(property?.data?.value || "'text=Vazio;color=red'");
-                        break;
-                    case "datetime":
-                        if (property?.data?.start && property?.data?.end) {
-                            const start = formatDateToPreview(property?.data?.start || new Date().toISOString()),
-                                end = formatDateToPreview(property?.data?.end || new Date().toISOString());
-                            relationValue = `${start}-${end}`;
-                        }
-                        break;
-                    default:
-                        relationValue = property?.data?.value || "'text=Vazio;color=red'";
-                        break;
-                }
-            }
-        }
-
-        return relationValue;
-    }
-
-    const getPropRelationFromFormula = (rowPage: PageProps, formula: string): string => {
-        const matches = formula.match(/\|[^|]+\|/g); // Encontrar todas as ocorrências de marcadores de propriedades
-    
-        if (!matches) return formula; // Se não houver marcadores, retornar a fórmula original
-    
-        let result = formula;
-    
-        matches.forEach(match => {
-            const relationName = match.substring(1, match.length - 1); // Extrair o nome da propriedade do marcador
-            console.log(relationName);
-            const relationValue = getPropertyValue(rowPage, relationName); // Obter o valor da propriedade
-    
-            // Substituir o marcador pelo valor correspondente
-            result = result.replace(match, relationValue || "");
-        });
-    
-        return result;
-    };
-
-
-    const formula = getPropRelationFromFormula(rowPage, value);
+    const formula = getPropRelationFromFormula(pageData, value);
 
     const formulaValue = eval(formula);
     const { text, color: formulaColor } = parseFormula(formulaValue);
-    
 
     return (
         <div className={clsx("text-normal font-medium", {
