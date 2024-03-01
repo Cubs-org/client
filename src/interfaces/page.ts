@@ -11,6 +11,8 @@ export interface PageProps {
 
 type Data = {
     value?: string;
+    start?: string;
+    end?: string;
 } & Object;
 
 export interface PagePropertiesProps {

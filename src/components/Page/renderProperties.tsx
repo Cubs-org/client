@@ -3,7 +3,7 @@ import { PagePropertiesProps, PageProps } from "../../interfaces/page";
 import { BsHash, BsType } from "react-icons/bs";
 import { LuSigma } from "react-icons/lu";
 import { CiCalendar } from "react-icons/ci";
-import { Formula } from "./Formula";
+import { Formula } from "./Properties/Formula";
 
 export const renderIcon = (type) => {
     switch (type) {
@@ -22,8 +22,8 @@ export const renderIcon = (type) => {
 
 export const renderPropertiesTitle = (properties:PagePropertiesProps[]) => {
     return properties.map((property, index) => (
-        <th key={index} className="text-left ring-1 ring-light-400 dark:ring-dark-700 px-3 py-1">
-            <span className="flex gap-2 items-center">
+        <th key={index} scope="col">
+            <span className="w-full flex gap-2 items-center px-2 py-1">
                 {renderIcon(property.type)}
                 {property.title}
             </span>
@@ -39,7 +39,7 @@ export const renderPropertiesData = (page:PageProps) => {
                     property.type === "text" ? property.data.value :
                     property.type === "number" ? property.data.value :
                     property.type === "datetime" ? property.data.value :
-                    property.type === "formula" ? <Formula value={property.data.value}/> :
+                    property.type === "formula" ? <Formula value={property.data.value as string} rowPage={page}/> :
                     property.data.value
                 }
             </td>

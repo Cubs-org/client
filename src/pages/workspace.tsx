@@ -55,11 +55,21 @@ function Workspace () {
           data={{title: "Projetos", subdata: [
             {id: "1", title: "Projeto 1", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
                 {id: "1", type: "text", title: "Descrição", data: {value: "Valor 1"}, trash: false},
-                {id: "1", type: "formula", title: "Data", data: {value: "true && `text=@Hoje: ${new Date().toLocaleDateString()};color=blue`"}, trash: false},
+                {id: "1", type: "number", title: "Valor 1", data: {value: "1"}, trash: false},
+                {id: "1", type: "number", title: "Valor 2", data: {value: "1"}, trash: false},
+                {id: "1", type: "formula", title: "Resultado", data: {value: "let n1=Number('|Valor 1|');let n2=Number('|Valor 2|');'text='+`Valor 1 + Valor 2 = ${n1+n2}`+';color=yellow'"}, trash: false},
             ]},
             {id: "2", title: "Projeto 2", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
                 {id: "1", type: "text", title: "Descrição", data: {value: "Valor 2"}, trash: false},
-                {id: "1", type: "formula", title: "Data", data: {value: "true && `text=@Hoje: ${new Date().toLocaleDateString()};color=yellow`"}, trash: false},
+                {id: "1", type: "number", title: "Valor 1", data: {value: "2"}, trash: false},
+                {id: "1", type: "number", title: "Valor 2", data: {value: "2"}, trash: false},
+                {id: "1", type: "formula", title: "Resultado", data: {value: "let n1=Number('|Valor 1|');let n2=Number('|Valor 2|');'text='+`Valor 1 + Valor 2 = ${n1+n2}`+';color=yellow'"}, trash: false},
+            ]},
+            {id: "3", title: "Projeto 3", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
+                {id: "1", type: "text", title: "Descrição", data: {value: "Valor 3"}, trash: false},
+                {id: "1", type: "number", title: "Valor 1", data: {value: "3"}, trash: false},
+                {id: "1", type: "number", title: "Valor 2", data: {value: "3"}, trash: false},
+                {id: "1", type: "formula", title: "Resultado", data: {value: "let n1=Number('|Valor 1|');let n2=Number('|Valor 2|');'text='+`Valor 1 + Valor 2 = ${n1+n2}`+';color=yellow'"}, trash: false},
             ]},
           ]}} 
           search={search} 
