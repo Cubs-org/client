@@ -52,25 +52,11 @@ function Workspace () {
 
         <DatabaseView 
           view="grid" 
-          data={{title: "Projetos", subdata: [
-            {id: "1", title: "Projeto 1", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
-                {id: "1", type: "text", title: "Descrição", data: {value: "Valor 1"}, trash: false},
-                {id: "1", type: "datetime", title: "Data", data: {start: "2024-02-29 00:00:00.000", end: "2024-03-01 00:00:00.000"}, trash: false},
-                {id: "1", type: "select", title: "Categoria", data: { value: "Despesas", items:[
-                    {name: "Salário", color: "green"},
-                    {name: "Despesas", color: "red"},
-                    {name: "Investimentos", color: "blue"},
-                ]}, trash: false},
-                {id: "1", type: "multiselect", title: "Tags", data: { tags: [
-                    {name: "Salário", color: "green"},
-                    {name: "Investimentos", color: "blue"},
-                ], items:[
-                    {name: "Salário", color: "green"},
-                    {name: "Despesas", color: "red"},
-                    {name: "Investimentos", color: "blue"},
-                ]}, trash: false},
-                {id: "1", type: "formula", title: "Resultado", data: {value: "'AAA'"}, trash: false},
-                {id: "1", type: "checkbox", title: "Feito", data: {value: true}, trash: false}
+          data={{title: "Habit Tracker", subdata: [
+            {id: "1", title: "@Hoje", ownerId: "Lucas", createdAt: "2021-09-01", updatedAt: "2021-09-01", trash: false, properties: [
+                {id: "123", type: "checkbox", title: "Academia", data: {value: true, loadOrder:1, width: 100}, trash: false},
+                {id: "456", type: "checkbox", title: "Ler e meditar", data: {value: false, loadOrder:2, width: 100}, trash: false},
+                {id: "789", type: "checkbox", title: "Comer bem", data: {value: false, loadOrder:3, width: 100}, trash: false}
             ]},
           ]}} 
           search={search} 

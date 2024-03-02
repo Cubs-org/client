@@ -10,9 +10,18 @@ export interface PageProps {
 }
 
 type Data = {
+    // default
     value?: string | number | boolean | string[];
+
+    icon?: string;
+    width?: number;
+    loadOrder?: number;
+
+    // datetime
     start?: string;
     end?: string;
+
+    // select | multiselect
     items?: {name:string;color:string}[];
     tags?: {name:string;color:string}[];
 } & Object;

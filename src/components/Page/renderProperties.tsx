@@ -12,6 +12,7 @@ import { Select } from "./Properties/Select";
 import { MultiSelect } from "./Properties/MultiSelect";
 import { Datetime } from "./Properties/Datetime";
 import { Checkbox } from "./Properties/Checkbox";
+import { ColumnTable } from "../DatabaseView/ColumnTable";
 
 export const renderIcon = (type) => {
     switch (type) {
@@ -34,31 +35,36 @@ export const renderIcon = (type) => {
     }
 }
 
-export const renderPropertiesTitle = (properties:PagePropertiesProps[]) => {
+export const renderPropertiesTitle = (properties:PagePropertiesProps[], handleDrop: (e: React.DragEvent<HTMLDivElement>) => void) => {
     return properties.map((property, index) => (
-        <th key={index} scope="col" className="cursor-col-resize text-left ring-1 ring-light-400 dark:ring-dark-700 px-2 py-1">
-            <span className="w-full flex gap-2 items-center px-2 py-1 cursor-pointer">
-                {renderIcon(property.type)}
-                {property.title}
-            </span>
-        </th>
+        <ColumnTable 
+            key={`${property.title}-${index}`} 
+            title={property.title} 
+            type={property.type}
+            icon={property?.data?.icon}
+            width={property?.data?.width || 200}
+            loadOrder={property?.data?.loadOrder || 0}
+            id={property.id}
+            handleDrop={handleDrop}
+        />
     ));
 }
 
 export const renderPropertiesData = (page:PageProps) => {
     if (page.properties)
-        return page.properties.map((property, index) => (
-            <td key={index} className="ring-1 ring-light-400 dark:ring-dark-700 px-3 py-1">
-                {
-                    property.type === "text" ? property.data.value :
-                    property.type === "number" ? property.data.value :
-                    property.type === "datetime" ? <Datetime dateValue={property.data} /> :
-                    property.type === "select" ? <Select value={property.data.value} items={property.data.items} pageData={page} /> :
-                    property.type === "multiselect" ? <MultiSelect value={property.data.tags} items={property.data.items} pageData={page} /> :
-                    property.type === "formula" ? <Formula value={property.data.value as string} pageData={page}/> :
-                    property.type === "checkbox" ? <Checkbox value={property.data.value} /> :
-                    property.data.value
-                }
-            </td>
-        ));
+        return page.properties.sort((a, b) => (a.data.loadOrder ?? 0) - (b.data.loadOrder ?? 0))
+            .map((property, index) => (
+                <td key={index} className="border border-light-400 dark:border-dark-700 px-3 py-1 truncate overflow-auto">
+                    {
+                        property.type === "text" ? property.data.value :
+                        property.type === "number" ? property.data.value :
+                        property.type === "datetime" ? <Datetime dateValue={property.data} /> :
+                        property.type === "select" ? <Select value={property.data.value} items={property.data.items} pageData={page} /> :
+                        property.type === "multiselect" ? <MultiSelect value={property.data.tags} items={property.data.items} pageData={page} /> :
+                        property.type === "formula" ? <Formula value={property.data.value as string} pageData={page}/> :
+                        property.type === "checkbox" ? <Checkbox value={property.data.value} /> :
+                        property.data.value
+                    }
+                </td>
+            ));
 }
