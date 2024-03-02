@@ -24,7 +24,7 @@ export const Table = ({ data }) => {
         // // Se a ordem dos itens for a mesma, não faz nada
         if (targetColumnId === draggedColumnId) return;
 
-        // Atualiza os items com as novas ordens
+        // // Atualiza os items com as novas ordens
         const updatedItems = items.map((item:PageProps) => {
             if (!item.properties) return item;
 

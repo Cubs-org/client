@@ -26,32 +26,40 @@ export const ColumnTable = ({
     const [columnSize, setColumnSize] = useState<number>(width ? width : 300);
     const [click, setClick] = useState(false);
 
-    const handleResize = (e: React.DragEvent<HTMLTableHeaderCellElement>) => {
+    const handleStartResizable = (e: React.MouseEvent<HTMLTableHeaderCellElement>) => {
         e.stopPropagation();
+        setClick(true);
+        const initialX = e.clientX;
 
-        if (click) return;
+        const handleMouseMove = (e: MouseEvent) => {
+            const diff = initialX - e.clientX;
+            setColumnSize(columnSize - diff);
+        };
 
-        const offset = e.clientX - columnRef.current!.getBoundingClientRect().left;
-        setColumnSize(offset);
-    };
+        const handleMouseUp = () => {
+            setClick(false);
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseup", handleMouseUp);
+        };
 
-    const handleStartResizable = (e: React.DragEvent<HTMLTableHeaderCellElement>) => {
-        e.stopPropagation();
-        // columnRef.current!.style.backgroundColor = "#f00";
-    };
-
-    const handleEndResizable = (e: React.DragEvent<HTMLTableHeaderCellElement>) => {
-        e.stopPropagation();
-        // columnRef.current!.style.backgroundColor = "#ff0";
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
     };
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.stopPropagation();
 
         if (!click) return;
+
         e.dataTransfer.setData("text/plain", e.currentTarget.getAttribute("data-column-id") || "");
         e.dataTransfer.setData("text/number", e.currentTarget.getAttribute("data-column-order") || "");
     };
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setClick(true);
+        columnRef.current!.style.backgroundColor = "#00f";
+    }
 
     return (
         <th
@@ -59,24 +67,16 @@ export const ColumnTable = ({
             ref={columnRef}
             style={{ minWidth: `${columnSize}px` }}
             className={clsx(
-                "pl-0 py-0 pr-2 my-0 cursor-col-resize text-left border-r border-light-500 dark:border-dark-700 hover:border-light-600 dark:hover:border-dark-600"
+                "pl-0 py-0 pr-2 my-0 cursor-col-resize bg-red-500 text-left border-r border-light-500 dark:border-dark-700 hover:!bg-red-900 dark:hover:bg-dark-600"
             )}
-            draggable={true}
-            onDragOver={(e) => e.stopPropagation()}
-            onDragStart={handleStartResizable}
-            onDrag={handleResize}
-            onDragEnd={handleEndResizable}
+            
+            onMouseDown={handleStartResizable}
         >
             <div
                 draggable={true}
                 onDragStart={handleDragStart}
-                onDrop={(e) => {
-                    if (!handleDrop || !click) return;
-                    setClick(true);
-                    handleDrop(e);
-                }}
-
-                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
                 onClick={(e) => e.stopPropagation()}
 
                 onMouseDown={(e) => {
@@ -91,7 +91,7 @@ export const ColumnTable = ({
                 data-column-id={id}
                 data-column-order={loadOrder}
                 className={clsx(
-                    "w-full h-full flex gap-2 items-center px-2 py-1 cursor-pointer truncate",
+                    "w-full h-full flex gap-2 items-center px-2 py-1 cursor-pointer truncate bg-green-300",
                     {
                         "min-w-fit cursor-not-allowed": title === "Título"
                     }
