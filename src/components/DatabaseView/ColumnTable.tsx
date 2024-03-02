@@ -37,21 +37,28 @@ export const ColumnTable = ({
 
     const handleStartResizable = (e: React.DragEvent<HTMLTableHeaderCellElement>) => {
         e.stopPropagation();
-        // columnRef.current!.style.backgroundColor = "#f00";
+        columnRef.current!.style.backgroundColor = "#f00";
     };
 
     const handleEndResizable = (e: React.DragEvent<HTMLTableHeaderCellElement>) => {
         e.stopPropagation();
-        // columnRef.current!.style.backgroundColor = "#ff0";
+        columnRef.current!.style.backgroundColor = "#ff0";
     };
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.stopPropagation();
 
         if (!click) return;
+
         e.dataTransfer.setData("text/plain", e.currentTarget.getAttribute("data-column-id") || "");
         e.dataTransfer.setData("text/number", e.currentTarget.getAttribute("data-column-order") || "");
     };
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setClick(true);
+        columnRef.current!.style.backgroundColor = "#00f";
+    }
 
     return (
         <th
@@ -70,13 +77,8 @@ export const ColumnTable = ({
             <div
                 draggable={true}
                 onDragStart={handleDragStart}
-                onDrop={(e) => {
-                    if (!handleDrop || !click) return;
-                    setClick(true);
-                    handleDrop(e);
-                }}
-
-                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
                 onClick={(e) => e.stopPropagation()}
 
                 onMouseDown={(e) => {

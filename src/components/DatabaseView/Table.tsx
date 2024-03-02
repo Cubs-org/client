@@ -24,42 +24,42 @@ export const Table = ({ data }) => {
         // // Se a ordem dos itens for a mesma, não faz nada
         if (targetColumnId === draggedColumnId) return;
 
-        // Atualiza os items com as novas ordens
-        const updatedItems = items.map((item:PageProps) => {
-            if (!item.properties) return item;
+        // // Atualiza os items com as novas ordens
+        // const updatedItems = items.map((item:PageProps) => {
+        //     if (!item.properties) return item;
 
-            const updatedProperties = item.properties.map((property) => {
-                if (property.id === targetColumnId) {
-                    return {
-                        ...property,
-                        data: {
-                            ...property.data,
-                            loadOrder: draggedColumnOrder
-                        }
-                    }
-                }
-                if (property.id === draggedColumnId) {
-                    return {
-                        ...property,
-                        data: {
-                            ...property.data,
-                            loadOrder: targetColumnOrder
-                        }
-                    }
-                }
-                return property;
-            });
+        //     const updatedProperties = item.properties.map((property) => {
+        //         if (property.id === targetColumnId) {
+        //             return {
+        //                 ...property,
+        //                 data: {
+        //                     ...property.data,
+        //                     loadOrder: draggedColumnOrder
+        //                 }
+        //             }
+        //         }
+        //         if (property.id === draggedColumnId) {
+        //             return {
+        //                 ...property,
+        //                 data: {
+        //                     ...property.data,
+        //                     loadOrder: targetColumnOrder
+        //                 }
+        //             }
+        //         }
+        //         return property;
+        //     });
 
-            return {
-                ...item,
-                properties: updatedProperties
-            }
-        });
+        //     return {
+        //         ...item,
+        //         properties: updatedProperties
+        //     }
+        // });
 
-        console.log(items);
+        // console.log(items);
 
-        // Atualiza o estado com os novos items
-        setItems(updatedItems);
+        // // Atualiza o estado com os novos items
+        // setItems(updatedItems);
     };
 
     return (

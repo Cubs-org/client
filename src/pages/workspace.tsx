@@ -7,9 +7,9 @@ import { FaEllipsisVertical } from "react-icons/fa6"
   
 function Workspace () {
 
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
 
-  const [options, setOptions] = useState(false)
+  const [options, setOptions] = useState(false);
 
   const toggleOptions = () => setOptions(!options);
 
