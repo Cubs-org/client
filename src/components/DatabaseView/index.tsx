@@ -1,29 +1,13 @@
-import { 
-    useEffect, 
-    useState 
-} from "react";
+import { useState } from "react";
 
 import { FaPlus } from "react-icons/fa6";
-import { PageProps } from "../../interfaces/page";
 import { Button } from "../Button";
 import { BsFilterRight } from "react-icons/bs";
 import { CgBoard, CgViewDay, CgViewGrid } from "react-icons/cg";
 import clsx from "clsx";
 import { useSearchParams } from "react-router-dom";
-import { randomUUID } from "crypto";
 import { Table } from "./Table";
-
-interface IDatabaseViewProps {
-    search: string;
-    data: DatabaseView | [];
-    view: "grid" | "list" | "table" | "kanban";
-    notDisplayTitle?: boolean;
-}
-
-interface DatabaseView {
-    title: string;
-    subdata: PageProps[];
-}
+import { IDatabaseViewProps } from "../../interfaces/datahub";
 
 interface ViewProps {
     id?: number;

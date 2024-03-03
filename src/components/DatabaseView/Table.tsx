@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../Button"
 import { renderPropertiesData, renderPropertiesTitle } from "../Page/renderProperties"
 import { ColumnTable } from "./ColumnTable"
 import { PageProps } from "../../interfaces/page";
+import { SOCKET_URL } from "../../lib/api";
+import { io } from "socket.io-client";
 
 export const Table = ({ data }) => {
 
-    const [items, setItems] = useState(data.subdata);
+    const socket = io(SOCKET_URL);
+
+    const [items, setItems] = useState<PageProps[]>(data.subdata);
+
+    useEffect(() => {
+        // socket.on('items', (data) => {
+        //     setItems(data);
+        // });
+
+        setItems(data.subdata);
+    }, [data]);
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -17,49 +29,37 @@ export const Table = ({ data }) => {
         const draggedColumnId = e.dataTransfer.getData("text/plain");
         const draggedColumnOrder = parseInt(e.dataTransfer.getData("text/number") || "0");
 
-
-        console.log(targetColumnId, targetColumnOrder);
-        console.log(draggedColumnId, draggedColumnOrder);
-
-        // // Se a ordem dos itens for a mesma, não faz nada
         if (targetColumnId === draggedColumnId) return;
 
-        // // Atualiza os items com as novas ordens
-        const updatedItems = items.map((item:PageProps) => {
-            if (!item.properties) return item;
-
-            const updatedProperties = item.properties.map((property) => {
-                if (property.id === targetColumnId) {
-                    return {
-                        ...property,
-                        data: {
-                            ...property.data,
-                            loadOrder: draggedColumnOrder
-                        }
-                    }
-                }
-                if (property.id === draggedColumnId) {
-                    return {
-                        ...property,
-                        data: {
-                            ...property.data,
-                            loadOrder: targetColumnOrder
-                        }
-                    }
-                }
-                return property;
-            });
-
-            return {
-                ...item,
-                properties: updatedProperties
-            }
+        socket.emit('moveColumn', {
+            targetColumnId, targetColumnOrder,
+            draggedColumnId, draggedColumnOrder
         });
 
-        console.log(items);
+        socket.on('columnMoved', (data) => {
+            
+            const newItems = items.map((item) => {
+                if (item.id === data.pageId) {
+                    const newProperties = item.properties?.map((property) => {
+                        if (property.id === data.id) {
+                            return {
+                                ...property,
+                                data: data.data
+                            }
+                        }
+                        return property;
+                    });
 
-        // Atualiza o estado com os novos items
-        setItems(updatedItems);
+                    return {
+                        ...item,
+                        properties: newProperties
+                    }
+                }
+                return item;
+            });
+
+            setItems(newItems);
+        });
     };
 
     return (
@@ -73,7 +73,7 @@ export const Table = ({ data }) => {
                                     title="Título" 
                                     type="text"
                                 />
-                                {renderPropertiesTitle(items[0].properties, handleDrop)}
+                                {renderPropertiesTitle(items[0]?.properties ?? [], handleDrop)}
                             </tr>
                         </thead>
                         <tbody>

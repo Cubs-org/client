@@ -58,7 +58,7 @@ export const ColumnTable = ({
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         setClick(true);
-        columnRef.current!.style.backgroundColor = "#00f";
+        // columnRef.current!.style.backgroundColor = "#00f";
     }
 
     return (
@@ -67,7 +67,7 @@ export const ColumnTable = ({
             ref={columnRef}
             style={{ minWidth: `${columnSize}px` }}
             className={clsx(
-                "pl-0 py-0 pr-2 my-0 cursor-col-resize bg-red-500 text-left border-r border-light-500 dark:border-dark-700 hover:!bg-red-900 dark:hover:bg-dark-600"
+                "pl-0 py-0 pr-2 my-0 cursor-col-resize text-left border-r border-light-500 dark:border-dark-700 hover:bg-light-400 dark:hover:bg-dark-600"
             )}
             
             onMouseDown={handleStartResizable}
@@ -91,7 +91,7 @@ export const ColumnTable = ({
                 data-column-id={id}
                 data-column-order={loadOrder}
                 className={clsx(
-                    "w-full h-full flex gap-2 items-center px-2 py-1 cursor-pointer truncate bg-green-300",
+                    "w-full h-full flex gap-2 items-center px-2 py-1 cursor-pointer truncate bg-light-300",
                     {
                         "min-w-fit cursor-not-allowed": title === "Título"
                     }
