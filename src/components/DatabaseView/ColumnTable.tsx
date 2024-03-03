@@ -19,7 +19,6 @@ export const ColumnTable = ({
     icon,
     width,
     loadOrder,
-    id,
     handleDrop
 }: ColumnTableProps) => {
     const columnRef = useRef<HTMLTableHeaderCellElement>(null);
@@ -42,8 +41,15 @@ export const ColumnTable = ({
             window.removeEventListener("mouseup", handleMouseUp);
         };
 
+        const handleMouseLeave = () => {
+            setClick(false);
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseup", handleMouseUp);
+        };
+
         window.addEventListener("mousemove", handleMouseMove);
         window.addEventListener("mouseup", handleMouseUp);
+        window.addEventListener("mouseleave", handleMouseLeave);
     };
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
@@ -51,7 +57,7 @@ export const ColumnTable = ({
 
         if (!click) return;
 
-        e.dataTransfer.setData("text/plain", e.currentTarget.getAttribute("data-column-id") || "");
+        e.dataTransfer.setData("text/plain", e.currentTarget.getAttribute("data-column-title") || "");
         e.dataTransfer.setData("text/number", e.currentTarget.getAttribute("data-column-order") || "");
     };
 
@@ -88,10 +94,10 @@ export const ColumnTable = ({
                     setClick(false);
                 }}
 
-                data-column-id={id}
+                data-column-title={title}
                 data-column-order={loadOrder}
                 className={clsx(
-                    "w-full h-full flex gap-2 items-center px-2 py-1 cursor-pointer truncate bg-light-300",
+                    "w-full h-full flex gap-2 font-bold items-center px-2 py-1 cursor-pointer truncate bg-light-300 dark:bg-dark-800",
                     {
                         "min-w-fit cursor-not-allowed": title === "Título"
                     }

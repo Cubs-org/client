@@ -13,52 +13,29 @@ export const Table = ({ data }) => {
     const [items, setItems] = useState<PageProps[]>(data.subdata);
 
     useEffect(() => {
-        // socket.on('items', (data) => {
-        //     setItems(data);
-        // });
 
         setItems(data.subdata);
+
     }, [data]);
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
 
-        const targetColumnId = e.currentTarget.getAttribute("data-column-id");
+        const targetColumnTitle = e.currentTarget.getAttribute("data-column-title");
         const targetColumnOrder = parseInt(e.currentTarget.getAttribute("data-column-order") || "0");
 
-        const draggedColumnId = e.dataTransfer.getData("text/plain");
+        const draggedColumnTitle = e.dataTransfer.getData("text/plain");
         const draggedColumnOrder = parseInt(e.dataTransfer.getData("text/number") || "0");
 
-        if (targetColumnId === draggedColumnId) return;
+        if (targetColumnOrder === draggedColumnOrder) return;
 
         socket.emit('moveColumn', {
-            targetColumnId, targetColumnOrder,
-            draggedColumnId, draggedColumnOrder
+            targetColumnTitle, targetColumnOrder,
+            draggedColumnTitle, draggedColumnOrder
         });
 
         socket.on('columnMoved', (data) => {
-            
-            const newItems = items.map((item) => {
-                if (item.id === data.pageId) {
-                    const newProperties = item.properties?.map((property) => {
-                        if (property.id === data.id) {
-                            return {
-                                ...property,
-                                data: data.data
-                            }
-                        }
-                        return property;
-                    });
-
-                    return {
-                        ...item,
-                        properties: newProperties
-                    }
-                }
-                return item;
-            });
-
-            setItems(newItems);
+            setItems(data);
         });
     };
 
@@ -77,12 +54,27 @@ export const Table = ({ data }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {items.map((page, index) => (
-                                <tr key={index}>
-                                    <td className="border border-light-400 dark:border-dark-700 px-3 py-1">{page.title}</td>
-                                    {renderPropertiesData(page)}
-                                </tr>
-                            ))}
+                            {items.sort((a, b) => {
+                                const aDate = new Date(a.createdAt);
+                                const bDate = new Date(b.createdAt);
+                                return aDate.getTime() - bDate.getTime();
+                            }).map((page, index) => {
+                                // if (page.properties)
+                                //     page.properties = page.properties.sort((a, b) => (b.data.loadOrder || 1) - (a.data.loadOrder || 2));
+                                return (
+                                    <tr key={index}>
+                                        <td className="font-medium border border-light-400 dark:border-dark-700 px-3 py-1">
+                                            <div className="flex items-center justify-between group">
+                                                {page.title}
+                                                <span
+                                                    className="hidden group-hover:block bg-light-300 dark:bg-dark-700 rounded-md px-2 py-0.5 text-xs cursor-pointer"
+                                                >Abrir</span>
+                                            </div>
+                                        </td>
+                                        {renderPropertiesData(page)}
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
 
