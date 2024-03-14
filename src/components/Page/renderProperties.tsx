@@ -24,9 +24,9 @@ export const renderIcon = (type) => {
             return <CiCalendar size={18} />
         case "formula":
             return <LuSigma size={18} />
-        case "select":
+        case "selection":
             return <HiSelector size={18} />
-        case "multiselect":
+        case "multi-selection":
             return <LuTags size={18} />
         case "checkbox":
             return <IoCheckboxOutline size={18} />
@@ -59,10 +59,11 @@ export const renderPropertiesData = (page:PageProps) => {
                         property.type === "text" ? property.data.value :
                         property.type === "number" ? property.data.value :
                         property.type === "datetime" ? <Datetime dateValue={property.data} /> :
-                        property.type === "select" ? <Select value={property.data.value} items={property.data.items} pageData={page} /> :
-                        property.type === "multiselect" ? <MultiSelect value={property.data.tags} items={property.data.items} pageData={page} /> :
+                        property.type === "selection" ? <Select value={property.data.value} items={property.data.items} pageData={page} /> :
+                        property.type === "multi-selection" ? <MultiSelect value={property.data.tags} items={property.data.items} pageData={page} /> :
                         property.type === "formula" ? <Formula value={property.data.value as string} pageData={page}/> :
-                        property.type === "checkbox" ? <Checkbox value={property.data.value} /> :
+                        property.type === "checkbox" ? 
+                        <span className="w-full grid place-items-center"><Checkbox value={property.data.value as boolean} /></span> :
                         property.data.value
                     }
                 </td>

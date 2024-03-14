@@ -3,6 +3,7 @@ import { formatDate } from "../../utils/profilePage";
 import { EditItem } from "./EditItem";
 import { useModal } from "../../contexts/modalContext";
 import { Task } from "../../interfaces/task";
+import { FaCheck } from "react-icons/fa";
 
 interface IRemaingTasks {
     items: Task[];
@@ -32,6 +33,8 @@ export const AmountRemaingTasks = ({ items, onUpdateAnyTask }:IRemaingTasks) => 
                 // @ts-ignore
                 const { color } = item.properties?.find((p:any) => p.type === "calendar").data;
                 // @ts-ignore
+                const isCompleted = item.properties?.find((p:any) => p.type === "checkbox").data;
+                // @ts-ignore
                 const { start, end } = item.properties?.find((p:any) => p.type === "datetime").data;
                 return (
                     <div
@@ -41,7 +44,7 @@ export const AmountRemaingTasks = ({ items, onUpdateAnyTask }:IRemaingTasks) => 
                     >
                         <div className="flex items-center">
                             <div 
-                                className={clsx("w-[20px] h-[20px] rounded-md bg-light-600 dark:bg-dark-200", {
+                                className={clsx("w-[20px] h-[20px] rounded-md bg-light-600 dark:bg-dark-200 grid place-items-center text-gray-100", {
                                     "!bg-red-500": color === "red",
                                     "!bg-blue-500": color === "blue",
                                     "!bg-green-500": color === "green",
@@ -50,8 +53,13 @@ export const AmountRemaingTasks = ({ items, onUpdateAnyTask }:IRemaingTasks) => 
                                     "!bg-pink-500": color === "pink",
                                     "!bg-indigo-500": color === "indigo",
                                 })}
-                            />
-                            <h2 className="text-base font-black px-3 py-1 rounded-md text-dark-700 dark:text-light-200">
+                            >
+                                {isCompleted && <FaCheck/>}
+                            </div>
+
+                            <h2 className={clsx("text-base font-black px-3 py-1 rounded-md text-dark-700 dark:text-light-200", {
+                                "line-through opacity-25": isCompleted
+                            })}>
                                 {item.title || "Sem título"}
                             </h2>
                         </div>

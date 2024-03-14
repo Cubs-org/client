@@ -13,17 +13,17 @@ import { PageProps } from "../interfaces/page"
 
 function Workspace() {
 
-    const [search, setSearch] = useState("")
-
-    const [options, setOptions] = useState(false)
-
-    const toggleOptions = () => setOptions(!options);
-
     const socket = io(SOCKET_URL);
 
-    const [datahub, setDatahub] = useState<PageProps[]>([]);
+    const [search, setSearch] = useState("");
+    const [options, setOptions] = useState(false);
+    const [items, setItems] = useState<PageProps[]>([]);
+    
+    const [loading, setLoading] = useState<boolean>(true);
 
     const { pathname } = useLocation();
+
+    const toggleOptions = () => setOptions(!options);
 
     useEffect(() => {
 
@@ -35,12 +35,13 @@ function Workspace() {
                 socket.emit('getItems', { hubId: id });
 
                 socket.on('items', (data) => {
-                    console.log("test", data);
-                    setDatahub(data);
+                    handleSetItems(data);
                 });
-            });
+            }).finally(() => setLoading(false));
 
     }, []);
+
+    const handleSetItems = (data: PageProps[]) => setItems(data);
 
     return (
         <div>
@@ -81,9 +82,10 @@ function Workspace() {
 
             <DatabaseView
                 view="grid"
-                data={{
-                    title: "Habit Tracker", subdata: datahub
-                }}
+                title="@helder's"
+                loading={loading}
+                items={items}
+                handleSetItems={handleSetItems}
                 search={search}
                 notDisplayTitle
             />

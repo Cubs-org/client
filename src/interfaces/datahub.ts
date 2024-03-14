@@ -1,13 +1,11 @@
 import { PageProps } from "./page";
 
 export interface IDatabaseViewProps {
-    search: string;
-    data: DatabaseView | [];
-    view: "grid" | "list" | "table" | "kanban";
-    notDisplayTitle?: boolean;
-}
-
-export interface DatabaseView {
     title: string;
-    subdata: PageProps[] | [];
+    search: string;
+    items: PageProps[];
+    view: "grid" | "list" | "table" | "kanban";
+    handleSetItems: (data: PageProps[]) => void;
+    notDisplayTitle?: boolean;
+    loading?: boolean;
 }

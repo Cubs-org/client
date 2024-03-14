@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button } from "../Button"
 import { renderPropertiesData, renderPropertiesTitle } from "../Page/renderProperties"
 import { ColumnTable } from "./ColumnTable"
@@ -6,17 +6,18 @@ import { PageProps } from "../../interfaces/page";
 import { SOCKET_URL } from "../../lib/api";
 import { io } from "socket.io-client";
 
-export const Table = ({ data }) => {
+interface TableProps {
+    items: PageProps[];
+    handleSetItems: (data: PageProps[]) => void;
+}
+
+export const Table = ({ items, handleSetItems }:TableProps) => {
 
     const socket = io(SOCKET_URL);
 
-    const [items, setItems] = useState<PageProps[]>(data.subdata);
-
     useEffect(() => {
-
-        setItems(data.subdata);
-
-    }, [data]);
+        handleSetItems(items);
+    }, [items]);
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -35,7 +36,7 @@ export const Table = ({ data }) => {
         });
 
         socket.on('columnMoved', (data) => {
-            setItems(data);
+            handleSetItems(data);
         });
     };
 

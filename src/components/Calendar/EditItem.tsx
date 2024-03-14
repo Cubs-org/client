@@ -26,7 +26,7 @@ export const EditItem = ({ task, onUpdateAnyTask }:TaskProps) => {
 
     const { closeModal } = useModal();
     let _task = task as any;
-    const type = _task.properties.find((p) => p.type === "calendar").name;
+    const type = _task.properties.find((p) => p.type === "calendar").title;
 
     const properties = _task.properties;
 

@@ -14,7 +14,9 @@ const getPropertyValue = (rowPage:PageProps, relationName) => {
         relationValue = rowPage.trash;
     else{
         if (rowPage.properties) {
-            const property = rowPage.properties.find(property => property.title === relationName);
+
+            let property = rowPage.properties.find(property => String(property.title).toLowerCase() === String(relationName).toLowerCase());
+
             switch (property?.type) {
                 case "text":
                     relationValue = property?.data?.value;
@@ -23,7 +25,7 @@ const getPropertyValue = (rowPage:PageProps, relationName) => {
                     relationValue = property?.data?.value;
                     break;
                 case "formula":
-                    relationValue = eval(property?.data?.value as string || "'text=Vazio;color=red'");
+                    relationValue = eval(property?.data?.value as string || "Vazio");
                     break;
                 case "datetime":
                     if (property?.data?.start && property?.data?.end) {
@@ -32,8 +34,12 @@ const getPropertyValue = (rowPage:PageProps, relationName) => {
                         relationValue = `${start}-${end}`;
                     }
                     break;
+                case "checkbox":
+                    relationValue = property?.data?.value;
+                    relationValue = relationValue ? "'sim'" : "'não'";
+                    break;
                 default:
-                    relationValue = property?.data?.value || "'text=Vazio;color=red'";
+                    relationValue = property?.data?.value || "Vazio";
                     break;
             }
         }
@@ -51,7 +57,6 @@ export const getPropRelationFromFormula = (rowPage: PageProps, formula: string):
 
     matches.forEach(match => {
         const relationName = match.substring(1, match.length - 1); // Extrair o nome da propriedade do marcador
-        console.log(relationName);
         const relationValue = getPropertyValue(rowPage, relationName); // Obter o valor da propriedade
 
         // Substituir o marcador pelo valor correspondente
