@@ -12,10 +12,7 @@ import { useEffect, useState } from "react";
 
 export default function Profile() {
 
-    const socket = io(SOCKET_URL);
-
     const { user, setUser } = useUser();
-
 
     const handleSetUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
         let data = {
@@ -37,7 +34,18 @@ export default function Profile() {
     }
 
     const handleSetUserData = (user) => {
+        const socket = io(SOCKET_URL, { transports: ['websocket'] });
+        socket.connect();
         socket.emit("updateUser", user);
+
+        socket.on("userUpdated", (data) => {
+            setUser(data);
+        });
+
+        return () => {
+            socket.off("userUpdated");
+            socket.disconnect();
+        }
     };
 
     const username = user?.name as string,

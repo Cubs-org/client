@@ -35,7 +35,10 @@ export const renderIcon = (type) => {
     }
 }
 
-export const renderPropertiesTitle = (properties:PagePropertiesProps[], handleDrop: (e: React.DragEvent<HTMLDivElement>) => void) => {
+export const renderPropertiesTitle = (
+    properties:PagePropertiesProps[],
+    handleDrop: (e: React.DragEvent<HTMLDivElement>) => void
+) => {
     return properties.map((property, index) => (
         <ColumnTable 
             key={`${property.title}-${index}`} 

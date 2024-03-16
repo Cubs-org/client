@@ -30,13 +30,44 @@ export const Table = ({ items, handleSetItems }:TableProps) => {
 
         if (targetColumnOrder === draggedColumnOrder) return;
 
+
+        // Atualiza os items com as novas ordens
+        const updatedItems = items.map((item:PageProps) => {
+            if (!item.properties) return item;
+
+            const updatedProperties = item.properties.map((property) => {
+                if (property.title === targetColumnTitle) {
+                    return {
+                        ...property,
+                        data: {
+                            ...property.data,
+                            loadOrder: draggedColumnOrder
+                        }
+                    }
+                }
+                if (property.title === draggedColumnTitle) {
+                    return {
+                        ...property,
+                        data: {
+                            ...property.data,
+                            loadOrder: targetColumnOrder
+                        }
+                    }
+                }
+                return property;
+            });
+
+            return {
+                ...item,
+                properties: updatedProperties
+            }
+        });
+
+        handleSetItems(updatedItems);
+
         socket.emit('moveColumn', {
             targetColumnTitle, targetColumnOrder,
             draggedColumnTitle, draggedColumnOrder
-        });
-
-        socket.on('columnMoved', (data) => {
-            handleSetItems(data);
         });
     };
 
@@ -51,7 +82,7 @@ export const Table = ({ items, handleSetItems }:TableProps) => {
                                     title="Título" 
                                     type="text"
                                 />
-                                {renderPropertiesTitle(items[0]?.properties ?? [], handleDrop)}
+                                {renderPropertiesTitle(items[0]?.properties ?? [], handleDrop) || null}
                             </tr>
                         </thead>
                         <tbody>

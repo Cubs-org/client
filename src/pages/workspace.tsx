@@ -13,8 +13,6 @@ import { PageProps } from "../interfaces/page"
 
 function Workspace() {
 
-    const socket = io(SOCKET_URL);
-
     const [search, setSearch] = useState("");
     const [options, setOptions] = useState(false);
     const [items, setItems] = useState<PageProps[]>([]);
@@ -25,23 +23,37 @@ function Workspace() {
 
     const toggleOptions = () => setOptions(!options);
 
+    const handleSetItems = (data: PageProps[]) => setItems(data);
+
     useEffect(() => {
+
+        const socket = io(SOCKET_URL, { transports: ['websocket'] });
+        socket.connect();
 
         let wkspId = pathname.split("/")[2];
 
-        getDatahubId(wkspId)
-            .then((id) => {
-                // console.log(data);
-                socket.emit('getItems', { hubId: id });
+        if (!wkspId) return;
+        if (loading) {
+            getDatahubId(wkspId)
+                .then((id) => {
+                    socket.emit('getItems', { hubId: id });
 
-                socket.on('items', (data) => {
-                    handleSetItems(data);
-                });
-            }).finally(() => setLoading(false));
+                    socket.on('items', (data) => {
+                        handleSetItems(data);
+                    });
+                }).finally(() => setLoading(false));
+        }
 
+        socket.on('columnMoved', (data) => handleSetItems(data));
+        socket.on('columnResized', (data) => handleSetItems(data));
+
+        return () => {
+            socket.off('items');
+            socket.off('columnMoved');
+            socket.off('columnResized');
+            socket.disconnect();
+        }
     }, []);
-
-    const handleSetItems = (data: PageProps[]) => setItems(data);
 
     return (
         <div>
@@ -53,7 +65,7 @@ function Workspace() {
                     >Área de trabalho</h1>
                     <span
                         className="text-sm md:text-base text-dark-300 dark:text-light-500"
-                    >Total de projetos: 3</span>
+                    >Total de projetos: {items.length}</span>
                 </div>
 
                 <div className="w-full md:w-fit flex justify-end gap-2 items-center">
@@ -80,15 +92,17 @@ function Workspace() {
                 </div>
             </header>
 
-            <DatabaseView
-                view="grid"
-                title="@helder's"
-                loading={loading}
-                items={items}
-                handleSetItems={handleSetItems}
-                search={search}
-                notDisplayTitle
-            />
+            <main className="px-3">
+                <DatabaseView
+                    view="grid"
+                    title="@helder's"
+                    loading={loading}
+                    items={items}
+                    handleSetItems={handleSetItems}
+                    search={search}
+                    notDisplayTitle
+                />
+            </main>
         </div>
     )
 }

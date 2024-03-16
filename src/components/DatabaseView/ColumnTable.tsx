@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import { renderIcon } from "../Page/renderProperties";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { io } from "socket.io-client";
+import { SOCKET_URL } from "../../lib/api";
 
 interface ColumnTableProps {
     id?: string;
@@ -17,17 +19,30 @@ export const ColumnTable = ({
     title,
     type,
     icon,
-    width,
+    width=200,
     loadOrder,
     handleDrop
 }: ColumnTableProps) => {
+
+    const socket = io(SOCKET_URL, {transports: ['websocket']});
+
     const columnRef = useRef<HTMLTableHeaderCellElement>(null);
-    const [columnSize, setColumnSize] = useState<number>(width ? width : 300);
-    const [click, setClick] = useState(false);
+    const [columnSize, setColumnSize] = useState<number>(width);
+    const [isResizing, setIsResizing] = useState(false);
+
+    let props = {};
+
+    if (width) {
+        props = { style: { minWidth: `${columnSize}px` } };
+    }
+
+    useEffect(() => {
+        setColumnSize(width);
+    }, [width]);
 
     const handleStartResizable = (e: React.MouseEvent<HTMLTableHeaderCellElement>) => {
         e.stopPropagation();
-        setClick(true);
+        setIsResizing(true);
         const initialX = e.clientX;
 
         const handleMouseMove = (e: MouseEvent) => {
@@ -36,13 +51,19 @@ export const ColumnTable = ({
         };
 
         const handleMouseUp = () => {
-            setClick(false);
+            setIsResizing(false);
+
+            if (columnRef.current) {
+                console.log('handleSetColumnWidth:', title, columnRef.current.offsetWidth);
+                handleSetColumnWidth(title, columnRef.current.offsetWidth);
+            }
+
             window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseup", handleMouseUp);
         };
 
         const handleMouseLeave = () => {
-            setClick(false);
+            setIsResizing(false);
             window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseup", handleMouseUp);
         };
@@ -52,48 +73,44 @@ export const ColumnTable = ({
         window.addEventListener("mouseleave", handleMouseLeave);
     };
 
+    const handleSetColumnWidth = (columnTitle: string, newWidth: number) => {
+        socket.emit('resizeColumn', { columnTitle, newWidth });
+    };
+
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.stopPropagation();
-
-        if (!click) return;
-
+        
+        if (!isResizing) return;
+    
         e.dataTransfer.setData("text/plain", e.currentTarget.getAttribute("data-column-title") || "");
         e.dataTransfer.setData("text/number", e.currentTarget.getAttribute("data-column-order") || "");
     };
-
+    
+    const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        setIsResizing(false);
+        e.dataTransfer.clearData();
+    };
+    
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        setClick(true);
-        // columnRef.current!.style.backgroundColor = "#00f";
-    }
+    };
 
     return (
         <th
             scope="col"
             ref={columnRef}
-            style={{ minWidth: `${columnSize}px` }}
-            className={clsx(
-                "pl-0 py-0 pr-2 my-0 cursor-col-resize text-left border-r border-light-500 dark:border-dark-700 hover:bg-light-400 dark:hover:bg-dark-600"
-            )}
-            
+            className={clsx("pl-0 py-0 pr-2 my-0 cursor-col-resize text-left border-r border-light-500 dark:border-dark-700 hover:bg-light-400 dark:hover:bg-dark-600")}
             onMouseDown={handleStartResizable}
+            {...props}
         >
             <div
                 draggable={true}
                 onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onClick={(e) => e.stopPropagation()}
-
-                onMouseDown={(e) => {
-                    e.stopPropagation();
-                    setClick(true);
-                }}
-                onMouseUp={(e) => {
-                    e.stopPropagation();
-                    setClick(false);
-                }}
-
                 data-column-title={title}
                 data-column-order={loadOrder}
                 className={clsx(
