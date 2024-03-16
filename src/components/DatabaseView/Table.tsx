@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Button } from "../Button"
-import { renderPropertiesData, renderPropertiesTitle } from "../Page/renderProperties"
-import { ColumnTable } from "./ColumnTable"
+import { renderIcon, renderPropertiesData, renderPropertiesTitle } from "../Page/renderProperties"
 import { PageProps } from "../../interfaces/page";
 import { SOCKET_URL } from "../../lib/api";
 import { io } from "socket.io-client";
@@ -78,35 +77,43 @@ export const Table = ({ items, handleSetItems }:TableProps) => {
                     <table className="w-full rounded-md ring-1 ring-light-400 dark:ring-dark-700">
                         <thead className="w-full bg-light-300 dark:bg-dark-800 p-4 rounded-md">
                             <tr>
-                                <ColumnTable 
-                                    title="Título" 
-                                    type="text"
-                                />
-                                {renderPropertiesTitle(items[0]?.properties ?? [], handleDrop) || null}
+
+                                <th className="min-w-[230px] px-3 text-left border-r border-light-500 dark:border-dark-700 hover:bg-light-400 dark:hover:bg-dark-600">
+                                    <span className="w-full flex flex-row items-center gap-2 text-base font-bold truncate">
+                                        {renderIcon("text")}
+                                        Título
+                                    </span>
+                                </th>
+
+                                {items.length > 0 ? renderPropertiesTitle(items[0]?.properties ?? [], handleDrop) || null : (
+                                    <th className="text-center p-4 opacity-25">Adicione algo...</th>
+                                )}
                             </tr>
                         </thead>
                         <tbody>
-                            {items.sort((a, b) => {
+                            {items.length > 0 ? items.sort((a, b) => {
                                 const aDate = new Date(a.createdAt);
                                 const bDate = new Date(b.createdAt);
                                 return aDate.getTime() - bDate.getTime();
                             }).map((page, index) => {
-                                // if (page.properties)
-                                //     page.properties = page.properties.sort((a, b) => (b.data.loadOrder || 1) - (a.data.loadOrder || 2));
                                 return (
                                     <tr key={index}>
-                                        <td className="font-medium border border-light-400 dark:border-dark-700 px-3 py-1">
-                                            <div className="flex items-center justify-between group">
+                                        <td className="font-medium border border-light-400 dark:border-dark-700 pl-3 pr-1 py-1">
+                                            <div className="flex gap-3 items-center justify-between group">
                                                 {page.title}
                                                 <span
-                                                    className="hidden group-hover:block bg-light-300 dark:bg-dark-700 rounded-md px-2 py-0.5 text-xs cursor-pointer"
+                                                    className="opacity-0 group-hover:opacity-100 bg-light-300 dark:bg-dark-700 rounded-md px-2 py-0.5 text-xs cursor-pointer"
                                                 >Abrir</span>
                                             </div>
                                         </td>
                                         {renderPropertiesData(page)}
                                     </tr>
                                 )
-                            })}
+                            }) : (
+                                <tr>
+                                    <td colSpan={2} className="text-center p-4">Clique aqui ou em 'Novo' para começar.</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
 

@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import parseFormula from "../../../utils/page/formulaProperty/parseFormula";
-import { PageProps } from "../../../interfaces/page";
-import { getPropRelationFromFormula } from "../../../utils/page/formulaProperty/relations";
+import parseFormula from "../../../../utils/page/formulaProperty/parseFormula";
+import { PageProps } from "../../../../interfaces/page";
+import { getPropRelationFromFormula } from "../../../../utils/page/formulaProperty/relations";
 
 interface FormulaProps {
     value: string;
@@ -12,7 +12,13 @@ export const Formula = ({ value, pageData }:FormulaProps) => {
 
     const formula = getPropRelationFromFormula(pageData, value);
 
-    const formulaValue = eval(formula);
+    const formulaValue = (() => {
+        try {
+            return eval(formula);
+        } catch (error) {
+            return "text=Erro;color=red";
+        }
+    })();
     const { text, color: formulaColor } = parseFormula(formulaValue);
 
     return (

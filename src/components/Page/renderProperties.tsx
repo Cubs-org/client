@@ -39,23 +39,26 @@ export const renderPropertiesTitle = (
     properties:PagePropertiesProps[],
     handleDrop: (e: React.DragEvent<HTMLDivElement>) => void
 ) => {
-    return properties.map((property, index) => (
-        <ColumnTable 
-            key={`${property.title}-${index}`} 
-            title={property.title} 
-            type={property.type}
-            icon={property?.data?.icon}
-            width={property?.data?.width || 200}
-            loadOrder={property?.data?.loadOrder || 0}
-            id={property.id}
-            handleDrop={handleDrop}
-        />
-    ));
+    return properties
+        .sort((a, b) => (a.data.loadOrder ?? 0) - (b.data.loadOrder ?? 0))
+        .map((property, index) => (
+            <ColumnTable 
+                key={`${property.title}-${index}`} 
+                title={property.title} 
+                type={property.type}
+                value={property.data.value}
+                width={property?.data?.width || 200}
+                loadOrder={property?.data?.loadOrder || 0}
+                id={property.id}
+                handleDrop={handleDrop}
+            />
+        ));
 }
 
 export const renderPropertiesData = (page:PageProps) => {
-    if (page.properties)
-        return page.properties.sort((a, b) => (a.data.loadOrder ?? 0) - (b.data.loadOrder ?? 0))
+    if (page.properties) {
+        return page.properties
+            .sort((a, b) => (a.data.loadOrder ?? 0) - (b.data.loadOrder ?? 0))
             .map((property, index) => (
                 <td key={index} className="border border-light-400 dark:border-dark-700 px-3 py-1 truncate overflow-auto">
                     {
@@ -71,4 +74,5 @@ export const renderPropertiesData = (page:PageProps) => {
                     }
                 </td>
             ));
+    }
 }

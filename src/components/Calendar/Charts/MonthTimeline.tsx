@@ -8,6 +8,7 @@ interface ITimelineProps {
     range?: number;
     hierarchy: number;
     handle: (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onItemDeleted?: (item: any) => void;
 }
 
 export const Timeline = ({ item, width, range, hierarchy, handle }:ITimelineProps) => {

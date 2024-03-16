@@ -4,7 +4,13 @@ import { splitDt } from "../../utils/datetime/splitDate";
 import { HeaderCalendar } from "./HeaderCalendar";
 import { GridMonthCalendar } from "./GridMonthCalendar";
 
-export const Calendar = ({ event, items, onNewItemCreated, isPage=false }: CalendarProps) => {
+export const Calendar = ({ 
+    event, 
+    items, 
+    onNewItemCreated, 
+    onItemDeleted,
+    isPage=false 
+}: CalendarProps) => {
     const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     const [date, setDate] = useState<Date>(new Date());
@@ -36,6 +42,7 @@ export const Calendar = ({ event, items, onNewItemCreated, isPage=false }: Calen
                 items={items}
                 isPage={isPage}
                 onNewItemCreated={onNewItemCreated}
+                onItemDeleted={onItemDeleted}
             />
         </div>
     );

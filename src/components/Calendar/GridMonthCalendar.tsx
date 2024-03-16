@@ -16,7 +16,15 @@ interface Items {
     onNewItemCreated: (item: any) => void;
 }
 
-export const GridMonthCalendar = ({ year, month, event, items, isPage=false, onNewItemCreated }:CalendarProps) => {
+export const GridMonthCalendar = ({ 
+    year, 
+    month, 
+    event, 
+    items, 
+    isPage=false, 
+    onNewItemCreated,
+    onItemDeleted
+}:CalendarProps) => {
 
     const [searchParams] = useSearchParams();
 
@@ -59,7 +67,7 @@ export const GridMonthCalendar = ({ year, month, event, items, isPage=false, onN
 
     adjustWeekHeight(data);
 
-    const gridElements = data.map((week, index) => onNewItemCreated && (
+    const gridElements = data.map((week, index) => (
         <Week 
             key={`${week}-${index}`} 
             week={week}
@@ -70,6 +78,7 @@ export const GridMonthCalendar = ({ year, month, event, items, isPage=false, onN
             weekHeight={_weekHeight}
             index={index}
             onNewItemCreated={onNewItemCreated}
+            onItemDeleted={onItemDeleted}
         />
     ));
   

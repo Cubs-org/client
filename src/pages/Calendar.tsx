@@ -9,24 +9,27 @@ import Loading from "../components/Loading";
 
 export default function CalendarPage() {
 
-  const socket = io(SOCKET_URL);
   const {user} = useUser();
 
   const [items, setItems] = useState<any>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!loading) return;
-
+    const socket = io(SOCKET_URL, {transports: ['websocket']});
+    socket.connect();
     socket.emit("getCalendarItems", { email: user.email});
-    socket.on("getCalendarItems", (req) => {
-      // console.log("getCalendarItemsPage:", req);
+    socket.on("updateItems", (req) => {
       setItems(req);
-      setLoading(false);
     });
-  }, [socket, loading, user.email]);
+
+    setLoading(false);
+
+    return () => {
+      socket.off("getCalendarItems");
+      socket.off("updateItems");
+    }
+  }, [loading, user.email]);
   
-  // const items:any = [
   //   // {
   //   //   title: "Projeto Cub's",
   //   //   owner: "",
@@ -149,12 +152,14 @@ export default function CalendarPage() {
   const response = (event) => {
       var dt = event.concat("T00:00:00.000");
       openModal({
-          content: <CreateNewItem event={dt} type="task" onNewItemCreated={updateTasks} /> 
+          content: <CreateNewItem event={dt} type="task" onNewItemCreated={updateItems} /> 
       });
   }
 
-  const updateTasks = (data) => {
-    setItems(data);
+  const updateItems = (data) => setItems(data);
+
+  const leftItem = (item) => {
+    setItems(items.filter((i) => i !== item));
   }
 
   return (
@@ -162,7 +167,8 @@ export default function CalendarPage() {
       {!loading ? <Calendar 
         event={response} 
         items={items}
-        onNewItemCreated={updateTasks}
+        onNewItemCreated={updateItems}
+        onItemDeleted={leftItem}
       /> : <Loading />}
     </div>
   );

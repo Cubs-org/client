@@ -15,9 +15,18 @@ interface IDayProps {
     month?: number;
     isPage?: boolean;
     onNewItemCreated: (item: any) => void;
+    onItemDeleted: (item: any) => void;
 }
 
-export const Day = ({ day, month, event, items, isPage=false, onNewItemCreated }:IDayProps) => {
+export const Day = ({ 
+    day, 
+    month, 
+    event, 
+    items, 
+    isPage=false, 
+    onNewItemCreated,
+    onItemDeleted
+}:IDayProps) => {
 
     const { openModal } = useModal();
 
@@ -28,7 +37,7 @@ export const Day = ({ day, month, event, items, isPage=false, onNewItemCreated }
 
         if (isCalendar) {
             openModal({
-                content: <EditItem task={item} onUpdateAnyTask={onNewItemCreated} />
+                content: <EditItem task={item} onUpdateAnyTask={onNewItemCreated} onItemDeleted={onItemDeleted} />
             });
         }
     };
@@ -79,6 +88,7 @@ export const Day = ({ day, month, event, items, isPage=false, onNewItemCreated }
                             range={timeline.range}
                             hierarchy={timeline.hierarchy}
                             handle={handleOpenTimeline}
+                            onItemDeleted={onItemDeleted}
                         />
                     ))
                 } else {

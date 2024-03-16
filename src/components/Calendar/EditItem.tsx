@@ -17,9 +17,10 @@ import { SOCKET_URL } from "../../lib/api";
 interface TaskProps {
     task: Task;
     onUpdateAnyTask: (item: Task) => void;
+    onItemDeleted: (item: Task) => void;
 }
 
-export const EditItem = ({ task, onUpdateAnyTask }:TaskProps) => {
+export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => {
 
     const socket = io(SOCKET_URL);
     // const {user} = useUser(); // add a ownerByUpdate
@@ -46,7 +47,6 @@ export const EditItem = ({ task, onUpdateAnyTask }:TaskProps) => {
     }
 
     const handleCompleteForm = () => {
-        console.log("formData:", formData);
         socket.emit("updateItem", {
             id: task.id,
             title: formData.title,
@@ -115,10 +115,8 @@ export const EditItem = ({ task, onUpdateAnyTask }:TaskProps) => {
     }
 
     const handleDelete = () => {
-        socket.emit("deleteItem", task.id);
-        socket.on("getCalendarItems", (req) => {
-            onUpdateAnyTask(req);
-        });
+        socket.emit("deleteItem", {id:task.id});
+        onItemDeleted(task);
         clean();
     }
 

@@ -3,22 +3,62 @@ import { renderIcon } from "../Page/renderProperties";
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../../lib/api";
+import { Popover } from "../Popover";
+
+import { CgChevronRight, CgTrash } from "react-icons/cg";
+import { Editor } from "../Page/Properties/Formula/Editor";
 
 interface ColumnTableProps {
     id?: string;
     title: string;
     type: string;
-    icon?: string;
+    value?: any;
     loadOrder?: number;
     width?: number;
 
     handleDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
 }
 
+const EditColumn = ({ title, type, value }) => {
+    return (
+        <ul className="flex flex-col gap-2 p-2">
+            <li className="text-sm font-bold flex gap-1 items-center">
+                <span className="w-max h-max p-1">
+                    {renderIcon(type)}
+                </span>
+                <input 
+                    type="text" 
+                    value={title} 
+                    className="w-full px-3 py-0.5 bg-glass-light dark:bg-glass-dark rounded-md ring-1 ring-light-500 dark:ring-dark-700 text-sm font-bold outline-none"
+                    readOnly 
+                />
+            </li>
+            <li className="px-2 py-1 rounded-md cursor-pointer text-sm font-bold flex items-center justify-between hover:bg-glass-light hover:dark:bg-glass-dark">
+                Propriedade <span className="flex items-center justify-between"><p className="text-xs text-dark-100 dark:text-light-900">{type}</p><CgChevronRight size={18} /></span>
+            </li>
+            {type === "formula" && (
+                <Popover
+                    content={<Editor content={value} />}
+                    direction="bottom-start"
+                    width="100%"
+                >
+                    <li className="px-2 py-1 rounded-md cursor-pointer text-sm font-bold flex items-center justify-between hover:bg-glass-light hover:dark:bg-glass-dark">
+                        Editar <span className="flex items-center justify-between"><CgChevronRight size={18} /></span>
+                    </li>
+                </Popover>
+            )}
+            <hr className="border-light-400 dark:border-dark-300" />
+            <li className="px-2 py-1 rounded-md cursor-pointer text-sm font-bold text-red-500 dark:text-red-400 flex items-center gap-1 hover:bg-glass-light hover:dark:bg-glass-dark">
+                <CgTrash size={18}/> Deletar
+            </li>
+        </ul>
+    );
+};
+
 export const ColumnTable = ({
     title,
     type,
-    icon,
+    value,
     width=200,
     loadOrder,
     handleDrop
@@ -54,7 +94,6 @@ export const ColumnTable = ({
             setIsResizing(false);
 
             if (columnRef.current) {
-                console.log('handleSetColumnWidth:', title, columnRef.current.offsetWidth);
                 handleSetColumnWidth(title, columnRef.current.offsetWidth);
             }
 
@@ -110,7 +149,6 @@ export const ColumnTable = ({
                 onDragEnd={handleDragEnd}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
-                onClick={(e) => e.stopPropagation()}
                 data-column-title={title}
                 data-column-order={loadOrder}
                 className={clsx(
@@ -120,8 +158,22 @@ export const ColumnTable = ({
                     }
                 )}
             >
-                {icon ? icon : renderIcon(type)}
-                {title}
+                <Popover
+                    content={
+                        <EditColumn 
+                            title={title} 
+                            type={type}
+                            value={value}
+                        />
+                    }
+                    direction="bottom-start"
+                    width="100%"
+                >
+                    <span className="w-full flex flex-row items-center gap-2 text-base font-bold truncate">
+                        {renderIcon(type)}
+                        {title}
+                    </span>
+                </Popover>
             </div>
         </th>
     );

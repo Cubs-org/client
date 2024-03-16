@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { FaCheck } from "react-icons/fa";
 
 export const Checkbox = ({ value }) => (
-    <div className={clsx("w-max gap-1 grid place-items-center relative", {
+    <div className={clsx("w-max gap-1 grid place-items-center relative cursor-pointer hover:text-light-400 dark:hover:text-dark-700", {
         "text-gray-100": value,
         "text-transparent": !value
     })}>

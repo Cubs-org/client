@@ -1,7 +1,5 @@
-import { FaPlus } from "react-icons/fa6";
 import { Button } from "../Button";
-import { BsFilterRight } from "react-icons/bs";
-import { CgBoard, CgViewDay, CgViewGrid, CgViewList } from "react-icons/cg";
+import { CgBoard, CgMathPlus, CgSortAz, CgViewDay, CgViewGrid, CgViewList } from "react-icons/cg";
 
 import clsx from "clsx";
 import { Table } from "./Table";
@@ -24,7 +22,7 @@ export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplay
 
     const [currentView, setCurrentView] = useState<View>("Grade");
 
-    function hasCategoryOnProps(items: PageProps[]) {
+    function hasSelectionOnProps(items: PageProps[]) {
         return items[0]?.properties?.findIndex((prop) => prop.type === "selection") !== -1;
     }
 
@@ -64,11 +62,12 @@ export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplay
                             <Button
                                 classNames={clsx("px-2 py-0.5 bg-light-200 text-dark-100 ring-1 ring-light-300 dark:text-light-300 dark:bg-dark-800 dark:ring-dark-600 hover:bg-light-300 dark:hover:bg-dark-700", {
                                     "bg-light-400 dark:bg-dark-600": view.name === currentView,
-                                    "hidden" : (!hasCategoryOnProps(items) && view.name === "Kanban")
+                                    "hidden" : (!hasSelectionOnProps(items) && view.name === "Kanban")
                                 })} 
                                 onClick={() => setCurrentView(view.name)}
                             >
                                 {view.icon}
+                                {view.name === currentView && view.name}
                             </Button>
                         </Tooltip>
                     ))}
@@ -76,13 +75,13 @@ export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplay
 
                 <div className="flex flex-row gap-2 items-center">
                     <Button classNames="px-2 py-1 bg-light-200 text-dark-100 ring-1 ring-light-300 dark:text-light-300 dark:bg-dark-800 dark:ring-dark-600 hover:bg-light-300 dark:hover:bg-dark-700">
-                        <BsFilterRight size={24} />
-                        Aplicar Filtros
+                        <CgSortAz size={24} />
+                        <span className="hidden md:block">Aplicar Filtros</span>
                     </Button>
 
                     <Button classNames="px-2 py-1">
-                        <FaPlus size={18} />
-                        Novo
+                        <CgMathPlus size={24} />
+                        <span className="hidden md:block">Novo</span>
                     </Button>
                 </div>
             </div>
