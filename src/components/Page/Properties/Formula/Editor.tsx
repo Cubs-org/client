@@ -6,19 +6,6 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css'; //Example style, you can use another
 
-// Função temporária para substituir os parênteses por hífen
-// TODO: Substituir por uma função mais robusta
-const codePreview = (value) => {
-    const regex = /\|([^|]+?)\(([^)]+?)\)\|/g;
-
-    const newValue = value.replace(regex, (_, prefix, suffix) => {
-        // Substitui os parênteses por hífen
-        return `|'${prefix.trim()}-${suffix.trim()}'|`;
-    });
-
-    return newValue;
-}
-
 const preview = (value) => {
     const regex = /\|[^|]+\|/g;
 
@@ -54,7 +41,7 @@ export const Editor = ({
             </ul>
 
             <E.default
-                value={codePreview(code)}
+                value={code}
                 onValueChange={code => setCode(code)}
                 highlight={code => highlight(code, languages.js)}
                 padding={10}

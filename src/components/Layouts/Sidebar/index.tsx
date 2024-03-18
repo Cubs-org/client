@@ -126,7 +126,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     })}/>
                 </Button>
                 <div className="w-3/5 mt-0 lg:w-[40px] lg:h-[40px] lg:mt-4 flex flex-row items-center gap-3">
-                    <Logo color="default" size={42}/>
+                    <Logo size={32} className="min-w-full" />
                     <span className="block lg:hidden text-3xl font-extrabold text-primary">Cub's</span>
                 </div>
                 <hr className="w-full border-1 border-light-900 dark:border-dark-100 hidden lg:block"/>
