@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import { 
+    // useContext, 
+    useEffect 
+} from "react";
 import { Button } from "../Button"
 import { renderIcon, renderPropertiesData, renderPropertiesTitle } from "../Page/renderProperties"
 import { PageProps } from "../../interfaces/page";
+import { useLocation } from "react-router-dom";
+// import { SocketContext } from "../../contexts/socketContext";
 import { SOCKET_URL } from "../../lib/api";
 import { io } from "socket.io-client";
-import { useLocation } from "react-router-dom";
 
 interface TableProps {
     items: PageProps[];
@@ -13,12 +17,14 @@ interface TableProps {
 
 export const Table = ({ items, handleSetItems }:TableProps) => {
 
-    const socket = io(SOCKET_URL);
+    // const { socket } = useContext(SocketContext);
+    const socket = io(SOCKET_URL, {
+        transports: ["websocket"]
+    });
+    
     const { pathname } = useLocation()
 
-    useEffect(() => {
-        handleSetItems(items);
-    }, [items]);
+    useEffect(() => handleSetItems(items), [items]);
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();

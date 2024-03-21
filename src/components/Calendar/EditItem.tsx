@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { 
+    // useContext, 
+    useState 
+} from "react";
 
 import { ColorPicker } from "../ColorPicker";
 import { Button } from "../Button";
-// import { Avatar } from "../Avatar";
 import { Check } from "../Check";
-// import { Alert } from "../Alert";
-
 import { Task } from "../../interfaces/task";
-// import { AddMembers } from "../AddMembers";
 import { DatePicker } from "../TimeControls/DatePicker";
 import { useModal } from "../../contexts/modalContext";
+// import { SocketContext } from "../../contexts/socketContext";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../../lib/api";
-// import { useUser } from "../../contexts/userContext";
 
 interface TaskProps {
     task: Task;
@@ -22,8 +21,10 @@ interface TaskProps {
 
 export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => {
 
-    const socket = io(SOCKET_URL);
-    // const {user} = useUser(); // add a ownerByUpdate
+    // const { socket } = useContext(SocketContext);
+    const socket = io(SOCKET_URL, {
+        transports: ["websocket"]
+    });
 
     const { closeModal } = useModal();
     let _task = task as any;
@@ -79,15 +80,6 @@ export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => 
             color: "blue"
         });
     }
-
-    // @ts-ignore
-    // const { openModal, closeModal }:IModal = useModal();
-    
-    // const handleAddMembers = () => {
-    //     let data = getAllFormData();
-    //     // @ts-ignore
-    //     openModal({content: <AddMembers task={data} onClose={closeModal} />})
-    // }
 
     const handleSetColor = (color:string) => {
         setFormData({

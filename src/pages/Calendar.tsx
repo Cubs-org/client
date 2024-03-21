@@ -1,13 +1,23 @@
 import { useModal } from "../contexts/modalContext";
 import { CreateNewItem } from "../components/Calendar/CreateNewItem";
 import { Calendar } from "../components/Calendar";
-import { io } from "socket.io-client";
-import { SOCKET_URL } from "../lib/api";
-import { useEffect, useState } from "react";
+import { 
+  // useContext, 
+  useEffect, 
+  useState 
+} from "react";
 import { useUser } from "../contexts/userContext";
 import Loading from "../components/Loading";
+import { io } from "socket.io-client";
+import { SOCKET_URL } from "../lib/api";
+// import { SocketContext } from "../contexts/socketContext";
 
 export default function CalendarPage() {
+
+  // const { socket } = useContext(SocketContext);
+  const socket = io(SOCKET_URL, {
+    transports: ["websocket"]
+  });
 
   const {user} = useUser();
 
@@ -15,12 +25,9 @@ export default function CalendarPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const socket = io(SOCKET_URL, {transports: ['websocket']});
     socket.connect();
     socket.emit("getCalendarItems", { email: user.email});
-    socket.on("updateItems", (req) => {
-      setItems(req);
-    });
+    socket.on("updateItems", (received_items) => loadItems(received_items));
 
     setLoading(false);
 
@@ -29,6 +36,18 @@ export default function CalendarPage() {
       socket.off("updateItems");
     }
   }, [loading, user.email]);
+
+  useEffect(() => {
+    socket.connect();
+
+    socket.on("updateCalendarItems", (req) => {
+      updateItems(req);
+    });
+
+    return () => {
+      socket.off("updateCalendarItems");
+    }
+  }, []);
   
   //   // {
   //   //   title: "Projeto Cub's",
@@ -156,11 +175,9 @@ export default function CalendarPage() {
       });
   }
 
-  const updateItems = (data) => setItems(data);
-
-  const leftItem = (item) => {
-    setItems(items.filter((i) => i !== item));
-  }
+  const loadItems = (data) => setItems(data);
+  const updateItems = (data) => setItems(prev => [...prev, data]);
+  const leftItem = (item) => setItems(items.filter((i) => i !== item));
 
   return (
     <div className="w-full h-full flex flex-col">

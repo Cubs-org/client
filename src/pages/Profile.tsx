@@ -1,17 +1,17 @@
-import { io } from "socket.io-client";
 import { FooterProfile } from "../components/Profile/FooterProfile";
 import { HeaderProfile } from "../components/Profile/HeaderProfile";
-import { SOCKET_URL } from "../lib/api";
 import { useUser } from "../contexts/userContext";
 import { Popover } from "../components/Popover";
 import { ChoiceAnimalImage } from "../components/Profile/ChoiceAnimalImage";
 import { Avatar } from "../components/Avatar";
 import { formatDate, formatUserName } from "../utils/profilePage";
 import { FaImage } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { SocketContext } from "../contexts/socketContext";
 
 export default function Profile() {
 
+    const { socket } = useContext(SocketContext);
     const { user, setUser } = useUser();
 
     const handleSetUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,6 @@ export default function Profile() {
     }
 
     const handleSetUserData = (user) => {
-        const socket = io(SOCKET_URL, { transports: ['websocket'] });
         socket.connect();
         socket.emit("updateUser", user);
 
@@ -44,7 +43,7 @@ export default function Profile() {
 
         return () => {
             socket.off("userUpdated");
-            socket.disconnect();
+            // socket.disconnect();
         }
     };
 

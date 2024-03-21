@@ -1,12 +1,18 @@
 import clsx from "clsx";
 import { renderIcon } from "../Page/renderProperties";
-import { useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
-import { SOCKET_URL } from "../../lib/api";
+import { 
+    // useContext, 
+    useEffect, 
+    useRef, 
+    useState
+} from "react";
 import { Popover } from "../Popover";
 
 import { CgChevronRight, CgTrash } from "react-icons/cg";
 import { Editor } from "../Page/Properties/Formula/Editor";
+// import { SocketContext } from "../../contexts/socketContext";
+import { SOCKET_URL } from "../../lib/api";
+import { io } from "socket.io-client";
 
 interface ColumnTableProps {
     id?: string;
@@ -64,7 +70,10 @@ export const ColumnTable = ({
     handleDrop
 }: ColumnTableProps) => {
 
-    const socket = io(SOCKET_URL, {transports: ['websocket']});
+    // const { socket } = useContext(SocketContext);
+    const socket = io(SOCKET_URL, {
+        transports: ["websocket"]
+    });
 
     const columnRef = useRef<HTMLTableHeaderCellElement>(null);
     const [columnSize, setColumnSize] = useState<number>(width);
@@ -112,9 +121,10 @@ export const ColumnTable = ({
         window.addEventListener("mouseleave", handleMouseLeave);
     };
 
-    const handleSetColumnWidth = (columnTitle: string, newWidth: number) => {
-        socket.emit('resizeColumn', { columnTitle, newWidth });
-    };
+    const handleSetColumnWidth = (
+        columnTitle: string, 
+        newWidth: number
+    ) => socket.emit('resizeColumn', { columnTitle, newWidth });
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.stopPropagation();

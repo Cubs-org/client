@@ -40,6 +40,7 @@ export const GridMonthCalendar = ({
     let _weekHeight = [] as any;
 
     createTimelines(items, data);
+    console.log(items);
 
     const adjustWeekHeight = (data: string[][]) => {
     

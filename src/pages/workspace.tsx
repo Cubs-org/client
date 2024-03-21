@@ -5,13 +5,18 @@ import { useEffect, useState } from "react"
 import { WorkspaceFilterOptions } from "../components/Workspace/WorkspaceFilterOptions"
 import { FaEllipsisVertical } from "react-icons/fa6"
 import { getDatahubId } from "../api/fetchDatahubId"
-// import { IDatabaseViewProps } from "../interfaces/datahub"
 import { useLocation } from "react-router-dom"
+import { PageProps } from "../interfaces/page"
+// import { SocketContext } from "../contexts/socketContext"
 import { SOCKET_URL } from "../lib/api"
 import { io } from "socket.io-client"
-import { PageProps } from "../interfaces/page"
 
 function Workspace() {
+
+    // const { socket } = useContext(SocketContext);
+    const socket = io(SOCKET_URL, {
+        transports: ["websocket"]
+    });
 
     const [search, setSearch] = useState("");
     const [options, setOptions] = useState(false);
@@ -28,8 +33,7 @@ function Workspace() {
     const handleSetItemsAfterCreate = (data: PageProps) => setItems(prev => [...prev, data]);
 
     useEffect(() => {
-
-        const socket = io(SOCKET_URL, { transports: ['websocket'] });
+        
         socket.connect();
 
         let wkspId = pathname.split("/")[2];
@@ -54,7 +58,7 @@ function Workspace() {
             socket.off('items');
             socket.off('columnMoved');
             socket.off('columnResized');
-            socket.disconnect();
+            // socket.disconnect();
         }
     }, []);
 
