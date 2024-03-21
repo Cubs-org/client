@@ -6,12 +6,18 @@ import { ChoiceAnimalImage } from "../components/Profile/ChoiceAnimalImage";
 import { Avatar } from "../components/Avatar";
 import { formatDate, formatUserName } from "../utils/profilePage";
 import { FaImage } from "react-icons/fa";
-import { useContext, useEffect, useState } from "react";
-import { SocketContext } from "../contexts/socketContext";
+import { useEffect, useState } from "react";
+// import { SocketContext } from "../contexts/socketContext";
+import { io } from "socket.io-client";
+import { SOCKET_URL } from "../lib/api";
 
 export default function Profile() {
 
-    const { socket } = useContext(SocketContext);
+    // const { socket } = useContext(SocketContext);
+    const socket = io(SOCKET_URL, {
+        transports: ["websocket"]
+    });
+
     const { user, setUser } = useUser();
 
     const handleSetUserName = (e: React.ChangeEvent<HTMLInputElement>) => {

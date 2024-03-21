@@ -22,7 +22,7 @@ export const SignInButton = ({ children, classNames }: SignInButtonProps) => {
         const res = response as IResponse | any;
         const authenticateUser = async (accessToken: string) => {
           try {
-            const res = await API.post(`/authenticateUser/oauth`, {
+            const res = await API.post(`/user/authenticateUser/oauth`, {
               access_token: accessToken,
             });
 

@@ -3,7 +3,7 @@ import API from ".";
 async function createUserOAuth(access_token: string) {
   
   try {
-    const response = await API.post(`/registerUser`, {
+    const response = await API.post(`/user/registerUser`, {
         access_token,
     });
 
