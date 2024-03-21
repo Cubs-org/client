@@ -20,7 +20,7 @@ interface ViewProps {
 
 export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplayTitle = false }: IDatabaseViewProps) => {
 
-    const [currentView, setCurrentView] = useState<View>("Grade");
+    const [currentView, setCurrentView] = useState<View>("Tabela");
 
     function hasSelectionOnProps(items: PageProps[]) {
         return items[0]?.properties?.findIndex((prop) => prop.type === "selection") !== -1;
@@ -60,7 +60,7 @@ export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplay
                             content={view.name}
                         >
                             <Button
-                                classNames={clsx("px-2 py-0.5 bg-light-200 text-dark-100 ring-1 ring-light-300 dark:text-light-300 dark:bg-dark-800 dark:ring-dark-600 hover:bg-light-300 dark:hover:bg-dark-700", {
+                                classNames={clsx("w-max px-2 py-0.5 bg-light-200 text-dark-100 ring-1 ring-light-300 dark:text-light-300 dark:bg-dark-800 dark:ring-dark-600 hover:bg-light-300 dark:hover:bg-dark-700 transition-all ease-in", {
                                     "bg-light-400 dark:bg-dark-600": view.name === currentView,
                                     "hidden" : (!hasSelectionOnProps(items) && view.name === "Kanban")
                                 })} 
@@ -89,7 +89,8 @@ export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplay
             {(!notDisplayTitle && title) && <h1 className="text-xl font-bold mb-3">{title}</h1>}
 
             {!loading ?
-                <Table items={items} handleSetItems={handleSetItems} /> : <Skeleton.Table />}
+                (currentView === "Tabela" && <Table items={items} handleSetItems={handleSetItems} />)
+                : <Skeleton.Table />}
         </div>
     );
 };

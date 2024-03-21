@@ -4,6 +4,7 @@ import { renderIcon, renderPropertiesData, renderPropertiesTitle } from "../Page
 import { PageProps } from "../../interfaces/page";
 import { SOCKET_URL } from "../../lib/api";
 import { io } from "socket.io-client";
+import { useLocation } from "react-router-dom";
 
 interface TableProps {
     items: PageProps[];
@@ -13,6 +14,7 @@ interface TableProps {
 export const Table = ({ items, handleSetItems }:TableProps) => {
 
     const socket = io(SOCKET_URL);
+    const { pathname } = useLocation()
 
     useEffect(() => {
         handleSetItems(items);
@@ -70,6 +72,12 @@ export const Table = ({ items, handleSetItems }:TableProps) => {
         });
     };
 
+    const handleCreateNewPage = () => {
+        socket.emit('createPage', {
+            datahubId: pathname.split("/")[2]
+        });
+    };
+
     return (
         <div className="w-full px-1 overflow-x-scroll scrollbar scrollbar-thumb-light-300 dark:scrollbar-thumb-dark-700 scrollbar-track-transparent">
             <div className="flex flex-row gap-1 float-left">
@@ -117,7 +125,12 @@ export const Table = ({ items, handleSetItems }:TableProps) => {
                         </tbody>
                     </table>
 
-                    <Button classNames="w-full px-1 py-0.5 bg-transparent text-dark-600 dark:text-light-300 hover:bg-light-300 dark:hover:bg-dark-700">+</Button>
+                    <Button 
+                        classNames="w-full px-1 py-0.5 bg-transparent text-dark-600 dark:text-light-300 hover:bg-light-300 dark:hover:bg-dark-700"
+                        onClick={handleCreateNewPage}
+                    >
+                        +
+                    </Button>
                 </div>
 
                 <Button classNames="bg-transparent text-dark-600 dark:text-light-300 hover:bg-light-300 dark:hover:bg-dark-700">+</Button>

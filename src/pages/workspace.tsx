@@ -25,6 +25,8 @@ function Workspace() {
 
     const handleSetItems = (data: PageProps[]) => setItems(data);
 
+    const handleSetItemsAfterCreate = (data: PageProps) => setItems(prev => [...prev, data]);
+
     useEffect(() => {
 
         const socket = io(SOCKET_URL, { transports: ['websocket'] });
@@ -46,6 +48,7 @@ function Workspace() {
 
         socket.on('columnMoved', (data) => handleSetItems(data));
         socket.on('columnResized', (data) => handleSetItems(data));
+        socket.on('pageCreated', (data: PageProps) => handleSetItemsAfterCreate(data));
 
         return () => {
             socket.off('items');

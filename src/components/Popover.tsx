@@ -18,7 +18,7 @@ interface PopoverProps {
  
 export const Popover = ({ children, content, direction, width, height, offset, classNames }:PopoverProps) => {
     return (
-        <PopoverContainer 
+        <PopoverContainer
             placement={direction} 
             animate={{
                 mount: { scale: 1, y: 0 },
@@ -29,8 +29,10 @@ export const Popover = ({ children, content, direction, width, height, offset, c
         <PopoverHandler>
             <Button style={{
                 width: width || "fit-content",
-                height: height || "fit-content",
-            }} className={clsx("p-0 shadow-none text-dark-600 dark:text-light-300", classNames)}>{children}</Button>
+                minHeight: height || "fit-content",
+            }} className={clsx("p-0 shadow-none text-dark-600 dark:text-light-300", classNames)}>
+                {children}
+            </Button>
         </PopoverHandler>
         <PopoverContent className="text-dark-700 border-light-600 dark:border-dark-600 dark:text-light-300 bg-glass-light dark:bg-glass-dark backdrop-blur-md shadow-full z-10 p-0">
             {content}
