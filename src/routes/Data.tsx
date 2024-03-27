@@ -5,12 +5,13 @@ import { Layout } from "../components/Layouts/Layout";
 import App from "../App";
 import CalendarPage from "../pages/Calendar.tsx";
 import Home from "../pages/Home.tsx";
-import Login from "../pages/authentication/Login";
-import Register from "../pages/authentication/Register";
 import Workspace from "../pages/Workspace.tsx";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
 import Profile from "../pages/Profile.tsx";
+import Page from "../pages/Page.tsx";
+import Login from "../pages/authentication/login.tsx";
+import Register from "../pages/authentication/register.tsx";
 
 export const data = {
     notAuthenticated: [
@@ -47,8 +48,12 @@ export const data = {
             element: <Layout />,
             children: [
               {
-                path: "/workspace/:id", // Acesse /:id e vá para a Workspace
+                path: "/workspace/:id",
                 element: <Workspace />
+              },
+              {
+                path: "/page/:id",
+                element: <Page />
               },
               {
                 path: "calendar",

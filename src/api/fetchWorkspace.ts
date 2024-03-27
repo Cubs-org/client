@@ -2,7 +2,7 @@ import API from "."
 
 export default async function fetchWorkspace(userId: string) {
     try {
-        const response = await API.get(`/workspace/${userId}`);
+        const response = await API.get(`/workspace?userId=${userId}`);
         if (response.data.status === 200) {
             return response.data.workspace;
         } else {

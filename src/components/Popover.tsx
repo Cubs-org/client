@@ -34,7 +34,9 @@ export const Popover = ({ children, content, direction, width, height, offset, c
                 {children}
             </Button>
         </PopoverHandler>
-        <PopoverContent className="text-dark-700 border-light-600 dark:border-dark-600 dark:text-light-300 bg-glass-light dark:bg-glass-dark backdrop-blur-md shadow-full z-10 p-0">
+        <PopoverContent
+            className="text-dark-700 border-light-600 dark:border-dark-600 dark:text-light-300 bg-glass-light dark:bg-glass-dark backdrop-blur-md shadow-full z-10 p-0"
+        >
             {content}
         </PopoverContent>
         </PopoverContainer>

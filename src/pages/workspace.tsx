@@ -1,32 +1,29 @@
-import { DatabaseView } from "../components/DatabaseView"
-import { Popover } from "../components/Popover"
-import { Search } from "../components/Search"
 import { useEffect, useState } from "react"
-import { WorkspaceFilterOptions } from "../components/Workspace/WorkspaceFilterOptions"
-import { FaEllipsisVertical } from "react-icons/fa6"
-import { getDatahubId } from "../api/fetchDatahubId"
-import { useLocation } from "react-router-dom"
-import { PageProps } from "../interfaces/page"
-// import { SocketContext } from "../contexts/socketContext"
-import { SOCKET_URL } from "../lib/api"
+
 import { io } from "socket.io-client"
+import { SOCKET_URL } from "../lib/api"
+
+import { DatabaseView } from "../components/DatabaseView"
+import { Search } from "../components/Search"
+
+import { useLocation } from "react-router-dom"
+
+import { getDatahubId } from "../api/fetchDatahubId"
+
+import { PageProps } from "../interfaces/page"
 
 function Workspace() {
 
-    // const { socket } = useContext(SocketContext);
     const socket = io(SOCKET_URL, {
         transports: ["websocket"]
     });
 
-    const [search, setSearch] = useState("");
-    const [options, setOptions] = useState(false);
+    const [hubId, setHubId] = useState<string>("");
+    const [search, setSearch] = useState<string>("");
     const [items, setItems] = useState<PageProps[]>([]);
-    
     const [loading, setLoading] = useState<boolean>(true);
 
     const { pathname } = useLocation();
-
-    const toggleOptions = () => setOptions(!options);
 
     const handleSetItems = (data: PageProps[]) => setItems(data);
 
@@ -42,11 +39,14 @@ function Workspace() {
         if (loading) {
             getDatahubId(wkspId)
                 .then((id) => {
+                    const hub_id = id as any;
                     socket.emit('getItems', { hubId: id });
 
                     socket.on('items', (data) => {
                         handleSetItems(data);
                     });
+
+                    setHubId(hub_id);
                 }).finally(() => setLoading(false));
         }
 
@@ -58,6 +58,7 @@ function Workspace() {
             socket.off('items');
             socket.off('columnMoved');
             socket.off('columnResized');
+            socket.off('pageCreated');
             // socket.disconnect();
         }
     }, []);
@@ -85,17 +86,6 @@ function Workspace() {
                         iconVisible={search !== "" ? false : true}
                         classNames="w-full md:w-[300px]"
                     />
-
-                    <Popover
-                        direction="bottom-start"
-                        content={<WorkspaceFilterOptions />}
-                    >
-                        <div className="w-fit p-2">
-                            <FaEllipsisVertical size={24} className="cursor-pointer" onClick={toggleOptions} />
-                        </div>
-                    </Popover>
-
-
                 </div>
             </header>
 
@@ -103,6 +93,7 @@ function Workspace() {
                 <DatabaseView
                     view="grid"
                     title="@helder's"
+                    datahubId={hubId}
                     loading={loading}
                     items={items}
                     handleSetItems={handleSetItems}

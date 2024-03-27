@@ -23,9 +23,9 @@ import { IUser } from "../../../interfaces/user";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../../contexts/authProvider";
 import getUser from "../../../api/getUser";
-import { SOCKET_URL } from "../../../lib/api";
-import { io } from "socket.io-client";
 import Logo from "../../Logo";
+import { io } from "socket.io-client";
+import { SOCKET_URL } from "../../../lib/api";
 
 interface ISidebar {
     layout: boolean;
@@ -35,8 +35,9 @@ interface ISidebar {
 export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
 
     const { token } = useAuth();
-
-    const socket = io(SOCKET_URL);
+    const socket = io(SOCKET_URL, {
+        transports: ["websocket"]
+    });
 
     const [userData, setUserData] = useState<IUser>();
     const [userFetched, setUserFetched] = useState(false);
@@ -87,9 +88,16 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
             });
         }
 
-        socket.on("updateUser", (user) => {
-            setUserData(user);
-        });
+        if (socket) {
+            socket.connect();
+            socket.on("updateUser", (user) => {
+                setUserData(user);
+            });
+        }
+
+        return () => {
+            if (socket) socket.off("updateUser");
+        }
     }, [socket, userFetched]);
 
     return (
@@ -126,7 +134,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     })}/>
                 </Button>
                 <div className="w-3/5 mt-0 lg:w-[40px] lg:h-[40px] lg:mt-4 flex flex-row items-center gap-3">
-                    <Logo size={32} className="min-w-full" />
+                    <Logo size={32} className="md:min-w-full" />
                     <span className="block lg:hidden text-3xl font-extrabold text-primary">Cub's</span>
                 </div>
                 <hr className="w-full border-1 border-light-900 dark:border-dark-100 hidden lg:block"/>

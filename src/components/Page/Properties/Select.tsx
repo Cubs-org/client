@@ -26,7 +26,7 @@ export const Select = ({ value, items, pageData }) => {
     // TO DO: Add a way to change the value of the select
 
     return (
-        <div className="grid place-items-center w-full h-full">
+        <div className="grid place-items-center w-full h-full px-2 py-1">
             <Popover
                 width="100%"
                 height="24px"
@@ -39,6 +39,8 @@ export const Select = ({ value, items, pageData }) => {
                                 color={value !== "" ? color : "transparent"}
                             />
                         </li>
+
+                        {value !== "" && <hr className="border-light-400 dark:border-dark-300" />}
 
                         {items.map((item, index) => (
                             <li key={index} className={clsx("w-fit text-xs font-semibold px-3 py-1 rounded-md text-light-300 cursor-pointer transition-all ease-in-out", {

@@ -1,7 +1,6 @@
 import { 
     useState,
     useEffect,
-    // useContext
 } from "react";
 
 import { DatePicker } from "../TimeControls/DatePicker";
@@ -9,7 +8,6 @@ import { ColorPicker } from "../ColorPicker";
 import { Button } from "../Button";
 import { useModal } from "../../contexts/modalContext";
 import { useUser } from "../../contexts/userContext";
-// import { SocketContext } from "../../contexts/socketContext";
 import { SOCKET_URL } from "../../lib/api";
 import { io } from "socket.io-client";
 
@@ -21,7 +19,6 @@ interface ICreateTask {
 
 export const CreateNewItem = ({ event, type, onNewItemCreated }: ICreateTask) => {
     
-    // const { socket } = useContext(SocketContext);
     const socket = io(SOCKET_URL, {
         transports: ["websocket"]
     });

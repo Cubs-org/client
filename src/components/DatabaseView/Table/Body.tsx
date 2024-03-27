@@ -1,28 +1,33 @@
-import { 
-    // useContext, 
+import {
     useEffect 
 } from "react";
-import { Button } from "../Button"
-import { renderIcon, renderPropertiesData, renderPropertiesTitle } from "../Page/renderProperties"
-import { PageProps } from "../../interfaces/page";
-import { useLocation } from "react-router-dom";
-// import { SocketContext } from "../../contexts/socketContext";
-import { SOCKET_URL } from "../../lib/api";
+import { Button } from "../../Button"
+import { renderIcon, renderPropertiesData, renderPropertiesTitle } from "../../Page/renderProperties"
+import { PageProps } from "../../../interfaces/page";
 import { io } from "socket.io-client";
+import { SOCKET_URL } from "../../../lib/api";
+import { Title } from "./Cell/Title";
+import { NewColumn } from "./BtnNewColumn";
+import { Popover } from "../../Popover";
 
 interface TableProps {
     items: PageProps[];
     handleSetItems: (data: PageProps[]) => void;
+    handleCreateNewPage: () => void;
+
+    datahubId: string;
 }
 
-export const Table = ({ items, handleSetItems }:TableProps) => {
+export const Body = ({ 
+    items, 
+    datahubId,
+    handleSetItems, 
+    handleCreateNewPage 
+}:TableProps) => {
 
-    // const { socket } = useContext(SocketContext);
     const socket = io(SOCKET_URL, {
         transports: ["websocket"]
     });
-    
-    const { pathname } = useLocation()
 
     useEffect(() => handleSetItems(items), [items]);
 
@@ -72,24 +77,20 @@ export const Table = ({ items, handleSetItems }:TableProps) => {
 
         handleSetItems(updatedItems);
 
-        socket.emit('moveColumn', {
-            targetColumnTitle, targetColumnOrder,
-            draggedColumnTitle, draggedColumnOrder
-        });
-    };
-
-    const handleCreateNewPage = () => {
-        socket.emit('createPage', {
-            datahubId: pathname.split("/")[2]
-        });
+        if (socket) {
+            socket.emit('moveColumn', {
+                targetColumnTitle, targetColumnOrder,
+                draggedColumnTitle, draggedColumnOrder
+            });
+        }
     };
 
     return (
-        <div className="w-full px-1 overflow-x-scroll scrollbar scrollbar-thumb-light-300 dark:scrollbar-thumb-dark-700 scrollbar-track-transparent">
+        <div className="max-w-full px-1 overflow-x-scroll scrollbar scrollbar-thumb-light-300 dark:scrollbar-thumb-dark-700 scrollbar-track-transparent">
             <div className="flex flex-row gap-1 float-left">
                 <div className="flex flex-col items-center gap-1 flex-grow">
-                    <table className="w-full rounded-md ring-1 ring-light-400 dark:ring-dark-700">
-                        <thead className="w-full bg-light-300 dark:bg-dark-800 p-4 rounded-md">
+                    <table className="w-min rounded-md ring-1 ring-light-400 dark:ring-dark-700">
+                        <thead className="bg-light-300 dark:bg-dark-800 p-4 rounded-md">
                             <tr>
 
                                 <th className="min-w-[230px] px-3 text-left border-r border-light-500 dark:border-dark-700 hover:bg-light-400 dark:hover:bg-dark-600">
@@ -112,12 +113,14 @@ export const Table = ({ items, handleSetItems }:TableProps) => {
                             }).map((page, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td className="font-medium border border-light-400 dark:border-dark-700 pl-3 pr-1 py-1">
-                                            <div className="flex gap-3 items-center justify-between group">
-                                                {page.title}
-                                                <span
-                                                    className="opacity-0 group-hover:opacity-100 bg-light-300 dark:bg-dark-700 rounded-md px-2 py-0.5 text-xs cursor-pointer"
-                                                >Abrir</span>
+                                        <td className="relative font-medium border border-light-400 dark:border-dark-700">
+                                            <div className="h-full w-full flex">
+                                                <div className="w-full min-h-full group">
+                                                    <Title value={page.title} />
+                                                    <span
+                                                        className="absolute top-1/2 -translate-y-1/2 right-0 opacity-0 group-hover:opacity-100 bg-light-300 dark:bg-dark-700 rounded-md px-2 py-0.5 text-xs cursor-pointer"
+                                                    >Abrir</span>
+                                                </div>
                                             </div>
                                         </td>
                                         {renderPropertiesData(page)}
@@ -139,7 +142,11 @@ export const Table = ({ items, handleSetItems }:TableProps) => {
                     </Button>
                 </div>
 
-                <Button classNames="bg-transparent text-dark-600 dark:text-light-300 hover:bg-light-300 dark:hover:bg-dark-700">+</Button>
+                <Popover 
+                    direction="left-start"
+                    classNames="px-2 bg-transparent text-dark-600 dark:text-light-300 hover:bg-light-300 dark:hover:bg-dark-700"
+                    content={<NewColumn datahubId={datahubId} />}
+                >+</Popover>
             </div>
         </div>
     )

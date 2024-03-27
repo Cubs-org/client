@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { renderIcon } from "../Page/renderProperties";
 import { 
-    // useContext, 
     useEffect, 
     useRef, 
     useState
@@ -10,9 +9,8 @@ import { Popover } from "../Popover";
 
 import { CgChevronRight, CgTrash } from "react-icons/cg";
 import { Editor } from "../Page/Properties/Formula/Editor";
-// import { SocketContext } from "../../contexts/socketContext";
-import { SOCKET_URL } from "../../lib/api";
 import { io } from "socket.io-client";
+import { SOCKET_URL } from "../../lib/api";
 
 interface ColumnTableProps {
     id?: string;
@@ -70,9 +68,8 @@ export const ColumnTable = ({
     handleDrop
 }: ColumnTableProps) => {
 
-    // const { socket } = useContext(SocketContext);
     const socket = io(SOCKET_URL, {
-        transports: ["websocket"]
+        transports: ['websocket'],
     });
 
     const columnRef = useRef<HTMLTableHeaderCellElement>(null);

@@ -8,6 +8,9 @@ import { Skeleton } from "../Skeleton";
 import { useState } from "react";
 import { PageProps } from "../../interfaces/page";
 import { Tooltip } from "../Tooltip";
+import { SOCKET_URL } from "../../lib/api";
+import { io } from "socket.io-client";
+import { useUser } from "../../contexts/userContext";
 
 type View = "Grade" | "Tabela" | "Kanban" | "Lista";
 
@@ -18,7 +21,20 @@ interface ViewProps {
     preferences?: JSON;
 }
 
-export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplayTitle = false }: IDatabaseViewProps) => {
+export const DatabaseView = ({ 
+    datahubId,
+    title, 
+    items, 
+    handleSetItems,
+    loading, 
+    notDisplayTitle=false 
+}: IDatabaseViewProps) => {
+
+    const socket = io(SOCKET_URL, {
+        transports: ["websocket"]
+    });
+
+    const { user } = useUser();
 
     const [currentView, setCurrentView] = useState<View>("Tabela");
 
@@ -44,6 +60,13 @@ export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplay
             icon: <CgBoard size={24} />
         }
     ];
+
+    const handleCreateNewPage = () => {
+        socket.emit('createPage', {
+            datahubId: datahubId,
+            email: user?.email
+        });
+    };
 
     return (
         <div className="w-full h-full relative">
@@ -79,7 +102,10 @@ export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplay
                         <span className="hidden md:block">Aplicar Filtros</span>
                     </Button>
 
-                    <Button classNames="px-2 py-1">
+                    <Button 
+                        classNames="px-2 py-1"
+                        onClick={handleCreateNewPage}
+                    >
                         <CgMathPlus size={24} />
                         <span className="hidden md:block">Novo</span>
                     </Button>
@@ -89,7 +115,14 @@ export const DatabaseView = ({ title, items, handleSetItems, loading, notDisplay
             {(!notDisplayTitle && title) && <h1 className="text-xl font-bold mb-3">{title}</h1>}
 
             {!loading ?
-                (currentView === "Tabela" && <Table items={items} handleSetItems={handleSetItems} />)
+                (currentView === "Tabela" && (
+                    <Table.Body 
+                        items={items} 
+                        datahubId={datahubId}
+                        handleSetItems={handleSetItems} 
+                        handleCreateNewPage={handleCreateNewPage}
+                    />
+                ))
                 : <Skeleton.Table />}
         </div>
     );

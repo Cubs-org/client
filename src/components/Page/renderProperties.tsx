@@ -13,6 +13,7 @@ import { MultiSelect } from "./Properties/MultiSelect";
 import { Datetime } from "./Properties/Datetime";
 import { Checkbox } from "./Properties/Checkbox";
 import { ColumnTable } from "../DatabaseView/ColumnTable";
+import { Text } from "../DatabaseView/Table/Cell/Text";
 
 export const renderIcon = (type) => {
     switch (type) {
@@ -26,7 +27,7 @@ export const renderIcon = (type) => {
             return <LuSigma size={18} />
         case "selection":
             return <HiSelector size={18} />
-        case "multi-selection":
+        case "multi_selection":
             return <LuTags size={18} />
         case "checkbox":
             return <IoCheckboxOutline size={18} />
@@ -60,17 +61,19 @@ export const renderPropertiesData = (page:PageProps) => {
         return page.properties
             .sort((a, b) => (a.data.loadOrder ?? 0) - (b.data.loadOrder ?? 0))
             .map((property, index) => (
-                <td key={index} className="border border-light-400 dark:border-dark-700 px-3 py-1 truncate overflow-auto">
+                <td key={index} className="border border-light-400 dark:border-dark-700 hover:border-light-300 hover:dark:border-dark-600">
                     {
-                        property.type === "text" ? property.data.value :
-                        property.type === "number" ? property.data.value :
-                        property.type === "datetime" ? <Datetime dateValue={property.data} /> :
-                        property.type === "selection" ? <Select value={property.data.value} items={property.data.items} pageData={page} /> :
-                        property.type === "multi-selection" ? <MultiSelect value={property.data.tags} items={property.data.items} pageData={page} /> :
-                        property.type === "formula" ? <Formula value={property.data.value as string} pageData={page}/> :
-                        property.type === "checkbox" ? 
-                        <span className="w-full grid place-items-center"><Checkbox value={property.data.value as boolean} /></span> :
-                        property.data.value
+                        property.type === "text" ? <Text value={property.data.value as string} /> :
+                            property.type === "number" ? <Text value={property.data.value as string} /> :
+                                property.type === "datetime" ? <Datetime dateValue={property.data} /> :
+                                    property.type === "selection" ? <Select value={property.data.value} items={property.data.items} pageData={page} /> :
+                                        property.type === "multi_selection" ? <MultiSelect tags={property.data.tags} items={property.data.items} pageData={page} /> :
+                                            property.type === "formula" ? <Formula value={property.data.value as string} pageData={page} /> :
+                                                property.type === "checkbox" ?
+                                                    <span
+                                                        className="w-full grid place-items-center"
+                                                    ><Checkbox value={property.data.value as boolean} /></span> :
+                                                    property.data.value
                     }
                 </td>
             ));

@@ -11,14 +11,15 @@ import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../contexts/authProvider";
 import getUser from "../../api/getUser";
 import { useUser } from "../../contexts/userContext";
+import Loading from "../Loading";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../../lib/api";
-import Loading from "../Loading";
 
 export const Layout = () => {
 
-    const socket = io(SOCKET_URL);
-
+    const socket = io(SOCKET_URL, {
+        transports: ["websocket"]
+    });
     const { setUser } = useUser();
 
     const { token } = useAuth();
@@ -90,9 +91,11 @@ export const Layout = () => {
         _layout = JSON.parse(localStorage.getItem("layout") || "true")
         setLayout(_layout)
 
-        socket.on("updateUser", (user) => {
-            setUser(user);
-        });
+        if (socket) {
+            socket.on("updateUser", (user) => {
+                setUser(user);
+            });
+        }
     }, []);
 
     const handleSetLayout = () => {

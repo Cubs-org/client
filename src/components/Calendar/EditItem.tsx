@@ -1,5 +1,4 @@
 import { 
-    // useContext, 
     useState 
 } from "react";
 
@@ -9,7 +8,6 @@ import { Check } from "../Check";
 import { Task } from "../../interfaces/task";
 import { DatePicker } from "../TimeControls/DatePicker";
 import { useModal } from "../../contexts/modalContext";
-// import { SocketContext } from "../../contexts/socketContext";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../../lib/api";
 
@@ -21,7 +19,6 @@ interface TaskProps {
 
 export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => {
 
-    // const { socket } = useContext(SocketContext);
     const socket = io(SOCKET_URL, {
         transports: ["websocket"]
     });

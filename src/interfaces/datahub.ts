@@ -8,4 +8,5 @@ export interface IDatabaseViewProps {
     handleSetItems: (data: PageProps[]) => void;
     notDisplayTitle?: boolean;
     loading?: boolean;
+    datahubId: string;
 }

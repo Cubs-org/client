@@ -31,6 +31,8 @@ export const Avatar = ({ name, icon, classNames, notDisplayUsername, isCircle, s
                 style={{
                     width: size ? `${size}px` : "100%",
                     height: size ? `${size}px` : "100%",
+                    minWidth: size ? `${size}px` : "100%",
+                    minHeight: size ? `${size}px` : "100%",
                 }}
                 className={clsx("object-cover", classNames, {
                     "rounded-full": (isCircle && !isAnimal),

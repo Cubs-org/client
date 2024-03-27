@@ -2,6 +2,7 @@ import clsx from "clsx";
 import parseFormula from "../../../../utils/page/formulaProperty/parseFormula";
 import { PageProps } from "../../../../interfaces/page";
 import { getPropRelationFromFormula } from "../../../../utils/page/formulaProperty/relations";
+import { Popover } from "../../../Popover";
 
 interface FormulaProps {
     value: string;
@@ -19,22 +20,27 @@ export const Formula = ({ value, pageData }:FormulaProps) => {
             return "text=Erro;color=red";
         }
     })();
-    const { text, color: formulaColor } = parseFormula(formulaValue);
+    const { text, color } = parseFormula(formulaValue);
 
     return (
-        <div className={clsx("text-normal font-medium", {
-            "text-red-500": formulaColor === "red",
-            "text-green-500": formulaColor === "green",
-            "text-blue-500": formulaColor === "blue",
-            "text-yellow-500": formulaColor === "yellow",
-            "text-orange-500": formulaColor === "orange",
-            "text-purple-500": formulaColor === "purple",
-            "text-pink-500": formulaColor === "pink",
-            "text-indigo-500": formulaColor === "indigo",
-            "text-gray-500": formulaColor === "gray",
-            "text-light-500": formulaColor === "light",
-        })}>
-            {text}
-        </div>
+        <Popover
+            content={formula}
+            direction="top"
+        >
+            <div className={clsx("px-2 text-normal font-medium", {
+                "text-red-500": color === "red",
+                "text-green-500": color === "green",
+                "text-blue-500": color === "blue",
+                "text-yellow-500": color === "yellow",
+                "text-orange-500": color === "orange",
+                "text-purple-500": color === "purple",
+                "text-pink-500": color === "pink",
+                "text-indigo-500": color === "indigo",
+                "text-gray-500": color === "gray",
+                "text-light-500": color === "light",
+            })}>
+                <span className="text-base font-medium">{text}</span>
+            </div>
+        </Popover>
     )
 }
