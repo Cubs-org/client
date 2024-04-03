@@ -1,5 +1,5 @@
 import React from "react"
-import { TextArea } from "./TextArea";
+import { TextArea } from "../../../TextArea";
 import { twMerge } from "tailwind-merge";
 
 interface TextCellProps extends React.HTMLProps<HTMLInputElement> {

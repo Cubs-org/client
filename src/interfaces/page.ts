@@ -33,3 +33,18 @@ export interface PagePropertiesProps {
     data: Data; 
     trash: boolean;
 }
+
+export type PageData = {
+    id: string;
+    title: string;
+    data: {
+        icon: string;
+        prev: string | undefined | null;
+        next: string | undefined | null;
+    }
+}
+
+export type ChangeAction = {
+    type: "title" | "icon";
+    payload: string;
+}

@@ -1,0 +1,40 @@
+{
+    "branch": [
+        {
+            "id": "1",
+            "title": "A História da Segunda Guerra Mundial",
+            "data": {
+                "icon": "1f99a",
+                "prev": null,
+                "next": "2"
+            }
+        },
+        {
+            "id": "2",
+            "title": "1945",
+            "data": {
+                "icon": "1f4c4",
+                "prev": "1",
+                "next": "3"
+            }
+        },
+        {
+            "id": "3",
+            "title": "Hitler",
+            "data": {
+                "icon": "1f978",
+                "prev": "2",
+                "next": "4"
+            }
+        },
+        {
+            "id": "4",
+            "title": "Alemanha",
+            "data": {
+                "icon": "1f4c4",
+                "prev": "3",
+                "next": null
+            }
+        }
+    ]
+}

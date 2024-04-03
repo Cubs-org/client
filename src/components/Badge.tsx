@@ -12,7 +12,7 @@ export const Badge = ({ children, content, color="red" }:BadgeProps) => {
         <div className="relative group">
             
             <span
-                className={clsx("absolute w-[18px] h-[18px] top-0 right-0 rounded-full text-[.7rem] text-light-300 flex justify-center items-center ring ring-light-100 dark:ring-dark-900", {
+                className={clsx("absolute w-[18px] h-[18px] top-0 right-0 rounded-full text-[.7rem] text-light-300 flex justify-center items-center ring ring-light-100 dark:ring-dark-900 cursor-pointer", {
                     "bg-red-500": color === "red",
                     "bg-green-500": color === "green",
                     "bg-blue-500": color === "blue",
