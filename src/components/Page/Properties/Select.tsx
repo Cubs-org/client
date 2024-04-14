@@ -3,7 +3,7 @@ import { Popover } from "../../Popover";
 
 const Selected = ({ value, color }) => {
     return (
-        <div className={clsx("w-max text-base font-bold px-3 py-0.5 rounded-md text-light-300 cursor-pointer transition-all ease-in", {
+        <div className={clsx("w-max text-sm font-bold px-3 py-0.5 rounded-md text-dark-700 dark:text-light-300 cursor-pointer transition-all ease-in", {
             "bg-red-600 hover:bg-red-700": color === "red",
             "bg-green-600 hover:bg-green-700": color === "green",
             "bg-blue-600 hover:bg-blue-700": color === "blue",

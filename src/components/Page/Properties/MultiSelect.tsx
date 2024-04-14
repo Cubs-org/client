@@ -5,7 +5,7 @@ import { CgClose } from "react-icons/cg";
 const Tags = ({ tags }) => {
     return (
         <div className="flex flex-wrap gap-1">
-            {(tags.length > 0) ? tags.map((tag, index) => (
+            {tags.map((tag, index) => (
                 <div key={index} className={clsx("flex items-center gap-0.5 px-2 text-xs rounded-md text-light-300", {
                     "bg-red-500": tag.color === "red",
                     "bg-green-500": tag.color === "green",
@@ -20,7 +20,7 @@ const Tags = ({ tags }) => {
                     {tag.name}
                     <CgClose size={12}/>
                 </div>
-            )) : <span className="px-2 text-xs text-light-900 dark:text-dark-500">Nenhuma tag encontrada...</span>}
+            ))} 
         </div>
     )
 
@@ -40,9 +40,7 @@ export const MultiSelect = ({ tags, items, pageData }) => {
                     <ul className="flex flex-col gap-1.5 p-1">
 
                         <li className="w-full bg-light-500 dark:bg-dark-500 rounded-md p-1 ring-1 ring-light-600 dark:ring-dark-400">
-                            <Tags
-                                tags={tags}
-                            />
+                            {tags.length > 0 ? <Tags tags={tags}/> : <span className="font-bold text-dark-700 dark:text-light-300">Sem nenhuma tag...</span>}
                         </li>
 
                         {(tags.length > 0) && <hr className="border-light-400 dark:border-dark-300" />}

@@ -16,6 +16,7 @@
     "@react-oauth/google": "^0.11.1",
     "axios": "^1.6.0",
     "clsx": "^2.0.0",
+    "date-fns": "^3.6.0",
     "emoji-mart": "^5.5.2",
     "emoji-picker-react": "^4.5.16",
     "jsonwebtoken": "^9.0.2",

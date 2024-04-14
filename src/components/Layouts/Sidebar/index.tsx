@@ -98,7 +98,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
         return () => {
             if (socket) socket.off("updateUser");
         }
-    }, [socket, userFetched]);
+    }, [userFetched]);
 
     return (
         <>
@@ -136,7 +136,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                 </Button>
                 <div className="w-full flex flex-col items-center gap-2">
                     <div className="w-3/5 mb-8 lg:mb-3 lg:w-[60px] lg:h-[60px] lg:mt-4 flex items-center flex-row gap-3 text-purple-500">
-                        <Logo size={32} className="md:min-w-full fill-purple-500" />
+                        <Logo size={32} className="lg:min-w-full fill-purple-500" />
                         <span className="block lg:hidden text-3xl font-extrabold text-primary">Cub's</span>
                     </div>
                     <hr className="w-full border-1 border-light-300 dark:border-dark-700 hidden lg:block"/>
