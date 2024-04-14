@@ -31,11 +31,11 @@ export const Nav = () => {
             ))}>
             <Link to={`/`} className={clsx(
                 "flex flex-row items-center gap-2 font-black text-xl",
-                (pathname === '/register' || pathname === '/login') ? "text-light-100" : "text-primary"
+                (pathname === '/register' || pathname === '/login') ? "text-light-100" : "text-purple-500"
             )}>
-                <Logo color={
+                <Logo className={
                     (pathname === '/register' || pathname === '/login') ?
-                    "light" : "default"
+                    "fill-light-100" : "fill-purple-500"
                 } size={32}/>
                 <span className="hidden md:flex">Cub's</span>
             </Link>

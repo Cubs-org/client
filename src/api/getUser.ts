@@ -12,7 +12,7 @@ async function getUser(userId: string) {
 
         return user;
     } catch (error) {
-        return error;
+        console.error("Error while getting user: ", error);
     }
 }
 

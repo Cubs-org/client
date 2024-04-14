@@ -39,8 +39,6 @@ export default {
           "light-700": "#B7B7B7",
           "light-800": "#B0B0B0",
           "light-900": "#A7A7A7",
-          "primary": "#9E3ED5",
-          "secondary": "#950EE3",
           "modal": "rgba(0, 0, 0, .7)",
           "glass-dark": "rgba(55, 55, 55, .6)",
           "glass-light": "rgba(215, 215, 215, .6)",

@@ -87,7 +87,7 @@ export default function Profile() {
                     />
                     <span 
                         className="text-sm sm:text-base text-dark-300 font-medium dark:text-light-800"
-                    >Criado em {formatDate(user.createdAt as string)}</span>
+                    >Criado em {formatDate((user.createdAt as string).substring(0, 10))}</span>
                 </div>
 
                 <div className="w-1/2 static md:relative group py-3 md:py-2">
@@ -107,7 +107,7 @@ export default function Profile() {
                             direction={isMobile ? "bottom-start" : "left"}
                         >
                             <span 
-                                className="flex items-center justify-center bg-primary text-xl md:text-3xl group-hover:scale-100 scale-0 min-w-[60px] min-h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all"
+                                className="flex items-center justify-center bg-purple-500 text-xl md:text-3xl group-hover:scale-100 scale-0 min-w-[60px] min-h-[60px] md:w-[80px] md:h-[80px] rounded-full shadow-full transition-all"
                             ><FaImage />
                             </span>
                         </Popover>

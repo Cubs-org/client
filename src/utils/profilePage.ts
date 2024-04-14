@@ -1,7 +1,7 @@
 const padDate = (date: number) => String(date).padStart(2, '0');
 
 const formatDate = (date: string) => {
-    const d = new Date(date)
+    const d = new Date(date.concat("T03:00:00.000Z"));
     return `${padDate(d.getDate())}/${padDate(d.getMonth() + 1)}/${d.getFullYear()}`
 }
 

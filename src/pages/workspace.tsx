@@ -31,7 +31,7 @@ function Workspace() {
 
     useEffect(() => {
         
-        socket.connect();
+        // socket.connect();
 
         let wkspId = pathname.split("/")[2];
 

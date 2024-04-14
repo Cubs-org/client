@@ -103,17 +103,15 @@ export const Layout = () => {
         localStorage.setItem("layout", JSON.stringify(!layout))
     }
 
-    // @ts-ignore
-    const { modalState:{ visible, content }, openModal, closeModal } = useModal();
+    const { modalState:{ visible, content }, closeModal } = useModal();
 
     return (
-        <div className="w-screen h-screen grid place-items-center bg-light-100 dark:bg-dark-900">
-            <div className={clsx("relative lg:absolute w-full h-full lg:w-[95%] lg:h-[90vh] flex flex-col lg:flex-row items-center justify-between lg:gap-3 overflow-x-hidden lg:overflow-x-visible")}>
+        <div className="w-screen h-screen flex items-center justify-center bg-light-100 dark:bg-dark-900">
+            <div className={clsx("w-[98%] m-auto h-full flex  flex-col lg:flex-row items-center gap-3")}>
                 <Modal visible={visible} closeModal={closeModal}>{content}</Modal>
                 <Sidebar layout={layout} handleSetLayout={handleSetLayout}/>
-                <div className={clsx("relative lg:absolute right-0 h-full lg:p-4 lg:shadow-full lg:rounded-2xl text-dark-600 dark:text-light-200 bg-light-100 dark:bg-dark-900 transition-all overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-light-300 dark:scrollbar-thumb-dark-700 scrollbar-track-transparent", {
-                    "w-full lg:w-[calc(100%-100px)]" : layout,
-                    "w-full lg:w-full" : !layout,
+                <div className={clsx("w-full h-full lg:p-4 lg:h-[95vh] lg:shadow-full lg:rounded-2xl text-dark-600 dark:text-light-200 bg-light-100 dark:bg-dark-900 transition-all overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-light-300 dark:scrollbar-thumb-dark-700 scrollbar-track-transparent", {
+                    // "lg:absolute lg:left-8 lg:w-[calc(100%-32px)]" : !layout,
                 })}>
                     {!loading ? <Loading /> : <Outlet />}
                 </div>

@@ -20,12 +20,15 @@ export const Formula = ({ value, pageData }:FormulaProps) => {
             return "text=Erro;color=red";
         }
     })();
+
     const { text, color } = parseFormula(formulaValue);
 
     return (
         <Popover
-            content={formula}
+            // content={formula}
+            content="formula"
             direction="top"
+            width="100%"
         >
             <div className={clsx("px-2 text-normal font-medium", {
                 "text-red-500": color === "red",
@@ -37,7 +40,7 @@ export const Formula = ({ value, pageData }:FormulaProps) => {
                 "text-pink-500": color === "pink",
                 "text-indigo-500": color === "indigo",
                 "text-gray-500": color === "gray",
-                "text-light-500": color === "light",
+                "text-light-500": color === "light"
             })}>
                 <span className="text-base font-medium">{text}</span>
             </div>

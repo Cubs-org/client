@@ -121,8 +121,9 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     />
                 </span>
             </div>
-            <div className={clsx("absolute top-0 w-full h-screen rounded-none lg:w-[80px] flex z-40 lg:min-h-[90vh] lg:max-h-[90vh] flex-col justify-evenly lg:justify-between items-center gap-0 lg:gap-3 lg:shadow-full lg:rounded-2xl px-3 py-2 bg-light-100 dark:bg-dark-900 transition-all", {
-                "lg:-left-[100px]" : !layout,
+            <div className={clsx("absolute lg:relative w-full min-h-screen lg:w-[80px] lg:min-w-[80px] lg:min-h-[95vh] lg:max-h-[90vh] flex z-40 flex-col justify-evenly lg:justify-between items-center gap-0 lg:gap-3 lg:shadow-full lg:rounded-2xl px-3 py-2 bg-light-100 dark:bg-dark-900 transition-all", {
+                // "lg:absolute lg:-translate-x-[80px]" : !layout,
+                "lg:-ml-[80px]" : !layout,
                 "lg:translate-x-0 -translate-x-[100vw]" : !sidebarVisibility,
                 "lg:translate-x-0 translate-x-0" : sidebarVisibility,
             })}>
@@ -133,29 +134,32 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                         "transform rotate-180" : !layout,
                     })}/>
                 </Button>
-                <div className="w-3/5 mt-0 lg:w-[40px] lg:h-[40px] lg:mt-4 flex flex-row items-center gap-3">
-                    <Logo size={32} className="md:min-w-full" />
-                    <span className="block lg:hidden text-3xl font-extrabold text-primary">Cub's</span>
+                <div className="w-full flex flex-col items-center gap-2">
+                    <div className="w-3/5 mb-8 lg:mb-3 lg:w-[60px] lg:h-[60px] lg:mt-4 flex items-center flex-row gap-3 text-purple-500">
+                        <Logo size={32} className="md:min-w-full fill-purple-500" />
+                        <span className="block lg:hidden text-3xl font-extrabold text-primary">Cub's</span>
+                    </div>
+                    <hr className="w-full border-1 border-light-300 dark:border-dark-700 hidden lg:block"/>
+                    <div className="w-3/5 h-full lg:w-full flex flex-col gap-2">
+                        {pages.map((page, index) => (
+                            <Tooltip 
+                                content={page.name}
+                                key={`${index}-${page.name}`}>
+                                <a href={page.link}>
+                                    <div className={clsx(menu_option_default, {
+                                        "!text-purple-500 hover:!text-light-300 w-full": page.link == pathname,
+                                    })}>
+                                        {page.icon}
+                                        <span className="block lg:hidden">{page.name}</span>
+                                    </div>
+                                </a>
+                            </Tooltip>
+                        ))}
+                    </div>
                 </div>
-                <hr className="w-full border-1 border-light-900 dark:border-dark-100 hidden lg:block"/>
+                
                 <div className="w-3/5 lg:w-full flex flex-col gap-2">
-                    {pages.map((page, index) => (
-                        <Tooltip 
-                            content={page.name}
-                            key={`${index}-${page.name}`}>
-                            <a href={page.link}>
-                                <div className={clsx(menu_option_default, {
-                                    "!text-purple-500 hover:!text-light-300 w-full": page.link == pathname,
-                                })}>
-                                    {page.icon}
-                                    <span className="block lg:hidden">{page.name}</span>
-                                </div>
-                            </a>
-                        </Tooltip>
-                    ))}
-                </div>
-                <hr className="w-full border-1 border-light-900 dark:border-dark-100 hidden lg:block"/>
-                <div className="w-3/5 lg:w-full flex flex-col gap-2">
+                <hr className="w-full border-1 border-light-300 dark:border-dark-700 hidden lg:block"/>
                     <ThemeSwitcher classNames={twMerge(menu_option_default)}>
                         <span className="block lg:hidden">Tema</span>
                     </ThemeSwitcher>
@@ -168,7 +172,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
 
                         <Popover 
                             content={<UserSettings />} 
-                            direction="right"
+                            direction="right-start"
                             width="100%"
                             offset={30}
                             classNames="w-full place-items-center hidden lg:grid"

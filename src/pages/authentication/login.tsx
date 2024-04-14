@@ -31,7 +31,7 @@ export default function Login() {
 
     async function authenticateUser() {
         try {
-            const result = await API.post(`/authenticateUser`, formData);
+            const result = await API.post(`/user/authenticateUser`, formData);
             if (result.data.status === 200){
                 signIn(result.data.token);
             } else {
