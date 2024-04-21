@@ -8,11 +8,13 @@ interface IHeaderProfileProps {
 
 export const HeaderProfile = ({ user }:IHeaderProfileProps) => {
 
-    const userUpdatedAt = user.updatedAt as string;
+    const { data } = user;
+
+    const userUpdatedAt = data?.updatedAt as string || "00/00/0000";
 
     // const accountPlan = user.planType as string;
-    const accountStatus = user.status;
-    const accountType = user.accountType;
+    const accountStatus = data?.status || "active";
+    const accountType = data?.accountType || "free";
     // const accountPaymentType = user.paymentType;
 
     return (

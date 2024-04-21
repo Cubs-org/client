@@ -8,8 +8,91 @@ import { TextArea } from "../components/TextArea";
 import { NewTool } from "../components/Page/Content/NewTool";
 import handlePage from "../utils/page/handleHeaderPage";
 import { useLocation } from "react-router-dom";
+import { DataTools } from "../interfaces/page";
+import { Tools } from "../components/Page/Content/Tools";
+import clsx from "clsx";
 
 const twiconsPath = "/twicons/";
+
+const tools: DataTools[] = [
+    {
+        type: 'subtitle',
+        tool_id: '123',
+        data: {
+            content: 'O que houve em 30 de abril de 1945?',
+            y: 2,
+        },
+    },
+    {
+        type: 'image',
+        tool_id: '456',
+        data: {
+            content: 'https://bloghojenahistoria.wordpress.com/wp-content/uploads/2016/04/30-de-abril-de-1945.jpg?w=624',
+            align: 'left',
+            x: 1,
+            y: 5
+        },
+    },
+    {
+        type: 'text',
+        tool_id: '789',
+        data: {
+            content: 'Logo em 1 de janeiro de 1945, o exército soviético lançou uma ofensiva contra Berlim, a capital do Terceiro Reich. Em retaliação ao Massacre de Malmedy, as tropas americanas matam 60 prisioneiros de guerra alemães em Chenogne.',
+            align: 'left',
+            y: 3,
+        },
+    },
+    {
+        type: 'text',
+        tool_id: '789',
+        data: {
+            content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius porro quidem commodi eligendi facilis nemo consequuntur, optio unde numquam molestias nam voluptate eveniet? Non fugit iure reprehenderit velit. Architecto, adipisci!',
+            align: 'left',
+            x: 1,
+            y: 4,
+        },
+    },
+    {
+        type: 'text',
+        tool_id: '789',
+        data: {
+            content: '123Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius porro quidem commodi eligendi facilis nemo consequuntur, optio unde numquam molestias nam voluptate eveniet? Non fugit iure reprehenderit velit. Architecto, adipisci!',
+            align: 'left',
+            x: 2,
+            y: 4,
+        },
+    },
+    {
+        type: 'text',
+        tool_id: '789',
+        data: {
+            content: '456Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius porro quidem commodi eligendi facilis nemo consequuntur, optio unde numquam molestias nam voluptate eveniet? Non fugit iure reprehenderit velit. Architecto, adipisci!',
+            align: 'left',
+            x: 3,
+            y: 4,
+        },
+    },
+    {
+        type: 'title',
+        tool_id: '101112',
+        data: {
+            content: 'Acontecimentos',
+            align: 'left',
+            y: 1,
+        },
+    },
+    {
+        type: 'text',
+        tool_id: '101112',
+        data: {
+            content: 'A Segunda Guerra Mundial foi um conflito militar global que durou de 1939 a 1945, envolvendo a maioria das nações do mundo — incluindo todas as grandes potências — organizadas em duas alianças militares opostas: os Aliados e o Eixo. Foi a guerra mais abrangente da história, com mais de 100 milhões de militares mobilizados. Em estado de "guerra total", os principais envolvidos dedicaram toda sua capacidade econômica, industrial e científica a serviço dos esforços de guerra, deixando de lado a distinção entre recursos civis e militares. Marcado por um número significante de ataques contra civis, incluindo o Holocausto e a única vez em que armas nucleares foram utilizadas em combate, foi o conflito mais letal da história da humanidade, resultando entre 50 a mais de 70 milhões de mortes.[1] Geralmente considera-se o ponto inicial da guerra como sendo a invasão da Polônia pela Alemanha Nazista em 1 de setembro de 1939 e subsequentes declarações de guerra contra a Alemanha pela França e pela maioria dos países do Império Britânico e da Commonwealth. Alguns países já estavam em guerra nesta época, como Etiópia e Reino de Itália na Segunda Guerra Ítalo-Etíope e China e Japão na Segunda Guerra Sino-Japonesa.[2] Muitos dos que não se envolveram inicialmente acabaram aderindo ao conflito em resposta a eventos como a invasão da União Soviética pelos alemães e os ataques japoneses contra as forças dos Estados Unidos no Pacífico em Pearl Harbor e em colônias ultra marítimas britânicas, que resultou em declarações de guerra contra o Japão pelos Estados Unidos, Países Baixos e o Commonwealth Britânico.[3][4] A guerra terminou com a vitória dos Aliados em 1945, alterando significativamente o equilíbrio de poder no mundo. As Nações Unidas foram criadas para promover a cooperação internacional e prevenir futuros conflitos. A União Soviética e os Estados Unidos emergiram como superpotências rivais, estabelecendo as bases para a Guerra Fria, que durou por mais de quatro décadas. Enquanto isso, a descolonização de Ásia e África, e a crise econômica europeia, criaram um novo cenário global, que levou ao surgimento de movimentos de independência e à formação de novas nações em todo o mundo.',
+            align: 'left',
+            x: 2,
+            y: 5,
+            width: 75
+        },
+    }
+];
 
 function Page() {
 
@@ -20,9 +103,9 @@ function Page() {
     const [pageData, setPageData] = useReducer(handlePage, currentPage);
 
     const members = [
-        {name:"Helder Martins", icon:"cervo", email:"helder@gmail.com"},
-        {name:"Gabriel Nogueira", icon:"gorila", email:"nogs@gmail.com"},
-        {name:"Augusto Kawashima", icon:"panda", email:"gutin@hotmail.com"}
+        { name: "Helder Martins", icon: "cervo", email: "helder@gmail.com" },
+        { name: "Gabriel Nogueira", icon: "gorila", email: "nogs@gmail.com" },
+        { name: "Augusto Kawashima", icon: "panda", email: "gutin@hotmail.com" }
     ];
 
     useEffect(() => {
@@ -30,39 +113,51 @@ function Page() {
         let link = document.querySelector("link[rel='icon']") as HTMLLinkElement;
         // link.href = pageData.data.icon;
         link.href = `${twiconsPath}/${pageData.data.icon}.svg`;
-    }, [pageData.title, pageData.data.icon]);
+    }, [pageData]);
 
     return (
-        <main className="m-auto w-[95%] lg:w-full">
-            <Pg.Header 
+        <div className="m-auto w-[95%] lg:w-full pb-3">
+            <Pg.Header
                 currentPage={pageData}
                 setPageData={setPageData}
                 branch={branch}
                 members={members}
             />
             <header
-                className="flex items-start gap-1 my-3"
+                className="flex items-start gap-1 my-3 group"
             >
 
-                <IconPicker 
+                <IconPicker
                     icon={pageData.data.icon}
                     setIcon={(icon) => {
                         // @ts-ignore
-                        setPageData({type:"icon", payload:icon})
+                        setPageData({ type: "icon", payload: icon })
                     }}
-                    classNames="w-8 h-8 mt-2 rounded-md text-2xl hover:bg-light-300 dark:hover:bg-dark-700 flex items-center justify-center cursor-pointer"
+                    size={32}
+                    classNames={clsx("w-8 h-8 mt-4 rounded-md text-2xl hover:bg-light-300 dark:hover:bg-dark-700 flex items-center justify-center cursor-pointer", {
+                        "saturate-0 opacity-0 group-hover:opacity-100" : pageData.data.icon === "undefined"
+                    })}
+                    hide={pageData.data.icon === "undefined"}
                 />
 
-                <TextArea 
+                <TextArea
                     value={pageData.title}
                     placeholder={"Sem título"}
-                    handle={(newValue) => console.log(newValue)}
-                    classNames="w-full text-3xl font-bold"
+                    handle={(newValue) => {
+                        setPageData({ type: "title", payload: newValue })
+                    }
+                    }
+                    classNames="w-[calc(100%-(32px+48px))] text-5xl font-bold break-words"
                     outlineDisabled
                 />
             </header>
+
+            <main className="mb-5 w-full">
+                <Tools tools={tools} />
+            </main>
+
             <NewTool />
-        </main>
+        </div>
     )
 }
 

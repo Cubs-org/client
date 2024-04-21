@@ -8,7 +8,10 @@ export interface IUser {
     updatedAt?: Date | string;
 }
 
-export interface IUserAccount extends IAccount, IUser {}
+export type IUserAccount = {
+    data: IAccount & IUser;
+    hubId: string;
+}
 
 export interface IUserGoogle {
     email: string;
@@ -26,18 +29,5 @@ export interface IGoogleUserResponse {
 
 export interface IUserContext {
     user: IUserAccount;
-    setUser: (
-        newValues: {
-            id?: string,
-            name?: string,
-            email?: string,
-            icon?: string,
-            createdAt?: Date | string,
-            updatedAt?: Date | string,
-            accountType?: string,
-            status?: string,
-            planType?: string,
-            paymentType?: string,
-        }
-    ) => void;
+    setUser: ({}:IUserAccount) => void;
 }

@@ -3,13 +3,13 @@ import { ChangeAction, PageData } from "../../interfaces/page";
 export default function handlePage(pageData:PageData, setPageData:ChangeAction) {
     switch (setPageData.type) {
         case "title":
-            console.log("title", setPageData.payload)
+            // console.log("title", setPageData.payload)
             return {
                 ...pageData,
                 title: setPageData.payload
             }
         case "icon":
-            console.log("icon", setPageData.payload)
+            // console.log("icon", setPageData.payload)
             return {
                 ...pageData,
                 data: {

@@ -17,11 +17,11 @@ interface TaskProps {
     onItemDeleted: (item: Task) => void;
 }
 
-export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => {
+const socket = io(SOCKET_URL, {
+    transports: ["websocket"]
+});
 
-    const socket = io(SOCKET_URL, {
-        transports: ["websocket"]
-    });
+export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => {
 
     const { closeModal } = useModal();
     let _task = task as any;

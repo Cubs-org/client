@@ -6,35 +6,26 @@ const userContext = createContext<IUserContext>({} as IUserContext);
 
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState<IUserAccount>({
-        id: "a1b2c3d4e5f6g7h8i9j0",
-        name: "Usuário",
-        email: "user@adress",
-        icon: "/src/assets/default-user.jpg",
-        createdAt: "00/00/0000",
-        updatedAt: "00/00/0000",
-        accountType: "free",
-        status: "active",
-        planType: "perMonth",
-        paymentType: "creditCard",
+        data: {
+            id: "a1b2c3d4e5f6g7h8i9j0",
+            name: "Usuário",
+            email: "user@adress",
+            icon: "/src/assets/default-user.jpg",
+            createdAt: "00/00/0000",
+            updatedAt: "00/00/0000",
+            accountType: "free",
+            status: "active",
+            planType: "perMonth",
+            paymentType: "creditCard"
+        },
+        hubId: "a1b2c3d4e5f6g7h8i9j0",
     });
 
-    const handleSetUser = (newValues) => {
-
-        const newUser = { ...user } as IUserAccount;
-
-        for (let key in newValues) {
-            if (newUser[key] !== newValues[key]) {
-                newUser[key] = newValues[key];
-            }
-        }
-
-        const { name, email, icon } = newUser;
-        localStorage.setItem("user", JSON.stringify({ name, email, icon }));
-        setUser(newUser);
-    }
+    /* TODO: not set usar data if doesn't changed values */
+    const handleSetUser = (newValues) => setUser(newValues);
 
     return (
-        <userContext.Provider value={{ user, setUser:handleSetUser }}>
+        <userContext.Provider value={{ user, setUser: handleSetUser }}>
             {children}
         </userContext.Provider>
     )

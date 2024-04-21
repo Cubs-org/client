@@ -18,16 +18,14 @@ interface TableProps {
     datahubId: string;
 }
 
+const socket = io(SOCKET_URL);
+
 export const Body = ({ 
     items, 
     datahubId,
     handleSetItems, 
     handleCreateNewPage 
 }:TableProps) => {
-
-    const socket = io(SOCKET_URL, {
-        transports: ["websocket"]
-    });
 
     useEffect(() => handleSetItems(items), [items]);
 

@@ -9,17 +9,15 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import fetchWorkspace from "../../api/fetchWorkspace";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../contexts/authProvider";
-import getUser from "../../api/getUser";
+import getUser from "../../api/user/getUser";
 import { useUser } from "../../contexts/userContext";
 import Loading from "../Loading";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../../lib/api";
 
-export const Layout = () => {
+const socket = io(SOCKET_URL);
 
-    const socket = io(SOCKET_URL, {
-        transports: ["websocket"]
-    });
+export const Layout = () => {
     const { setUser } = useUser();
 
     const { token } = useAuth();
@@ -33,10 +31,12 @@ export const Layout = () => {
 
         if (!userFetched) {
             const userId = (jwtDecode(token as string) as any).user.id;
+            // setUser({ data:{...user.data}, hubId: (jwtDecode(token as any) as any).hubId});
 
             getUser(userId)
                 .then(res => {
-                    setUser(res.data.user);
+                    const userData = res.data.user;
+                    setUser({data:{...userData}, hubId: (jwtDecode(token as any) as any).hubId});
                 }).finally(() => {
                     setUserFetched(true);
                 });

@@ -59,6 +59,8 @@ const EditColumn = ({ title, type, value }) => {
     );
 };
 
+const socket = io(SOCKET_URL);
+
 export const ColumnTable = ({
     title,
     type,
@@ -67,10 +69,6 @@ export const ColumnTable = ({
     loadOrder,
     handleDrop
 }: ColumnTableProps) => {
-
-    const socket = io(SOCKET_URL, {
-        transports: ['websocket'],
-    });
 
     const columnRef = useRef<HTMLTableHeaderCellElement>(null);
     const [columnSize, setColumnSize] = useState<number>(width);

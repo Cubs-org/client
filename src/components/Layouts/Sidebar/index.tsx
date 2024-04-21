@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import clsx from "clsx";
 
@@ -19,13 +19,11 @@ import {
 } from "react-icons/fa";
 import { Tooltip } from "../../Tooltip";
 import { useLocation } from "react-router-dom";
-import { IUser } from "../../../interfaces/user";
-import { jwtDecode } from "jwt-decode";
-import { useAuth } from "../../../contexts/authProvider";
-import getUser from "../../../api/getUser";
+// import { jwtDecode } from "jwt-decode";
+// import { useAuth } from "../../../contexts/authProvider";
+// import getUser from "../../../api/getUser";
 import Logo from "../../Logo";
-import { io } from "socket.io-client";
-import { SOCKET_URL } from "../../../lib/api";
+import { useUser } from "../../../contexts/userContext";
 
 interface ISidebar {
     layout: boolean;
@@ -34,15 +32,13 @@ interface ISidebar {
 
 export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
 
-    const { token } = useAuth();
-    const socket = io(SOCKET_URL, {
-        transports: ["websocket"]
-    });
+    const { user } = useUser();
 
-    const [userData, setUserData] = useState<IUser>();
-    const [userFetched, setUserFetched] = useState(false);
+    // const { token } = useAuth();
+    // const [userFetched, setUserFetched] = useState(false);
 
-    const username = userData?.name;
+    const userName = user?.data?.name as string || "Usuário", 
+        userIcon = user?.data?.icon as string || "/src/assets/default-user.jpg"
 
     const { pathname } = useLocation();
 
@@ -76,29 +72,18 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
         window.location.href = "/profile"
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (!userFetched) {
-            const userId = (jwtDecode(token as string) as any).user.id;
+    //     if (!userFetched) {
+    //         const userId = (jwtDecode(token as string) as any).user.id;
 
-
-            getUser(userId).then(res => {
-                setUserData(res.data.user);
-                setUserFetched(true);
-            });
-        }
-
-        if (socket) {
-            socket.connect();
-            socket.on("updateUser", (user) => {
-                setUserData(user);
-            });
-        }
-
-        return () => {
-            if (socket) socket.off("updateUser");
-        }
-    }, [userFetched]);
+    //         getUser(userId)
+    //             .then(res => {
+    //                 setUser({ data: res.data, hubId: user?.hubId});
+    //                 setUserFetched(true);
+    //             });
+    //     }
+    // }, [userFetched]);
 
     return (
         <>
@@ -114,7 +99,7 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     "flex" : !sidebarVisibility,
                 })}>
                     <Avatar 
-                        icon={userData?.icon as string} 
+                        icon={userIcon as string || "/src/assets/default-user.jpg"} 
                         size={32}
                         notDisplayUsername={true}
                         isCircle
@@ -166,8 +151,8 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                     <div className={menu_option_default}>
                         
                         <div className="flex justify-start items-center lg:hidden w-full gap-3">
-                            <Avatar icon={userData?.icon as string} name={username} size={24} isCircle />
-                            <span className="block lg:hidden" onClick={handleClickUser}>{username}</span>
+                            <Avatar icon={userIcon as string} name={userName} size={24} isCircle />
+                            <span className="block lg:hidden" onClick={handleClickUser}>{userName}</span>
                         </div>
 
                         <Popover 
@@ -177,8 +162,8 @@ export const Sidebar = ({ layout, handleSetLayout }:ISidebar) => {
                             offset={30}
                             classNames="w-full place-items-center hidden lg:grid"
                         >
-                            <Avatar icon={userData?.icon as string} name={username} size={24} isCircle />
-                            <span className="block lg:hidden" onClick={handleClickUser}>{username}</span>
+                            <Avatar icon={userIcon as string} name={userName} size={24} isCircle />
+                            <span className="block lg:hidden" onClick={handleClickUser}>{userName}</span>
                         </Popover>
                     </div>
                 </div>

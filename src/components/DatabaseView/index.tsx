@@ -21,6 +21,8 @@ interface ViewProps {
     preferences?: JSON;
 }
 
+const socket = io(SOCKET_URL);
+
 export const DatabaseView = ({ 
     datahubId,
     title, 
@@ -30,11 +32,7 @@ export const DatabaseView = ({
     notDisplayTitle=false 
 }: IDatabaseViewProps) => {
 
-    const socket = io(SOCKET_URL, {
-        transports: ["websocket"]
-    });
-
-    const { user } = useUser();
+    const { user: {data: { email }} } = useUser();
 
     const [currentView, setCurrentView] = useState<View>("Tabela");
 
@@ -64,7 +62,7 @@ export const DatabaseView = ({
     const handleCreateNewPage = () => {
         socket.emit('createPage', {
             datahubId: datahubId,
-            email: user?.email
+            email: email
         });
     };
 

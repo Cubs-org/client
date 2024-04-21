@@ -6,12 +6,9 @@ import { SOCKET_URL } from "../lib/api"
 import { DatabaseView } from "../components/DatabaseView"
 import { Search } from "../components/Search"
 
-import { useLocation } from "react-router-dom"
-
-import { getDatahubId } from "../api/fetchDatahubId"
-
 import { PageProps } from "../interfaces/page"
 import updatedAtFormat from "../utils/datetime/updatedAtFormat"
+import { useUser } from "../contexts/userContext"
 
 type SharedPages = {
     data: any;
@@ -21,19 +18,16 @@ type SharedPages = {
     is_admin: boolean;
 }[];
 
+const socket = io(SOCKET_URL);
+
 function Workspace() {
 
-    const socket = io(SOCKET_URL, {
-        transports: ["websocket"]
-    });
-
-    const [hubId, setHubId] = useState<string>("");
     const [search, setSearch] = useState<string>("");
     const [items, setItems] = useState<PageProps[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [shared, setShared] = useState<SharedPages>([]);
 
-    const { pathname } = useLocation();
+    const { user: { data: { email }, hubId } } = useUser();
 
     const handleSetItems = (data: PageProps[]) => setItems(data);
 
@@ -41,22 +35,12 @@ function Workspace() {
 
     useEffect(() => {
 
-        let wkspId = pathname.split("/")[2];
+        socket.emit('getItems', { hubId });
 
-        if (!wkspId) return;
-        if (loading) {
-            getDatahubId(wkspId)
-                .then((id) => {
-                    const hub_id = id as any;
-                    socket.emit('getItems', { hubId: id });
-
-                    socket.on('items', (data) => {
-                        handleSetItems(data);
-                    });
-
-                    setHubId(hub_id);
-                }).finally(() => setLoading(false));
-        }
+        socket.on('items', (data) => {
+            handleSetItems(data);
+            setLoading(false);
+        });
 
         socket.on('columnMoved', (data) => handleSetItems(data));
         socket.on('columnResized', (data) => handleSetItems(data));
@@ -72,14 +56,15 @@ function Workspace() {
 
     useEffect(() => {
 
-        socket.emit('getPagesByMemberId/emit', { id: "d5db2b7b-1573-45a7-a0ad-73cea311d369" });
-        socket.on('getPagesByMemberId/on', (data) => setShared(data));
+        if (email) {
+            socket.emit('getPagesByMemberId', { email });
+            socket.on('getPagesByMemberId', (data) => setShared(data));
+        }
 
         return () => {
-            socket.off('getPagesByMemberId/emit');
-            socket.off('getPagesByMemberId/on');
+            socket.off('getPagesByMemberId');
         }
-    }, []);
+    }, [shared]);
 
     return (
         <div className="w-[98%] m-auto">

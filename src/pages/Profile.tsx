@@ -4,55 +4,49 @@ import { useUser } from "../contexts/userContext";
 import { Popover } from "../components/Popover";
 import { ChoiceAnimalImage } from "../components/Profile/ChoiceAnimalImage";
 import { Avatar } from "../components/Avatar";
-import { formatDate, formatUserName } from "../utils/profilePage";
+import { 
+    formatDate, 
+    // formatUserName 
+} from "../utils/profilePage";
 import { FaImage } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-import { SOCKET_URL } from "../lib/api";
+import updateUser from "../api/user/updateUser";
 
 export default function Profile() {
 
-    const socket = io(SOCKET_URL, {
-        transports: ["websocket"]
-    });
-
     const { user, setUser } = useUser();
 
-    const handleSetUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let data = {
-            ...user,
+    const handleSetUsername = (e) => {
+        const data = {
+            ...user.data,
             name: e.target.value
         };
-
-        setUser(data);
+        setUser({ data:{...data}, hubId: user.hubId});
+        return data;
     }
+
+    const saveNameEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            saveName(e);
+            e.stopPropagation();
+        }
+    }
+
+    const saveName = (e) => handleSetUserData(handleSetUsername(e));
 
     const handleChangeAvatar = (avatar: string) => {
-        let data = {
-            ...user,
+        const updatedUserData = {
+            ...user.data,
             icon: avatar
         };
-
-        handleSetUserData(data);
-        setUser(data);
+        setUser({ data: updatedUserData, hubId: user.hubId });
     }
 
-    const handleSetUserData = (user) => {
-        socket.connect();
-        socket.emit("updateUser", user);
-
-        socket.on("userUpdated", (data) => {
-            setUser(data);
-        });
-
-        return () => {
-            socket.off("userUpdated");
-            // socket.disconnect();
-        }
-    };
-
-    const username = user?.name as string,
-        avatar = user?.icon as string;
+    const handleSetUserData = async (userData) => {
+        if (!userData.name || !userData.email || !userData.icon) return;
+        await updateUser(userData);
+    }
 
     const [isMobile, setIsMobile] = useState(false);
 
@@ -70,30 +64,25 @@ export default function Profile() {
                 <div className="flex flex-col flex-grow items-center md:items-start w-4/5 md:w-full m-auto">
                     <h3 
                         className="text-base md:text-lg font-bold text-dark-400 bg-transparent dark:text-light-700"
-                    >{user.email}</h3>
+                    >{user?.data?.email || "minion"}</h3>
                     <input 
                         className="w-full rounded-md outline-none text-center md:text-left sm:text-6xl text-3xl font-bold text-dark-700 bg-transparent placeholder:text-light-300 dark:text-light-200 hover:bg-light-200 focus:outline-1 focus:ring-2 focus:ring-light-500 dark:hover:bg-dark-600 dark:focus:outline-1 dark:focus:ring-2 dark:focus:ring-dark-300 transition-all duration-300 ease-in-out" 
                         placeholder="Usuário"
-                        value={username}
-                        onChange={handleSetUserName}
-                        onBlur={(e) => {
-                            const data = {
-                                ...user,
-                                name: e.target.value
-                            }
-                            handleSetUserData(data)
-                            e.target.value = formatUserName(username)
-                        }}
+                        value={user?.data?.name || "minion"}
+                        onChange={handleSetUsername}
+                        onBlur={saveName}
+                        onKeyDown={saveNameEnter}
                     />
+                    
                     <span 
                         className="text-sm sm:text-base text-dark-300 font-medium dark:text-light-800"
-                    >Criado em {formatDate((user.createdAt as string).substring(0, 10))}</span>
+                    >Criado em {formatDate((user?.data?.createdAt as string || "minion").substring(0, 10))}</span>
                 </div>
 
                 <div className="w-1/2 static md:relative group py-3 md:py-2">
                     <Avatar 
-                        icon={avatar}
-                        name={username}
+                        icon={user?.data?.icon as string || "minion"}
+                        name={user?.data?.name || "minion"}
                         notDisplayUsername={true}
                         classNames="hover:filter hover:brightness-125 hover:contrast-100 hover:saturate-150 transition-all duration-300 ease-in-out"
                         isCircle

@@ -17,9 +17,11 @@ interface EmojiPickerProps {
     icon: string
     setIcon: Dispatch<SetStateAction<string>>
     classNames?: string
+    hide?: boolean
+    size?: number
 }
 
-export const IconPicker = ({ icon, setIcon, classNames }:EmojiPickerProps) => {
+export const IconPicker = ({ icon, setIcon, classNames, size=24, hide=false }:EmojiPickerProps) => {
 
     const handleSetEmoji = (e: Emoji) => setIcon(e.unified);
 
@@ -40,8 +42,8 @@ export const IconPicker = ({ icon, setIcon, classNames }:EmojiPickerProps) => {
             }>
             <Emoji 
                 emojiStyle={EmojiStyle.TWITTER}
-                unified={icon} 
-                size={32}
+                unified={hide ? '1f642' : icon} 
+                size={size}
             />
         </Popover>
     )

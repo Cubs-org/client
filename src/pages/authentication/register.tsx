@@ -9,7 +9,7 @@ import { FaGoogle } from "react-icons/fa";
 import { useAuth } from "../../contexts/authProvider";
 import { Alert } from "../../components/Alert";
 import { AlertProps } from "../../interfaces/alert";
-import createUser from "../../api/createUser";
+import createUser from "../../api/user/createUser";
 
 export default function Register() {
 

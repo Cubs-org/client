@@ -22,15 +22,15 @@ type Data = {
     end?: string;
 
     // select | multiselect
-    items?: {name:string;color:string}[];
-    tags?: {name:string;color:string}[];
+    items?: { name: string; color: string }[];
+    tags?: { name: string; color: string }[];
 } & Object;
 
 export interface PagePropertiesProps {
     id: string;
     type: string;
     title: string;
-    data: Data; 
+    data: Data;
     trash: boolean;
 }
 
@@ -48,3 +48,17 @@ export type ChangeAction = {
     type: "title" | "icon";
     payload: string;
 }
+
+export type ToolData = {
+    x?: number;
+    y: number;
+    width?: number;
+    align?: 'left' | 'right' | 'center';
+    content?: string | number;
+};
+
+export type DataTools = {
+    type: string;
+    tool_id: string;
+    data: ToolData;
+};

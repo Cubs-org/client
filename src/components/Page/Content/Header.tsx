@@ -161,6 +161,7 @@ export const Header = ({
                         {members.length > 0 ? members.map((member, _i) => {
                             return (
                                 <Avatar
+                                    key={`${member}-${_i}`}
                                     icon={member.icon}
                                     size={28}
                                     classNames={clsx("ring ring-light-100 dark:ring-dark-900 rounded-full overflow-hidden", {

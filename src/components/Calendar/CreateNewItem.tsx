@@ -17,13 +17,13 @@ interface ICreateTask {
     onNewItemCreated: (item: any) => void;
 };
 
+const socket = io(SOCKET_URL);
+
 export const CreateNewItem = ({ event, type, onNewItemCreated }: ICreateTask) => {
     
-    const socket = io(SOCKET_URL, {
-        transports: ["websocket"]
-    });
     
-    const { user } = useUser();
+    
+    const { user: {data: { email }} } = useUser();
 
     const { closeModal } = useModal();
 
@@ -40,7 +40,7 @@ export const CreateNewItem = ({ event, type, onNewItemCreated }: ICreateTask) =>
         start: "",
         end: "",
         completed: false,
-        owner: user.email,
+        owner: email,
         color: "blue",
         type: type || "task",
     });

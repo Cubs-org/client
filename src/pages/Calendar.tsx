@@ -10,23 +10,19 @@ import { useUser } from "../contexts/userContext";
 import Loading from "../components/Loading";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../lib/api";
-// import { SocketContext } from "../contexts/socketContext";
+
+const socket = io(SOCKET_URL);
 
 export default function CalendarPage() {
 
-  // const { socket } = useContext(SocketContext);
-  const socket = io(SOCKET_URL, {
-    transports: ["websocket"]
-  });
-
-  const {user} = useUser();
+  const { user: {data: { email }} } = useUser();
 
   const [items, setItems] = useState<any>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     socket.connect();
-    socket.emit("getCalendarItems", { email: user.email});
+    socket.emit("getCalendarItems", { email: email});
     socket.on("updateItems", (received_items) => loadItems(received_items));
 
     setLoading(false);
@@ -35,7 +31,7 @@ export default function CalendarPage() {
       socket.off("getCalendarItems");
       socket.off("updateItems");
     }
-  }, [loading, user.email]);
+  }, [loading, email]);
 
   useEffect(() => {
     socket.connect();

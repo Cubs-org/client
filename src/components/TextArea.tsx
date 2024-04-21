@@ -9,6 +9,8 @@ interface TextAreaProps {
     handle: (newValue: string) => void;
 }
 
+type TextAreaState = boolean | "plaintext-only";
+
 export const TextArea = ({ 
     classNames, 
     value, 
@@ -17,7 +19,7 @@ export const TextArea = ({
     outlineDisabled=false 
 }: TextAreaProps) => {
     const [content, setContent] = React.useState(value || "");
-    const [isEditing, setIsEditing] = React.useState(false);
+    const [isEditing, setIsEditing] = React.useState<TextAreaState>(false);
 
     React.useEffect(() => {
         setContent(value || "");
@@ -25,18 +27,23 @@ export const TextArea = ({
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === "Enter") {
+            e.preventDefault();
             setIsEditing(false);
-            handle(content);
+            handle(e.currentTarget.textContent || "");
         }
     };
 
     const handleClick = () => {
-        setIsEditing(true);
+        setIsEditing("plaintext-only");
     };
 
-    const handleBlur = () => {
+    const handleBlur = (e: React.ChangeEvent<HTMLDivElement>) => {
         setIsEditing(false);
-        handle(content);
+        handle(e.target.textContent || "");
+    };
+
+    const handleWritting = (e: React.ChangeEvent<HTMLDivElement>) => {
+        setContent(e.target.textContent || "");
     };
 
     return (
@@ -50,6 +57,7 @@ export const TextArea = ({
             onClick={handleClick}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
+            onChange={handleWritting}
         >
             {content !== "" && content}
         </div>

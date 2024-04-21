@@ -10,8 +10,8 @@ import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
 import Profile from "../pages/Profile.tsx";
 import Page from "../pages/Page.tsx";
-import Login from "../pages/authentication/login.tsx";
-import Register from "../pages/authentication/register.tsx";
+import Login from "../pages/authentication/Login.tsx";
+import Register from "../pages/authentication/Register.tsx";
 
 export const data = {
     notAuthenticated: [

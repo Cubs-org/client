@@ -7,11 +7,9 @@ interface BtnNewColumnProps {
     datahubId: string;
 };
 
-export const NewColumn = ({ datahubId }:BtnNewColumnProps) => {
+const socket = io(SOCKET_URL);
 
-    const socket = io(SOCKET_URL, {
-        transports: ['websocket']
-    });
+export const NewColumn = ({ datahubId }:BtnNewColumnProps) => {
 
     const handleSubmit = (type:string) => {
         
