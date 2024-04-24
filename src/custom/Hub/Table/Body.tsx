@@ -1,14 +1,15 @@
 import {
     useEffect 
 } from "react";
-import { Button } from "../../Button"
-import { renderIcon, renderPropertiesData, renderPropertiesTitle } from "../../Page/renderProperties"
+import { Button } from "../../../components/Button"
+import { renderPropertiesData, renderPropertiesTitle } from "../../Page/renderProperties"
 import { PageProps } from "../../../interfaces/page";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../../../lib/api";
 import { Title } from "./Cell/Title";
 import { NewColumn } from "./BtnNewColumn";
-import { Popover } from "../../Popover";
+import { Popover } from "../../../components/Popover";
+import { ColumnTable } from "../ColumnTable";
 
 interface TableProps {
     items: PageProps[];
@@ -91,12 +92,16 @@ export const Body = ({
                         <thead className="bg-light-300 dark:bg-dark-800 p-4 rounded-md">
                             <tr>
 
-                                <th className="min-w-[230px] px-3 text-left border-r border-light-500 dark:border-dark-700 hover:bg-light-400 dark:hover:bg-dark-600">
+                                {/* <th className="min-w-[230px] px-3 text-left border-r border-light-500 dark:border-dark-700 hover:bg-light-400 dark:hover:bg-dark-600">
                                     <span className="w-full flex flex-row items-center gap-2 text-base font-bold truncate">
                                         {renderIcon("text")}
                                         Título
                                     </span>
-                                </th>
+                                </th> */}
+                                <ColumnTable 
+                                    title="Título"
+                                    type="text"
+                                />
 
                                 {items.length > 0 ? renderPropertiesTitle(items[0]?.properties ?? [], handleDrop) || null : (
                                     <th className="text-center p-4 opacity-25">Adicione algo...</th>

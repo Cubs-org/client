@@ -2,7 +2,7 @@ import clsx from "clsx";
 import parseFormula from "../../../../utils/page/formulaProperty/parseFormula";
 import { PageProps } from "../../../../interfaces/page";
 import { getPropRelationFromFormula } from "../../../../utils/page/formulaProperty/relations";
-import { Popover } from "../../../Popover";
+import { Popover } from "../../../../components/Popover";
 
 interface FormulaProps {
     value: string;

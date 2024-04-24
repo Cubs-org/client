@@ -1,6 +1,6 @@
 import { PageProps } from "./page";
 
-export interface IDatabaseViewProps {
+export interface IHubProps {
     title: string;
     search: string;
     items: PageProps[];

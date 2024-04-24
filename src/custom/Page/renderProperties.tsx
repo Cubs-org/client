@@ -12,8 +12,8 @@ import { Select } from "./Properties/Select";
 import { MultiSelect } from "./Properties/MultiSelect";
 import { Datetime } from "./Properties/Datetime";
 import { Checkbox } from "./Properties/Checkbox";
-import { ColumnTable } from "../DatabaseView/ColumnTable";
-import { Text } from "../DatabaseView/Table/Cell/Text";
+import { ColumnTable } from "../Hub/ColumnTable";
+import { Text } from "../Hub/Table/Cell/Text";
 
 export const renderIcon = (type) => {
     switch (type) {

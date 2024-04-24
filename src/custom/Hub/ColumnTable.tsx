@@ -5,7 +5,7 @@ import {
     useRef, 
     useState
 } from "react";
-import { Popover } from "../Popover";
+import { Popover } from "../../components/Popover";
 
 import { CgChevronRight, CgTrash } from "react-icons/cg";
 import { Editor } from "../Page/Properties/Formula/Editor";

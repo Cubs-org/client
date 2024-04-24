@@ -1,12 +1,11 @@
 import React from "react"
-import { TextArea } from "../../../TextArea";
-import { twMerge } from "tailwind-merge";
+import { TextArea } from "../../../../components/TextArea";
 
 interface TextCellProps extends React.HTMLProps<HTMLInputElement> {
     classNames?: string;
 };
 
-export const Title = ({ classNames, value }: TextCellProps) => {
+export const Text = ({ classNames, value }: TextCellProps) => {
     
     const handleSave = (saved_value) => {
         const newValue = saved_value.target.value;
@@ -16,7 +15,7 @@ export const Title = ({ classNames, value }: TextCellProps) => {
     return (
         <TextArea
             handle={handleSave}
-            classNames={twMerge("outline-none", classNames)}
+            classNames={classNames}
             value={value}
         />
     )

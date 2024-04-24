@@ -3,13 +3,13 @@ import { useEffect, useReducer } from "react";
 import { branch } from "../lib/skeleton.json";
 
 import { IconPicker } from "../components/IconPicker";
-import { Page as Pg } from "../components/Page/Content";
+import { Page as Pg } from "../custom/Page/Content";
 import { TextArea } from "../components/TextArea";
-import { NewTool } from "../components/Page/Content/NewTool";
+import { NewTool } from "../custom/Page/Content/NewTool";
 import handlePage from "../utils/page/handleHeaderPage";
 import { useLocation } from "react-router-dom";
 import { DataTools } from "../interfaces/page";
-import { Tools } from "../components/Page/Content/Tools";
+import { Tools } from "../custom/Page/Content/Tools";
 import clsx from "clsx";
 
 const twiconsPath = "/twicons/";
@@ -126,7 +126,6 @@ function Page() {
             <header
                 className="flex items-start gap-1 my-3 group"
             >
-
                 <IconPicker
                     icon={pageData.data.icon}
                     setIcon={(icon) => {

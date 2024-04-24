@@ -1,9 +1,9 @@
 import { FaRegCircle, FaRegCircleDot, FaRegCircleCheck } from "react-icons/fa6";
 import formatDatetime from "../../utils/datetime/formatDatetime";
-import { Progress } from "../Progress";
-import { RadialProgressBar } from "../RadialProgressBar";
+import { Progress } from "../../components/Progress";
+import { RadialProgressBar } from "../../components/RadialProgressBar";
 import clsx from "clsx";
-import { Avatar } from "../Avatar";
+import { Avatar } from "../../components/Avatar";
 import parseFormula from "../../utils/page/formulaProperty/parseFormula";
 
 export const Properties = ({ properties }) => {

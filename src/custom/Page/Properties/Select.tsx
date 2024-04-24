@@ -1,5 +1,5 @@
 import clsx from "clsx"
-import { Popover } from "../../Popover";
+import { Popover } from "../../../components/Popover";
 
 const Selected = ({ value, color }) => {
     return (

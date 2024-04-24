@@ -1,13 +1,13 @@
-import { Button } from "../Button";
+import { Button } from "../../components/Button";
 import { CgBoard, CgMathPlus, CgSortAz, CgViewDay, CgViewGrid, CgViewList } from "react-icons/cg";
 
 import clsx from "clsx";
 import { Table } from "./Table";
-import { IDatabaseViewProps } from "../../interfaces/datahub";
-import { Skeleton } from "../Skeleton";
+import { IHubProps } from "../../interfaces/hub";
+import { Skeleton } from "../../custom/Skeleton";
 import { useState } from "react";
 import { PageProps } from "../../interfaces/page";
-import { Tooltip } from "../Tooltip";
+import { Tooltip } from "../../components/Tooltip";
 import { SOCKET_URL } from "../../lib/api";
 import { io } from "socket.io-client";
 import { useUser } from "../../contexts/userContext";
@@ -23,14 +23,14 @@ interface ViewProps {
 
 const socket = io(SOCKET_URL);
 
-export const DatabaseView = ({ 
+export const Hub = ({ 
     datahubId,
     title, 
     items, 
     handleSetItems,
     loading, 
     notDisplayTitle=false 
-}: IDatabaseViewProps) => {
+}: IHubProps) => {
 
     const { user: {data: { email }} } = useUser();
 

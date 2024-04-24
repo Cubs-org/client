@@ -1,5 +1,5 @@
 import { CgMathPlus } from "react-icons/cg"
-import { Button } from "../../Button"
+import { Button } from "../../../components/Button"
 
 export const NewTool = () => {
     return <Button

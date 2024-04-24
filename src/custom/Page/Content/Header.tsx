@@ -1,21 +1,21 @@
+import React from "react";
 import clsx from "clsx";
 
 import { Link, useLocation } from "react-router-dom";
 
-import { Avatar } from "../../Avatar";
-import { Popover } from "../../Popover";
-import { Badge } from "../../Badge";
-import { Button } from "../../Button";
+import { Avatar } from "../../../components/Avatar";
+import { Popover } from "../../../components/Popover";
+import { Badge } from "../../../components/Badge";
+import { Button } from "../../../components/Button";
 
 import { FaAngleLeft, FaBell, FaCommentDots, FaUserPlus } from "react-icons/fa6";
 
 import minimizeText from "../../../utils/minimizeText";
 import { ChangeAction, PageData } from "../../../interfaces/page";
-import { Dispatch } from "react";
 
 interface HeaderPageProps {
     currentPage: PageData,
-    setPageData: Dispatch<ChangeAction>,
+    setPageData: React.Dispatch<ChangeAction>,
     branch: PageData[],
     members: {
         name: string;

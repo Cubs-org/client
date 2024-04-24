@@ -1,4 +1,4 @@
-import { Properties } from "../../Page/Properties";
+import { Properties } from "../../../custom/Page/Properties";
 
 export const TimelineProperties = ({ item }) => {
     const properties = item?.properties;

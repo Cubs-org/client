@@ -1,5 +1,5 @@
 import clsx from "clsx"
-import { Popover } from "../../Popover";
+import { Popover } from "../../../components/Popover";
 import { CgClose } from "react-icons/cg";
 
 const Tags = ({ tags }) => {
