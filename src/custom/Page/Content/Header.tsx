@@ -34,7 +34,7 @@ export const Header = ({
     const pageId = pathname.split("/").pop();
 
     return (
-        <header className="flex justify-between items-center gap-1 border-b border-light-300 dark:border-dark-800 pb-2 lg:pb-1">
+        <header className="flex justify-between items-center gap-1 pb-2 lg:pb-1 border-b border-light-300 dark:border-dark-700">
             <section className="flex gap-2 md:gap-3 items-center">
                 <nav
                     className="hidden md:flex items-center gap-0.5 text-sm"

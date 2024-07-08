@@ -61,10 +61,10 @@ export const renderPropertiesData = (page:PageProps) => {
         return page.properties
             .sort((a, b) => (a.data.loadOrder ?? 0) - (b.data.loadOrder ?? 0))
             .map((property, index) => (
-                <td key={index} className="border border-light-400 dark:border-dark-700 hover:border-light-300 hover:dark:border-dark-600">
+                <td key={index} className="border border-light-400 dark:border-dark-700 hover:border-light-300 hover:dark:border-dark-600 break-all">
                     {
-                        property.type === "text" ? <Text value={property.data.value as string} /> :
-                            property.type === "number" ? <Text value={property.data.value as string} /> :
+                        property.type === "text" ? <Text value={property.data.value as string} classNames="break-words" /> :
+                            property.type === "number" ? <Text value={property.data.value as string} classNames="break-words" /> :
                                 property.type === "datetime" ? <Datetime dateValue={property.data} /> :
                                     property.type === "selection" ? <Select value={property.data.value} items={property.data.items} pageData={page} /> :
                                         property.type === "multi_selection" ? <MultiSelect tags={property.data.tags} items={property.data.items} pageData={page} /> :

@@ -23,6 +23,8 @@ interface ColumnTableProps {
     handleDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
 }
 
+const socket = io(SOCKET_URL);
+
 const EditColumn = ({ title, type, value }) => {
     return (
         <ul className="flex flex-col gap-2 p-2">
@@ -58,8 +60,6 @@ const EditColumn = ({ title, type, value }) => {
         </ul>
     );
 };
-
-const socket = io(SOCKET_URL);
 
 export const ColumnTable = ({
     title,
@@ -119,7 +119,10 @@ export const ColumnTable = ({
     const handleSetColumnWidth = (
         columnTitle: string, 
         newWidth: number
-    ) => socket.emit('resizeColumn', { columnTitle, newWidth });
+    ) => {
+        let hubId = window.location.pathname.split("/")[2];
+        socket.emit('resizeColumn', { columnTitle, newWidth, hubId });
+    }
 
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -157,7 +160,7 @@ export const ColumnTable = ({
                 data-column-title={title}
                 data-column-order={loadOrder}
                 className={clsx(
-                    "w-full h-full flex gap-2 font-bold items-center px-2 py-1 cursor-pointer truncate bg-light-300 dark:bg-dark-800",
+                    "w-full h-full flex gap-2 font-bold items-center px-2 py-1 cursor-pointer bg-light-300 dark:bg-dark-800",
                     {
                         "min-w-fit cursor-not-allowed": title === "Título"
                     }

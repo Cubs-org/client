@@ -52,6 +52,7 @@ export const TextArea = ({
                 "outline-none": outlineDisabled
             }, classNames)}
             data-placeholder={placeholder}
+            // @ts-ignore
             contentEditable={isEditing}
             suppressContentEditableWarning={true}
             onClick={handleClick}

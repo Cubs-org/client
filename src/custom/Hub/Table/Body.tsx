@@ -10,6 +10,7 @@ import { Title } from "./Cell/Title";
 import { NewColumn } from "./BtnNewColumn";
 import { Popover } from "../../../components/Popover";
 import { ColumnTable } from "../ColumnTable";
+import { Link } from "react-router-dom";
 
 interface TableProps {
     items: PageProps[];
@@ -120,9 +121,10 @@ export const Body = ({
                                             <div className="h-full w-full flex">
                                                 <div className="w-full min-h-full group">
                                                     <Title value={page.title} />
-                                                    <span
+                                                    <Link
+                                                        to={`/page/${page.id}`}
                                                         className="absolute top-1/2 -translate-y-1/2 right-0 opacity-0 group-hover:opacity-100 bg-light-300 dark:bg-dark-700 rounded-md px-2 py-0.5 text-xs cursor-pointer"
-                                                    >Abrir</span>
+                                                    >Abrir</Link>
                                                 </div>
                                             </div>
                                         </td>
