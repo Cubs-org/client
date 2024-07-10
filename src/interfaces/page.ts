@@ -39,8 +39,8 @@ export type PageData = {
     title: string;
     data: {
         icon: string;
-        prev: string | undefined | null;
-        next: string | undefined | null;
+        prev?: string | undefined | null;
+        next?: string | undefined | null;
     }
 }
 

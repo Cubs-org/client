@@ -48,11 +48,11 @@ export const Tools = ({ tools }: ToolsProps) => {
   return (
     <>
       {groupedTools.map((row, rowIndex) => (
-        <div key={`row-${rowIndex}`} className="flex my-1">
+        <div key={`row-${rowIndex}`} className="flex">
           {row.map((tool, toolIndex) => (
             <div
               key={`tool-${rowIndex}-${toolIndex}`}
-              className={clsx('w-full h-fit flex items-start gap-3 pl-0.5 py-1 rounded-md hover:bg-light-200 dark:hover:bg-dark-800 group', {
+              className={clsx('w-full h-fit flex items-start rounded-md hover:bg-light-200 dark:hover:bg-dark-800 group', {
                 'justify-start text-left': tool.data.align === 'left',
                 'justify-end text-right': tool.data.align === 'right',
                 'justify-center text-center col-span-2': tool.data.align === 'center',

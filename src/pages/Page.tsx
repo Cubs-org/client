@@ -1,16 +1,14 @@
-import { useEffect, useReducer } from "react";
-
-import { branch } from "../lib/skeleton.json";
+import React, { useEffect, useState } from "react";
 
 import { IconPicker } from "../components/IconPicker";
-import { Page as Pg } from "../custom/Page/Content";
 import { TextArea } from "../components/TextArea";
-import { NewTool } from "../custom/Page/Content/NewTool";
-import handlePage from "../utils/page/handleHeaderPage";
-import { useLocation } from "react-router-dom";
+import { NewTool } from "../custom/Page/NewTool/NewTool";
 import { DataTools } from "../interfaces/page";
-import { Tools } from "../custom/Page/Content/Tools";
-import clsx from "clsx";
+import { Tools } from "../custom/Page/Tools";
+import { Header } from "../custom/Page/Header";
+import { usePage } from "../contexts/pageContext";
+
+import { branch } from "../lib/skeleton.json";
 
 const twiconsPath = "/twicons/";
 
@@ -66,7 +64,7 @@ const tools: DataTools[] = [
         type: 'text',
         tool_id: '789',
         data: {
-            
+
             align: 'left',
             x: 3,
             y: 4,
@@ -97,65 +95,73 @@ const tools: DataTools[] = [
 
 function Page() {
 
-    const { pathname } = useLocation();
-    const pageId = pathname.split("/").pop(),
-        currentPage = branch.find(page => page.id === pageId) || branch[0];
+    const {
+        currentPage,
+        // members,
+        setPageData,
+        setBranch,
+        setMembers
+    } = usePage();
 
-    const [pageData, setPageData] = useReducer(handlePage, currentPage);
+    const { title, data: { icon } } = currentPage;
 
-    const members = [
-        { name: "Helder Martins", icon: "cervo", email: "helder@gmail.com" },
-        { name: "Gabriel Nogueira", icon: "gorila", email: "nogs@gmail.com" },
-        { name: "Augusto Kawashima", icon: "panda", email: "gutin@hotmail.com" }
-    ];
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        document.title = pageData.title || "Sem título";
-        let link = document.querySelector("link[rel='icon']") as HTMLLinkElement;
-        // link.href = pageData.data.icon;
-        link.href = `${twiconsPath}/${pageData.data.icon}.svg`;
-    }, [pageData]);
+        document.title = title || "Sem título";
+        if (icon !== '') {
+            let link = document.querySelector("link[rel='icon']") as HTMLLinkElement;
+            // link.href = pageData.data.icon;
+            link.href = `${twiconsPath}/${icon}.svg`;
+        }
+    }, [currentPage]);
+
+    useEffect(() => {
+        if (loading) {
+            setBranch(branch);
+            setPageData(branch[0])
+            setMembers([
+                { name: "Helder Martins", icon: "cervo", email: "helder@gmail.com" },
+                { name: "Gabriel Nogueira", icon: "gorila", email: "nogs@gmail.com" },
+                { name: "Augusto Kawashima", icon: "panda", email: "gutin@hotmail.com" }
+            ])
+            setLoading(false)
+        }
+    }, [loading])
 
     return (
-        <div className="m-auto w-[95%] lg:w-full pb-3">
-            <Pg.Header
-                currentPage={pageData}
-                setPageData={setPageData}
-                branch={branch}
-                members={members}
-            />
-            <section className="flex gap-1 my-3 group flex-col w-[95%] mx-auto">
-                <IconPicker
-                    icon={pageData.data.icon}
+        <React.Fragment>
+            <Header />
+            <div className="px-4 flex items-center gap-x-3 my-3">
+                {icon && <IconPicker
+                    icon={icon}
                     setIcon={(icon) => {
-                        // @ts-ignore
-                        setPageData({ type: "icon", payload: icon })
+                        setPageData({
+                            data: {
+                                icon: icon as string
+                            }
+                        })
                     }}
-                    size={56}
-                    classNames={clsx("p-1 rounded-md text-2xl hover:bg-light-300 dark:hover:bg-dark-700 flex items-center justify-center cursor-pointer", {
-                        "saturate-0 opacity-0 group-hover:opacity-100" : pageData.data.icon === "undefined"
-                    })}
-                    hide={pageData.data.icon === "undefined"}
-                />
+                    size={42}
+                    classNames={"p-1 rounded-md text-2xl hover:bg-light-300 dark:hover:bg-dark-700 flex items-center justify-center cursor-pointer"}
+                    hide={!icon}
+                />}
 
                 <TextArea
-                    value={pageData.title}
+                    value={currentPage.title}
                     placeholder={"Sem título"}
-                    handle={(newValue) => {
-                        setPageData({ type: "title", payload: newValue })
-                    }
-                    }
-                    classNames="!w-[calc(100%-48px)] text-4xl font-bold break-words"
+                    handle={(title) => setPageData({ title })}
+                    classNames="!w-[calc(100%-48px)] text-4xl font-bold break-words !px-0"
                     outlineDisabled
                 />
-            </section>
+            </div>
 
             <main>
                 <Tools tools={tools} />
             </main>
 
             <NewTool />
-        </div>
+        </React.Fragment>
     )
 }
 

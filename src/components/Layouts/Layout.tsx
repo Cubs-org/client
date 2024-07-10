@@ -14,6 +14,7 @@ import { useUser } from "../../contexts/userContext";
 import Loading from "../Loading";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../../lib/api";
+import { PageProvider } from "../../contexts/pageContext";
 
 const socket = io(SOCKET_URL);
 
@@ -113,7 +114,9 @@ export const Layout = () => {
                 <div className={clsx("w-full h-full lg:p-4 lg:h-[95vh] lg:shadow-full lg:rounded-2xl text-dark-600 dark:text-light-200 bg-light-100 dark:bg-dark-900 transition-all overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-light-300 dark:scrollbar-thumb-dark-700 scrollbar-track-transparent", {
                     // "lg:absolute lg:left-8 lg:w-[calc(100%-32px)]" : !layout,
                 })}>
-                    {!loading ? <Loading /> : <Outlet />}
+                    <PageProvider>
+                        {!loading ? <Loading /> : <Outlet />}
+                    </PageProvider>
                 </div>
             </div>
         </div>
