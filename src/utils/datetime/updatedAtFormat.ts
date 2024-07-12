@@ -42,10 +42,10 @@ export default function updatedAtFormat(value: string | Date): string {
             return `Editado há ${hoursAgo} horas atrás`;
         }
     } else if (distanceToNow.includes('minute')) {
+        if (distanceToNow.includes('less than')) {
+            return `Editado há menos de 1 minuto atrás`;
+        }
         return `Editado há alguns minutos atrás`;
-    }
-    else if (distanceToNow.includes('second')) {
-        return `Editado há alguns segundos atrás`;
     } else {
         return format(date, "dd/MM/yyyy"); // Fallback format
     }
