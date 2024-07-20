@@ -1,12 +1,10 @@
-import { PageProps } from "./page";
+export type HubView = "grid" | "list" | "table" | "kanban";
 
 export interface IHubProps {
     title: string;
     search: string;
-    items: PageProps[];
-    view: "grid" | "list" | "table" | "kanban";
-    handleSetItems: (data: PageProps[]) => void;
+    view: HubView;
     notDisplayTitle?: boolean;
     loading?: boolean;
-    datahubId: string;
+    hubId: string;
 }

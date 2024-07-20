@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import { IconPicker } from "../components/IconPicker";
 import { TextArea } from "../components/TextArea";
-import { NewTool } from "../custom/Page/NewTool/NewTool";
+import { NewTool } from "../components/custom/Page/NewTool/NewTool";
 import { DataTools } from "../interfaces/page";
-import { Tools } from "../custom/Page/Tools";
-import { Header } from "../custom/Page/Header";
+import { Tools } from "../components/custom/Page/Tools";
+import { Header } from "../components/custom/Page/Header";
 import { usePage } from "../contexts/pageContext";
 
 import { branch } from "../lib/skeleton.json";

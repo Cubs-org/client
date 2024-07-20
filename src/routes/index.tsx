@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import { data } from "./Data";
 import { useAuth } from "../contexts/authProvider";
-import { Test } from "../pages/Test";
+import Test from "../pages/Test";
 
 export const AppRoutes = () => {
 

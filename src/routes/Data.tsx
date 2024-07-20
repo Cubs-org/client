@@ -5,13 +5,13 @@ import { Layout } from "../components/Layouts/Layout";
 import App from "../App";
 import CalendarPage from "../pages/Calendar.tsx";
 import Home from "../pages/Home.tsx";
-import Workspace from "../pages/Workspace.tsx";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
 import Profile from "../pages/Profile.tsx";
 import Page from "../pages/Page.tsx";
 import Login from "../pages/authentication/Login.tsx";
 import Register from "../pages/authentication/Register.tsx";
+import Workspace from "../pages/Workspace.tsx";
 
 export const data = {
     notAuthenticated: [

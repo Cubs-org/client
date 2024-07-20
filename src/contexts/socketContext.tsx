@@ -1,41 +1,45 @@
-import {useState, createContext, useContext, JSX} from 'react'
-import {io, Socket} from 'socket.io-client'
-import { SOCKET_URL } from '../lib/api';
+import { createContext, useContext, useEffect, useState } from "react";
+import { io, Socket } from "socket.io-client";
+import { SOCKET_URL } from "../lib/api";
 
-type SocketContextType = {
-  socket: Socket | null;
-  connectSocket: () => void;
-}
+interface SocketProviderProps {
+  children: React.ReactNode;
+};
 
-type SocketProviderProps = {
-  children: JSX.Element
-}
+type SocketContextProps = {
+  subscribe: (event: string, callback: (data: any) => void) => void;
+  unsubscribe: (event: string) => void;
+  listener: Socket | null;
+};
 
-export const SocketContext = createContext<SocketContextType | null>(null)
-
-export const SocketProvider = ({children}: SocketProviderProps) => {
-  const [socket, setSocket] = useState<Socket | null>(null)
-
-  const connectSocket = () => {
-    if(!socket) {
-      const newSocket: Socket = io(SOCKET_URL)
-      setSocket(newSocket)
-      return
-    }
-    socket.connect()
-  }
-
-  return (
-    <SocketContext.Provider value={{socket, connectSocket}}>
-      {children}
-    </SocketContext.Provider>
-  )
-}
+const SocketContext = createContext<SocketContextProps | undefined>(undefined);
 
 export const useSocket = () => {
-  const context = useContext(SocketContext)
-  if(!context) {
-    throw new Error('Something went wrong!')
+  const context = useContext(SocketContext);
+  if (!context) {
+    throw new Error("useSocket must be used within a SocketProvider");
   }
-  return context
-}
+  return context;
+};
+
+export const SocketProvider = ({ children }: SocketProviderProps) => {
+  const [listener, setListener] = useState<Socket | null>(null);
+
+  const subscribe = (event: string, callback: (data: any) => void) => {
+    if (listener) listener.on(event, callback);
+  };
+
+  const unsubscribe = (event: string) => {
+    if (listener) listener.off(event);
+  };
+
+  useEffect(() => {
+    setListener(io(SOCKET_URL));
+  }, []);
+
+  return (
+    <SocketContext.Provider value={{ listener, subscribe, unsubscribe }}>
+      {children}
+    </SocketContext.Provider>
+  );
+};

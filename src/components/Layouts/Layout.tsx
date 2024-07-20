@@ -12,14 +12,12 @@ import { useAuth } from "../../contexts/authProvider";
 import getUser from "../../api/user/getUser";
 import { useUser } from "../../contexts/userContext";
 import Loading from "../Loading";
-import { io } from "socket.io-client";
-import { SOCKET_URL } from "../../lib/api";
 import { PageProvider } from "../../contexts/pageContext";
-
-const socket = io(SOCKET_URL);
+import { useSocket } from "../../contexts/socketContext";
 
 export const Layout = () => {
     const { setUser } = useUser();
+    const { listener } = useSocket();
 
     const { token } = useAuth();
     const navigate = useNavigate();
@@ -67,7 +65,7 @@ export const Layout = () => {
                             navigate(`/workspace/${workspaceId}`);
                         }
                     }).then(() => {
-                        currentPath = pathname.split("/");
+                        currentPath = pathname.split("/").filter(Boolean);
                         currentPath.shift();
                         
                         if (
@@ -84,19 +82,12 @@ export const Layout = () => {
 
     }, [token]);
     
-    let _layout;
     const [layout, setLayout] = useState(true);
     
     useEffect(() => {
+        setLayout(JSON.parse(localStorage.getItem("layout") || "true"))
 
-        _layout = JSON.parse(localStorage.getItem("layout") || "true")
-        setLayout(_layout)
-
-        if (socket) {
-            socket.on("updateUser", (user) => {
-                setUser(user);
-            });
-        }
+        if (listener) listener.on("updateUser", (user) => setUser(user));
     }, []);
 
     const handleSetLayout = () => {
