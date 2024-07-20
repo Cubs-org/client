@@ -27,7 +27,7 @@ export const SharedPages = () => {
         pages: []
     });
 
-    return (
+    return shared.pages.length > 0 ? (
         <section className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
                 <h3 className="text-lg font-bold">Compartilhados comigo</h3>
@@ -67,5 +67,5 @@ export const SharedPages = () => {
                 )}
             </Container>
         </section>
-    )
+    ): null
 }

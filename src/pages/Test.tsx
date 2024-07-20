@@ -18,7 +18,7 @@ function Test() {
         return () => {
             unsubscribe('tagsTest');
         }
-    }, [value]);
+    }, [value, listener]);
 
     return (
         <div className="w-[98%] m-auto">

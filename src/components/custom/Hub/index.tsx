@@ -61,6 +61,15 @@ export const Hub = ({
         }));
     };
 
+    const updatedPages = ({ pages, error }) => {
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        setPages(pages);
+    };
+
     /**
      * Create a new page on the current hub
      */
@@ -71,32 +80,39 @@ export const Hub = ({
             datahubId: hubId,
             email: email
         });
-
-        listener.on('response:createHubPage', (newPage: PageProps) => {
-            setPages(prev => [ ...prev, newPage]);
-        });
     };
 
+    /**
+     * Preload the pages from the hub when the component is mounted
+     */
     useEffect(() => {
         if (!listener) return;
 
-        listener.emit('request:getPagesFromHub', {
-            hubId
-        });
+        listener.emit('request:getPagesFromHub', { hubId });
+
+        // Join the room of the hub
+        listener.emit('joinRoom', hubId);
     }, []);
 
     useEffect(() => {
         if (!listener) return;
 
-        listener.on('response:getPagesFromHub', ({ pages, error }) => {
+        listener.on('response:getPagesFromHub', updatedPages);
+
+        listener.on('response:createHubPage', ({ page, error }) => {
             if (error) {
                 console.error(error);
                 return;
             }
-
-            setPages(pages);
+    
+            setPages(prevPages => [...prevPages, page]);
         });
-    }, [pages]);
+
+        return () => {
+            listener.off('response:getPagesFromHub');
+            listener.off('response:createHubPage');
+        };
+    }, [pages, listener]);
 
     return (
         <div className="w-full h-full relative" key={`hub-${JSON.stringify(pages)}`}>

@@ -51,20 +51,17 @@ const Header = () => {
 }
 
 const HubViewer = () => {
-    const { pages, settings } = useHub();
+    const { settings } = useHub();
     const { user: { hubId } } = useUser();
-    
+
     return (
         <Hub
-        view="grid"
-        title="@helder's"
-        hubId={hubId}
-        // loading={false}
-        pages={pages}
-        handleSetItems={() => { }}
-        search={settings.filter?.search || ""}
-        notDisplayTitle
-    />
+            view="grid"
+            title="@helder's"
+            hubId={hubId}
+            search={settings.filter?.search || ""}
+            notDisplayTitle
+        />
     )
 }
 
