@@ -109,7 +109,7 @@ export const Hub = ({
         });
 
         return () => {
-            listener.off('response:getPagesFromHub');
+            listener.off('response:getPagesFromHub', updatedPages);
             listener.off('response:createHubPage');
         };
     }, [pages, listener]);
@@ -129,7 +129,7 @@ export const Hub = ({
                             <Button
                                 classNames={clsx("w-max px-2 py-0.5 bg-light-200 text-dark-100 ring-1 ring-light-300 dark:text-light-300 dark:bg-dark-800 dark:ring-dark-600 hover:bg-light-300 dark:hover:bg-dark-700 transition-all ease-in", {
                                     "bg-light-400 dark:bg-dark-600": view.name === viewPreferences,
-                                    "hidden": (!hasSelectionOnProps(pages) && view.name === "Kanban")
+                                    "hidden": (!hasSelectionOnProps(pages) && view.name === "kanban")
                                 })}
                                 onClick={() => handleChangeView(view.name as HubView)}
                             >
