@@ -1,71 +1,63 @@
+import {
+  useEffect,
+  useState
+} from "react";
 import { useModal } from "../contexts/modalContext";
 import { CreateNewItem } from "../components/Calendar/CreateNewItem";
 import { Calendar } from "../components/Calendar";
-import { 
-  // useContext, 
-  useEffect, 
-  useState 
-} from "react";
+
 import { useUser } from "../contexts/userContext";
 import Loading from "../components/Loading";
-import { io } from "socket.io-client";
-import { SOCKET_URL } from "../lib/api";
+import { useSocket } from "../contexts/socketContext";
 
 export default function CalendarPage() {
 
-  const socket = io(SOCKET_URL);
-  const { user: {data: { email }} } = useUser();
+  const { listener, unsubscribe } = useSocket();
+
+  const { user: { data: { email } } } = useUser();
 
   const [items, setItems] = useState<any>([]);
   const [loading, setLoading] = useState(true);
+  const { openModal } = useModal();
+
+  const response = (event) => {
+    var dt = event.concat("T00:00:00.000");
+    openModal({
+      content: <CreateNewItem event={dt} type="task" />
+    });
+  }
+
+  const loadItems = (data) => setItems(data);
 
   useEffect(() => {
-    socket.connect();
-    socket.emit("getCalendarItems", { email: email});
-    socket.on("updateItems", (received_items) => loadItems(received_items));
+    if (!listener) return;
+    listener.emit("request:getCalendarItems", { email: email });
+
+    return () => {
+      unsubscribe("request:getCalendarItems");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!listener) return;
+
+    listener.on("response:getCalendarItems", loadItems);
 
     setLoading(false);
 
     return () => {
-      socket.off("getCalendarItems");
-      socket.off("updateItems");
+      unsubscribe("response:getCalendarItems", loadItems);
     }
-  }, [loading, email]);
-
-  useEffect(() => {
-    socket.connect();
-
-    socket.on("updateCalendarItems", (req) => {
-      updateItems(req);
-    });
-
-    return () => {
-      socket.off("updateCalendarItems");
-    }
-  }, []);
-
-  // @ts-ignore
-  const { modalState:{ visible, content }, openModal, closeModal } = useModal();
-
-  const response = (event) => {
-      var dt = event.concat("T00:00:00.000");
-      openModal({
-          content: <CreateNewItem event={dt} type="task" onNewItemCreated={updateItems} /> 
-      });
-  }
-
-  const loadItems = (data) => setItems(data);
-  const updateItems = (data) => setItems(prev => [...prev, data]);
-  const leftItem = (item) => setItems(items.filter((i) => i !== item));
+  }, [loading, email, listener]);
 
   return (
     <div className="w-full h-full flex flex-col">
-      {!loading ? <Calendar 
-        event={response} 
-        items={items}
-        onNewItemCreated={updateItems}
-        onItemDeleted={leftItem}
-      /> : <Loading />}
+      {!loading ? (
+        <Calendar
+          event={response}
+          items={items}
+        />
+      ) : <Loading />}
     </div>
   );
 }

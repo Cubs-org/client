@@ -14,8 +14,6 @@ interface IDayProps {
     items?: any;
     month?: number;
     isPage?: boolean;
-    onNewItemCreated: (item: any) => void;
-    onItemDeleted: (item: any) => void;
 }
 
 export const Day = ({ 
@@ -23,9 +21,7 @@ export const Day = ({
     month, 
     event, 
     items, 
-    isPage=false, 
-    onNewItemCreated,
-    onItemDeleted
+    isPage=false
 }:IDayProps) => {
 
     const { openModal } = useModal();
@@ -37,7 +33,7 @@ export const Day = ({
 
         if (isCalendar) {
             openModal({
-                content: <EditItem task={item} onUpdateAnyTask={onNewItemCreated} onItemDeleted={onItemDeleted} />
+                content: <EditItem task={item} />
             });
         }
     };
@@ -49,7 +45,7 @@ export const Day = ({
         items.map(item => item.timeline.filter(timeline => ((timeline.day === date) && (timeline.hierarchy >= 3)) && amountitems.push(item)))
         
         openModal({
-            content: <AmountRemaingTasks items={amountitems} onUpdateAnyTask={onNewItemCreated}/>
+            content: <AmountRemaingTasks items={amountitems} />
         });
     }
 
@@ -88,7 +84,6 @@ export const Day = ({
                             range={timeline.range}
                             hierarchy={timeline.hierarchy}
                             handle={handleOpenTimeline}
-                            onItemDeleted={onItemDeleted}
                         />
                     ))
                 } else {

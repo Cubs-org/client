@@ -8,22 +8,16 @@ import { Check } from "../Check";
 import { Task } from "../../interfaces/task";
 import { DatePicker } from "../TimeControls/DatePicker";
 import { useModal } from "../../contexts/modalContext";
-import { io } from "socket.io-client";
-import { SOCKET_URL } from "../../lib/api";
+import { useSocket } from "../../contexts/socketContext";
 
 interface TaskProps {
     task: Task;
-    onUpdateAnyTask: (item: Task) => void;
-    onItemDeleted: (item: Task) => void;
 }
 
-const socket = io(SOCKET_URL, {
-    transports: ["websocket"]
-});
-
-export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => {
+export const EditItem = ({ task }:TaskProps) => {
 
     const { closeModal } = useModal();
+    const { listener } = useSocket();
     let _task = task as any;
     const type = _task.properties.find((p) => p.type === "calendar").title;
 
@@ -45,7 +39,8 @@ export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => 
     }
 
     const handleCompleteForm = () => {
-        socket.emit("updateItem", {
+        if (!listener) return;
+        const request = {
             id: task.id,
             title: formData.title,
             content: formData.content,
@@ -54,12 +49,9 @@ export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => 
             completed: formData.completed,
             owner: formData.owner,
             color: formData.color
-        });
+        }
 
-        socket.on("getCalendarItems", (req) => {
-            // console.log("updateItem:", req);
-            onUpdateAnyTask(req);
-        });
+        listener.emit("request:updateOnCalendarItem", request);
 
         clean();
     }
@@ -104,8 +96,8 @@ export const EditItem = ({ task, onUpdateAnyTask, onItemDeleted }:TaskProps) => 
     }
 
     const handleDelete = () => {
-        socket.emit("deleteItem", {id:task.id});
-        onItemDeleted(task);
+        if (!listener) return;
+        listener.emit("request:deleteCalendarItem", {id:task.id});
         clean();
     }
 

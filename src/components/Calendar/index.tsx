@@ -7,8 +7,6 @@ import { GridMonthCalendar } from "./GridMonthCalendar";
 export const Calendar = ({ 
     event, 
     items, 
-    onNewItemCreated, 
-    onItemDeleted,
     isPage=false 
 }: CalendarProps) => {
     const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
@@ -19,15 +17,14 @@ export const Calendar = ({
 
     return (
         <div className="w-full h-full flex flex-col">
-            {onNewItemCreated && <HeaderCalendar
-                date={date}
-                year={year}
-                month={month}
-                setDate={setDate}
-                setYear={setYear}
-                setMonth={setMonth}
-                onNewItemCreated={onNewItemCreated}
-            />}
+            <HeaderCalendar
+                    date={date}
+                    year={year}
+                    month={month}
+                    setDate={setDate}
+                    setYear={setYear}
+                    setMonth={setMonth}
+                />
             <div className="w-full flex gap-2 mb-[5px] place-items-center p-1">
                 {weekDays.map((day, key) => (
                     <div key={`${day}-${key}`} className="w-full text-center font-semibold">
@@ -41,8 +38,6 @@ export const Calendar = ({
                 event={event}
                 items={items}
                 isPage={isPage}
-                onNewItemCreated={onNewItemCreated}
-                onItemDeleted={onItemDeleted}
             />
         </div>
     );

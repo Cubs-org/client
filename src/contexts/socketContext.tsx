@@ -8,7 +8,7 @@ interface SocketProviderProps {
 
 type SocketContextProps = {
   subscribe: (event: string, callback: (data: any) => void) => void;
-  unsubscribe: (event: string) => void;
+  unsubscribe: (event: string, callback?: (data: any) => void) => void;
   listener: Socket | null;
 };
 
@@ -29,8 +29,8 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
     if (listener) listener.on(event, callback);
   };
 
-  const unsubscribe = (event: string) => {
-    if (listener) listener.off(event);
+  const unsubscribe = (event: string, callback?: (data: any) => void) => {
+    if (listener) listener.off(event, callback);
   };
 
   useEffect(() => {

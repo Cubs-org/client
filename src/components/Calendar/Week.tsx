@@ -8,8 +8,6 @@ interface IWeek {
     isPage?: boolean;
     weekHeight?: {h:number, index:number}[];
     index?: number;
-    onNewItemCreated: (item: any) => void;
-    onItemDeleted: (item: any) => void;
 }
 
 // type Height = string | number | undefined;
@@ -21,9 +19,7 @@ export const Week = ({
     event, 
     isPage=false, 
     weekHeight, 
-    index, 
-    onNewItemCreated,
-    onItemDeleted
+    index,
 }: IWeek) => {
     
     let style = {};
@@ -62,8 +58,6 @@ export const Week = ({
                     event={event}
                     items={items}
                     isPage={isPage}
-                    onNewItemCreated={onNewItemCreated}
-                    onItemDeleted={onItemDeleted}
                 />
             ))}
         </div>

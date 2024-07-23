@@ -20,10 +20,8 @@ export const GridMonthCalendar = ({
     year, 
     month, 
     event, 
-    items, 
-    isPage=false, 
-    onNewItemCreated,
-    onItemDeleted
+    items,
+    isPage=false
 }:CalendarProps) => {
 
     const [searchParams] = useSearchParams();
@@ -40,7 +38,6 @@ export const GridMonthCalendar = ({
     let _weekHeight = [] as any;
 
     createTimelines(items, data);
-    console.log(items);
 
     const adjustWeekHeight = (data: string[][]) => {
     
@@ -78,8 +75,6 @@ export const GridMonthCalendar = ({
             isPage={isPage}
             weekHeight={_weekHeight}
             index={index}
-            onNewItemCreated={onNewItemCreated}
-            onItemDeleted={onItemDeleted}
         />
     ));
   

@@ -7,10 +7,9 @@ import { FaCheck } from "react-icons/fa";
 
 interface IRemaingTasks {
     items: Task[];
-    onUpdateAnyTask: (task:Task) => void;
 }
 
-export const AmountRemaingTasks = ({ items, onUpdateAnyTask }:IRemaingTasks) => {
+export const AmountRemaingTasks = ({ items }:IRemaingTasks) => {
 
     if (!items.length) return (
         <div className="w-[600px] flex justify-center items-center h-48 bg-light-300 dark:bg-dark-400 rounded-md text-dark-900 dark:text-light-200">Nenhuma tarefa encontrada</div>
@@ -19,11 +18,8 @@ export const AmountRemaingTasks = ({ items, onUpdateAnyTask }:IRemaingTasks) => 
     const { openModal } = useModal();
 
     const handleOpenTask = (task:Task) => {
-        openModal({
-            content: <EditItem 
-                task={task}
-                onUpdateAnyTask={onUpdateAnyTask} 
-            />
+        openModal({ 
+            content: <EditItem task={task} /> 
         });
     }
 

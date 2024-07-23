@@ -5,19 +5,19 @@ import { Button } from "../Button"
 import { useModal } from "../../contexts/modalContext";
 import { CreateNewItem } from "./CreateNewItem";
 
-export const NewItem = ({ onNewItemCreated }) => {
+export const NewItem = () => {
 
     const { openModal } = useModal();
 
     const handleCreateTask = () => {
         openModal && openModal({
-            content: <CreateNewItem type="task" onNewItemCreated={onNewItemCreated} />
+            content: <CreateNewItem type="task" />
         });
     }
 
     const handleCreateEvent = () => {
         openModal && openModal({
-            content: <CreateNewItem type="event" onNewItemCreated={onNewItemCreated} />
+            content: <CreateNewItem type="event" />
         });
     }
 

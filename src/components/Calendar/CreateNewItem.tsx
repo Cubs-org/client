@@ -8,24 +8,18 @@ import { ColorPicker } from "../ColorPicker";
 import { Button } from "../Button";
 import { useModal } from "../../contexts/modalContext";
 import { useUser } from "../../contexts/userContext";
-import { SOCKET_URL } from "../../lib/api";
-import { io } from "socket.io-client";
+import { useSocket } from "../../contexts/socketContext";
 
 interface ICreateTask {
     event?: any;
     type?: string;
-    onNewItemCreated: (item: any) => void;
 };
 
-const socket = io(SOCKET_URL);
-
-export const CreateNewItem = ({ event, type, onNewItemCreated }: ICreateTask) => {
-    
-    
-    
+export const CreateNewItem = ({ event, type }: ICreateTask) => {
     const { user: {data: { email }} } = useUser();
 
     const { closeModal } = useModal();
+    const { listener } = useSocket();
 
     const handleSetColor = (color:string) => {
         setFormData({
@@ -54,11 +48,12 @@ export const CreateNewItem = ({ event, type, onNewItemCreated }: ICreateTask) =>
     }, [event]);
 
     const handleCompleteForm = () => {
+        if (!listener) return;
 
-        socket.emit("createNewItem", formData);
-        socket.on("getCalendarItems", (req) => {
-            onNewItemCreated(req);
-        });
+        listener.emit("createNewItem", formData);
+        // listener.on("getCalendarItems", (req) => {
+        //     onNewItemCreated(req);
+        // });
         
         clean();
     }
