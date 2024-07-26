@@ -1,36 +1,38 @@
-import { 
+import {
+    Dispatch,
+    SetStateAction,
     useState 
 } from "react";
 
 import { ColorPicker } from "../ColorPicker";
 import { Button } from "../Button";
 import { Check } from "../Check";
-import { Task } from "../../interfaces/task";
 import { DatePicker } from "../TimeControls/DatePicker";
 import { useModal } from "../../contexts/modalContext";
 import { useSocket } from "../../contexts/socketContext";
+import { PagePropertiesProps, PageProps } from "../../interfaces/page";
 
-interface TaskProps {
-    task: Task;
-}
+interface EditCalendarItemProps extends PageProps {
+    setPages: Dispatch<SetStateAction<PageProps[]>>
+};
 
-export const EditItem = ({ task }:TaskProps) => {
+export const EditItem = ({  id, setPages, ...props }: EditCalendarItemProps) => {
 
     const { closeModal } = useModal();
     const { listener } = useSocket();
-    let _task = task as any;
-    const type = _task.properties.find((p) => p.type === "calendar").title;
 
-    const properties = _task.properties;
+    const { title: type } = props.properties.find((p) => p.type === "calendar") as PagePropertiesProps
+
+    const { properties } = props;
 
     const [formData, setFormData] = useState({
-        title: task.title,
-        content: properties?.find((p) => p.type === "text").data.value,
-        start: properties?.find((p) => p.type === "datetime").data.start,
-        end: properties?.find((p) => p.type === "datetime").data.end,
-        completed: properties?.find((p) => p.type === "checkbox").data.value,
-        owner: _task.ownerId,
-        color: properties?.find((p) => p.type === "calendar").data.color || "blue"
+        title: props.title,
+        description: (properties.find((p) => p.type === "text") as PagePropertiesProps).data.value as string,
+        start: (properties.find((p) => p.type === "datetime") as PagePropertiesProps).data.start,
+        end: (properties.find((p) => p.type === "datetime") as PagePropertiesProps).data.end,
+        completed: (properties.find((p) => p.type === "checkbox") as PagePropertiesProps).data.value,
+        owner: props.ownerId,
+        color: (properties?.find((p) => p.type === "calendar") as PagePropertiesProps).data.color || "purple"
     });
 
     const formatDatetime = (datetime:string) => {
@@ -41,9 +43,9 @@ export const EditItem = ({ task }:TaskProps) => {
     const handleCompleteForm = () => {
         if (!listener) return;
         const request = {
-            id: task.id,
+            id,
             title: formData.title,
-            content: formData.content,
+            description: formData.description,
             start: formData.start,
             end: formData.end,
             completed: formData.completed,
@@ -53,21 +55,20 @@ export const EditItem = ({ task }:TaskProps) => {
 
         listener.emit("request:updateOnCalendarItem", request);
 
-        clean();
+        updateItem().then(() => clean());
     }
 
-    function clean() {
-        closeModal();
-        
+    const clean = async () => {
         setFormData({
             title: "",
-            content: "",
+            description: "",
             start: "",
             end: "",
             completed: false,
             owner: "",
             color: "blue"
         });
+        closeModal();
     }
 
     const handleSetColor = (color:string) => {
@@ -86,7 +87,6 @@ export const EditItem = ({ task }:TaskProps) => {
                 ...formData,
                 [name]: checked
             });
-            return;
         } else {
             setFormData({
                 ...formData,
@@ -97,8 +97,18 @@ export const EditItem = ({ task }:TaskProps) => {
 
     const handleDelete = () => {
         if (!listener) return;
-        listener.emit("request:deleteCalendarItem", {id:task.id});
+        listener.emit("request:deleteCalendarItem", { id });
+        setPages((prev) => prev.filter((page) => page.id !== id));
         clean();
+    }
+
+    const updateItem = async () => {
+        if (!listener) return;
+
+        listener.on("response:updateOnCalendarItem", async (data) => {
+            console.log("Updated task:", data);
+            setPages((prev) => prev.map((page) => page.id === id ? { ...data } : page));
+        });
     }
 
     return (
@@ -118,8 +128,8 @@ export const EditItem = ({ task }:TaskProps) => {
                 <textarea 
                     className="max-h-32 bg-light-300 text-dark-400 placeholder-light-900 focus:outline-light-400 text-base font-bold px-3 py-2 rounded-md outline-none border-0 focus:outline-2 dark:bg-dark-700 dark:placeholder-dark-100 dark:text-light-300 dark:focus:outline-dark-100 scrollbar scrollbar-thumb-dark-100 scrollbar-track-transparent"
                     placeholder="Descrição"
-                    value={formData.content}
-                    name="content"
+                    value={formData.description}
+                    name="description"
                     onChange={handleChange}
                 />
                 {/* ColorPicker->select a color */}
@@ -134,7 +144,7 @@ export const EditItem = ({ task }:TaskProps) => {
                     <div className="flex flex-col gap-1">
                     <h3 className="text-base font-bold text-dark-500 dark:text-light-300">Início</h3>
                         <DatePicker 
-                            value={formatDatetime(formData.start)} 
+                            value={formatDatetime(formData.start as string)} 
                             name="start"
                             handleChange={handleChange}
                         />
@@ -142,7 +152,7 @@ export const EditItem = ({ task }:TaskProps) => {
                     <div className="flex flex-col gap-1">
                     <h3 className="text-base font-bold text-dark-500 dark:text-light-300">Fim</h3>
                         <DatePicker 
-                            value={formatDatetime(formData.end)} 
+                            value={formatDatetime(formData.end as string)} 
                             name="end"
                             handleChange={handleChange}
                         />
@@ -172,7 +182,7 @@ export const EditItem = ({ task }:TaskProps) => {
                 <div className="flex justify-between">
                     <span className="flex items-center gap-2 font-semibold">
                         <Check
-                            checked={formData.completed}
+                            checked={!!formData.completed}
                             name="completed"
                             onChange={handleChange}
                             classNames="p-2"

@@ -6,7 +6,7 @@ export interface PageProps {
     updatedAt: string;
     trash: boolean;
 
-    properties?: PagePropertiesProps[];
+    properties: PagePropertiesProps[];
 }
 
 type Data = {
@@ -20,6 +20,8 @@ type Data = {
     // datetime
     start?: string;
     end?: string;
+
+    color?: string;
 
     // select | multiselect
     items?: { name: string; color: string }[];

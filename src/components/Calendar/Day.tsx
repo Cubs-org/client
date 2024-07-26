@@ -7,6 +7,7 @@ import { FaAngleUp } from "react-icons/fa6";
 import { EditItem } from "./EditItem";
 import { CustomTimeline } from "./Charts/CustomTimeline";
 import isDateInRange from "../../utils/calendar/isDateInRange";
+import { useCalendar } from "../../contexts/calendarContext";
 
 interface IDayProps {
     day: string;
@@ -25,17 +26,13 @@ export const Day = ({
 }:IDayProps) => {
 
     const { openModal } = useModal();
+    const { setPages } = useCalendar();
 
     const handleOpenTimeline = (item: any, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
-
-        const isCalendar = item?.properties?.find(prop => prop.type === "calendar");
-
-        if (isCalendar) {
-            openModal({
-                content: <EditItem task={item} />
-            });
-        }
+        openModal({
+            content: <EditItem setPages={setPages} {...item} />
+        });
     };
 
     const handlePushitems = (items:any, date:string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

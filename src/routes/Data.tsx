@@ -12,6 +12,7 @@ import Page from "../pages/Page.tsx";
 import Login from "../pages/authentication/Login.tsx";
 import Register from "../pages/authentication/Register.tsx";
 import Workspace from "../pages/Workspace.tsx";
+import { CalendarProvider } from "../contexts/calendarContext.tsx";
 
 export const data = {
     notAuthenticated: [
@@ -57,7 +58,7 @@ export const data = {
               },
               {
                 path: "calendar",
-                element: <CalendarPage />
+                element: <CalendarProvider><CalendarPage /></CalendarProvider>
               },
               {
                 path: "goals",

@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useState
 } from "react";
@@ -9,14 +10,14 @@ import { Calendar } from "../components/Calendar";
 import { useUser } from "../contexts/userContext";
 import Loading from "../components/Loading";
 import { useSocket } from "../contexts/socketContext";
+import { useCalendar } from "../contexts/calendarContext";
 
 export default function CalendarPage() {
 
   const { listener, unsubscribe } = useSocket();
-
   const { user: { data: { email } } } = useUser();
+  const { pages, setPages } = useCalendar();
 
-  const [items, setItems] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const { openModal } = useModal();
 
@@ -27,26 +28,31 @@ export default function CalendarPage() {
     });
   }
 
-  const loadItems = (data) => setItems(data);
+  const onCreate = useCallback((newPage) => {
+    setPages(prev => [...prev, newPage])
+  }, [pages]);
+  
+  const load = useCallback((data) => setPages(data), [pages, email]);
 
   useEffect(() => {
     if (!listener) return;
-    listener.emit("request:getCalendarItems", { email: email });
+    
+    listener.emit("request:getOwnedItems", { email: email });
+    listener.on("response:getOwnedItems", load);
 
     return () => {
-      unsubscribe("request:getCalendarItems");
+      unsubscribe("response:getOwnedItems", load);
     }
-  }, []);
+  }, [email, listener]);
 
   useEffect(() => {
     if (!listener) return;
-
-    listener.on("response:getCalendarItems", loadItems);
+    listener.on("response:createNewItem", onCreate);
 
     setLoading(false);
 
     return () => {
-      unsubscribe("response:getCalendarItems", loadItems);
+      unsubscribe("response:createNewItem", onCreate);
     }
   }, [loading, email, listener]);
 
@@ -55,7 +61,7 @@ export default function CalendarPage() {
       {!loading ? (
         <Calendar
           event={response}
-          items={items}
+          items={pages as any}
         />
       ) : <Loading />}
     </div>

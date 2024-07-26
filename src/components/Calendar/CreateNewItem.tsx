@@ -30,7 +30,7 @@ export const CreateNewItem = ({ event, type }: ICreateTask) => {
 
     const [formData, setFormData] = useState({
         title: "",
-        content: "",
+        description: "",
         start: "",
         end: "",
         completed: false,
@@ -39,21 +39,10 @@ export const CreateNewItem = ({ event, type }: ICreateTask) => {
         type: type || "task",
     });
 
-    useEffect(() => {
-        event && setFormData({
-            ...formData,
-            start: event,
-            end: event
-        });
-    }, [event]);
-
     const handleCompleteForm = () => {
         if (!listener) return;
 
-        listener.emit("createNewItem", formData);
-        // listener.on("getCalendarItems", (req) => {
-        //     onNewItemCreated(req);
-        // });
+        listener.emit("request:createNewItem", formData);
         
         clean();
     }
@@ -62,7 +51,7 @@ export const CreateNewItem = ({ event, type }: ICreateTask) => {
         closeModal();
         setFormData({
             title: "",
-            content: "",
+            description: "",
             start: "",
             end: "",
             completed: false,
@@ -80,14 +69,13 @@ export const CreateNewItem = ({ event, type }: ICreateTask) => {
         });
     };
 
-    // const formatIfDate = (value) => {
-    //     const matches = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/;
-    //     if (matches.test(value)) {
-    //         const date = new Date(value);
-    //         return date.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).replace(', ', ' ').replace('/', '-').concat(".000");
-    //     } else
-    //         return value;
-    // }
+    useEffect(() => {
+        event && setFormData({
+            ...formData,
+            start: event,
+            end: event
+        });
+    }, [event]);
 
     return (
         <div className="w-full flex flex-col gap-3">
@@ -107,7 +95,7 @@ export const CreateNewItem = ({ event, type }: ICreateTask) => {
                     className="max-h-32 bg-light-300 text-dark-400 placeholder-light-900 focus:outline-light-400 text-base font-bold px-3 py-2 rounded-md outline-none border-0 focus:outline-2 dark:bg-dark-800 dark:placeholder-dark-100 dark:text-light-300 dark:focus:outline-dark-100 scrollbar scrollbar-thumb-dark-100 scrollbar-track-transparent"
                     placeholder="Descrição"
                     name="content"
-                    value={formData.content}
+                    value={formData.description}
                     onChange={handleChange}
                 />
                 {/* ColorPicker->select a color  */}
