@@ -94,7 +94,7 @@ export const CreateNewItem = ({ event, type }: ICreateTask) => {
                 <textarea 
                     className="max-h-32 bg-light-300 text-dark-400 placeholder-light-900 focus:outline-light-400 text-base font-bold px-3 py-2 rounded-md outline-none border-0 focus:outline-2 dark:bg-dark-800 dark:placeholder-dark-100 dark:text-light-300 dark:focus:outline-dark-100 scrollbar scrollbar-thumb-dark-100 scrollbar-track-transparent"
                     placeholder="Descrição"
-                    name="content"
+                    name="description"
                     value={formData.description}
                     onChange={handleChange}
                 />

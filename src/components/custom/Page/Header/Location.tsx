@@ -18,11 +18,11 @@ export const PageLocation = () => {
     };
 
     return (
-        <nav className="hidden md:flex items-center gap-0.5 text-sm">
+        <nav className="hidden md:flex items-center gap-0.5 text-sm flex-nowrap">
             {(branch ?? []).length > 3 && (
                 <Popover
                     direction="bottom-end"
-                    classNames="font-normal"
+                    classNames="font-normal whitespace-nowrap"
                     content={
                         <ul className="p-1">
                             {branch.map((page, index) => {
@@ -61,7 +61,7 @@ export const PageLocation = () => {
                     _limit: boolean = ([_length, (_length - 1)].includes(index + 1));
 
                 return (
-                    <div key={page.id} className="flex items-center gap-1">
+                    <div key={page.id} className="flex items-center gap-1 flex-nowrap">
                         {_limit && (
                             <Link
                                 to={`/page/${page.id}`}

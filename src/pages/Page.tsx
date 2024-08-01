@@ -97,10 +97,11 @@ function Page() {
 
     const {
         currentPage,
-        // members,
         setPageData,
         setBranch,
-        setMembers
+        setMembers,
+        titleVisible,
+        setTitleVisible
     } = usePage();
 
     const { title, data: { icon } } = currentPage;
@@ -125,6 +126,7 @@ function Page() {
                 { name: "Gabriel Nogueira", icon: "gorila", email: "nogs@gmail.com" },
                 { name: "Augusto Kawashima", icon: "panda", email: "gutin@hotmail.com" }
             ])
+            if (titleVisible === true) setTitleVisible(false)
             setLoading(false)
         }
     }, [loading])
@@ -132,7 +134,7 @@ function Page() {
     return (
         <React.Fragment>
             <Header />
-            <div className="px-4 flex items-center gap-x-3 my-3">
+            {titleVisible && <div className="px-4 flex items-center gap-x-3 my-3">
                 {icon && <IconPicker
                     icon={icon}
                     setIcon={(icon) => {
@@ -154,7 +156,7 @@ function Page() {
                     classNames="!w-[calc(100%-48px)] text-4xl font-bold break-words !px-0"
                     outlineDisabled
                 />
-            </div>
+            </div>}
 
             <main>
                 <Tools tools={tools} />

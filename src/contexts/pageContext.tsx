@@ -1,4 +1,4 @@
-import { createContext, Dispatch } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 import { PageData } from "../interfaces/page";
 import { useContext, useState } from "react";
 
@@ -6,9 +6,11 @@ export interface PageContextProps {
     currentPage: PageData;
     branch: PageData[];
     members: PageMember[];
-    setMembers: Dispatch<PageMember[]>;
-    setBranch: Dispatch<PageData[]>;
+    setMembers: Dispatch<SetStateAction<PageMember[]>>;
+    setBranch: Dispatch<SetStateAction<PageData[]>>;
     setPageData: (data: Partial<PageData>) => void;
+    titleVisible: boolean;
+    setTitleVisible: Dispatch<SetStateAction<boolean>>;
 };
 
 const PageContext = createContext<PageContextProps>({
@@ -37,6 +39,7 @@ const PageProvider = ({ children }) => {
     });
     const [branch, setBranch] = useState<PageData[]>([]);
     const [members, setMembers] = useState<PageMember[]>([]);
+    const [titleVisible, setTitleVisible] = useState<boolean>(true);
 
     const setPageData = (data) => {
         setCurrentPage((prev) => {
@@ -47,7 +50,18 @@ const PageProvider = ({ children }) => {
         });
     };
 
-    return <PageContext.Provider value={{ currentPage, branch, members, setPageData, setBranch, setMembers }}>{children}</PageContext.Provider>
+    const contextValue = {
+        currentPage,
+        branch,
+        members,
+        setPageData,
+        setBranch,
+        setMembers,
+        titleVisible,
+        setTitleVisible
+    }
+
+    return <PageContext.Provider value={contextValue}>{children}</PageContext.Provider>
 }
 
 const usePage = () => {
