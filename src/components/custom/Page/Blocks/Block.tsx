@@ -1,0 +1,53 @@
+import clsx from 'clsx';
+import { LuGripVertical } from 'react-icons/lu';
+import { RenderRowBlocks } from '.';
+import { DataBlocks } from '../../../../interfaces/page';
+import { CSS } from '@dnd-kit/utilities';
+import { CSSProperties } from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+
+export const Block = ({ id, data = { align: 'left' }, ...rest }: DataBlocks) => {
+
+    const {
+        setNodeRef,
+        attributes,
+        listeners,
+        transform,
+        isDragging,
+        over
+    } = useSortable({
+        id,
+        resizeObserverConfig: { disabled: true }
+    })
+
+    const styles: CSSProperties = {
+        transform: over?.id !== id ? CSS.Transform.toString(transform) : '',
+        opacity: isDragging ? 0.5 : 1
+    };
+
+    return (
+        <div
+            ref={setNodeRef}
+            className={clsx('relative max-w-full w-full h-fit p-1 flex flex-grow items-start rounded-md hover:bg-light-200 dark:hover:bg-dark-800 group', {
+                'justify-start text-left': data.align === 'left',
+                'justify-end text-right': data.align === 'right',
+                'justify-center text-center col-span-2': data.align === 'center'
+            })}
+            style={{
+                minWidth: `${data.width}%`,
+                width: `${data.width}%`,
+                ...styles
+            }}
+        >
+            <button {...attributes} {...listeners}>
+                <LuGripVertical
+                    size={24}
+                    className="opacity-0 cursor-grab rounded-md hover:bg-light-200 text-light-900 dark:bg-dark-800 dark:text-dark-100 text-xs font-bold group-hover:opacity-100"
+                />
+            </button>
+            <div className="w-full relative">
+                <RenderRowBlocks {...rest} />
+            </div>
+        </div>
+    );
+};

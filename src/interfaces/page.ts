@@ -51,17 +51,18 @@ export type ChangeAction = {
     payload: string;
 }
 
-export type ToolData = {
-    x?: number;
-    y: number;
+export type BlockData = {
     width?: number;
     align?: 'left' | 'right' | 'center';
 };
 
-export type DataTools = {
+export type DataBlocks = {
+    id: string;
     type: string;
-    tool_id: string;
-    data: ToolData;
+    orderX: number;
+    orderY: number;
+    row: number;
+    data?: BlockData;
     content?: any;
     url?: string;
 };
