@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import { LuGripVertical } from 'react-icons/lu';
 import { RenderRowBlocks } from '.';
 import { DataBlocks } from '../../../../interfaces/page';
-import { CSS } from '@dnd-kit/utilities';
 import { CSSProperties } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 
@@ -12,16 +11,12 @@ export const Block = ({ id, data = { align: 'left' }, ...rest }: DataBlocks) => 
         setNodeRef,
         attributes,
         listeners,
-        transform,
         isDragging,
-        over
     } = useSortable({
-        id,
-        resizeObserverConfig: { disabled: true }
+        id
     })
 
     const styles: CSSProperties = {
-        transform: over?.id !== id ? CSS.Transform.toString(transform) : '',
         opacity: isDragging ? 0.5 : 1
     };
 

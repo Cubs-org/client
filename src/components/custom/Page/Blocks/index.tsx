@@ -1,8 +1,8 @@
 import { DragOverlay } from "@dnd-kit/core";
 import { DataBlocks } from "../../../../interfaces/page";
 import { Editor } from "../../TextEditor";
-import { DropBlocks } from "./DropBlocks";
 import { DropIndicator } from "./DropIndicator";
+import { DropCol } from "./DropCol";
 
 interface BlockProps {
   blocks: DataBlocks[];
@@ -59,16 +59,7 @@ export const Blocks = ({ blocks }: BlockProps) => {
             {row.map((col, _c) => {
               const isCol = row.length > 1;
               return (
-                <div className="flex flex-grow" key={_c}>
-                  <DropIndicator classNames="h-full min-w-[5px] ml-1 bg-blue-500" data-dropindicator={`col-${_c}`} />
-                  <div className="flex flex-col flex-grow">
-                      {col.map((block, _b) => (
-                        // { isCol, _b, _r, _c, ...block }
-                        <DropBlocks isCol={isCol} blockIndex={_b} rowIndex={_r} colIndex={_c} {...block} />
-                      ))}
-                      <DropIndicator classNames="w-full h-1 bg-yellow-500 mt-1" data-dropindicator={`block-${_r + 1}`} />
-                  </div>
-                </div>
+                <DropCol key={_c} isCol={isCol} rowIndex={_r} colIndex={_c} col={col} />
               );
             })}
             <DropIndicator classNames="min-w-[5px] bg-green-500 ml-1" data-dropindicator={`col-last`} />

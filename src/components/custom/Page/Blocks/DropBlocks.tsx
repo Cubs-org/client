@@ -16,7 +16,7 @@ export const DropBlocks = ({ isCol, blockIndex, colIndex, rowIndex, ...block }: 
         setNodeRef,
         isOver
     } = useDroppable({ 
-        id: `block-${block.id}-${blockIndex}`
+        id: `top:col-${block.id}-${blockIndex}`
     });
 
     const sortableId = `${rowIndex}-${colIndex}-${blockIndex}-${block.id}`;
