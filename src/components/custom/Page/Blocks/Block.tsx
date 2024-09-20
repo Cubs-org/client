@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import { LuGripVertical } from 'react-icons/lu';
-import { RenderRowBlocks } from '.';
 import { DataBlocks } from '../../../../interfaces/page';
 import { CSSProperties } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
+import { RenderBlocks } from './RenderBlocks';
 
 export const Block = ({ id, data = { align: 'left' }, ...rest }: DataBlocks) => {
 
@@ -41,7 +41,7 @@ export const Block = ({ id, data = { align: 'left' }, ...rest }: DataBlocks) => 
                 />
             </button>
             <div className="w-full relative">
-                <RenderRowBlocks {...rest} />
+                <RenderBlocks {...rest} />
             </div>
         </div>
     );

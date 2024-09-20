@@ -27,18 +27,18 @@ export const DropCol = ({ isCol, colIndex, rowIndex, col }: DropBlocksProps) => 
 
     return (
         <div className="flex flex-grow" key={colIndex}>
-            <DropIndicator classNames={clsx("h-full min-w-[5px] ml-1 bg-blue-500", {
-                "opacity-0": isBfColOver,
-                "opacity-100": !isBfColOver
+            <DropIndicator classNames={clsx("h-full min-w-[5px] ml-1 bg-purple-500 opacity-0", {
+                "opacity-0": !isBfColOver,
+                "opacity-100": isBfColOver
             })} ref={setBfColRef} />
             <div className="flex flex-col flex-grow">
                 {col.map((block, _b) => (
                     // { isCol, _b, _r, _c, ...block }
                     <DropBlocks key={_b} isCol={isCol} blockIndex={_b} rowIndex={rowIndex} colIndex={colIndex} {...block} />
                 ))}
-                <DropIndicator classNames={clsx("w-full h-1 bg-yellow-500 mt-1", {
-                    "opacity-0": isAfColOver,
-                    "opacity-100": !isAfColOver
+                <DropIndicator classNames={clsx("w-full h-1 bg-purple-500 mt-1 opacity-0", {
+                    "opacity-0": !isAfColOver,
+                    "opacity-100": isAfColOver
                 })} ref={setAfColRef} />
             </div>
         </div>
