@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
-import { IconPicker } from "../components/IconPicker";
-import { TextArea } from "../components/TextArea";
-import { NewTool } from "../components/custom/Page/NewTool/NewTool";
-import { DataBlocks } from "../interfaces/page";
-import { Blocks } from "../components/custom/Page/Blocks";
-import { Header } from "../components/custom/Page/Header";
-import { usePage } from "../contexts/pageContext";
-import { DndContext, MouseSensor, PointerSensor, rectIntersection, useSensor, useSensors } from "@dnd-kit/core";
+import { IconPicker } from '../components/IconPicker'
+import { TextArea } from '../components/TextArea'
+import { NewTool } from '../components/custom/Page/NewTool/NewTool'
+import { DataBlocks } from '../interfaces/page'
+import { Blocks } from '../components/custom/Page/Blocks'
+import { Header } from '../components/custom/Page/Header'
+import { usePage } from '../contexts/pageContext'
+import {
+    DndContext,
+    MouseSensor,
+    PointerSensor,
+    rectIntersection,
+    useSensor,
+    useSensors,
+} from '@dnd-kit/core'
 
-import { branch } from "../lib/skeleton.json";
-import { SortableContext } from "@dnd-kit/sortable";
+import { branch } from '../lib/skeleton.json'
+import { SortableContext } from '@dnd-kit/sortable'
 
-const twiconsPath = "/twicons/";
+const twiconsPath = '/twicons/'
 
+// Construir um parser para tratar os dados linearmente
 const blocks: DataBlocks[] = [
     {
         type: 'text',
@@ -122,7 +130,7 @@ const blocks: DataBlocks[] = [
         orderY: 1,
         orderX: 2,
         row: 5,
-        url: "https://igotoffer.com/apple/wp-content/uploads/2016/08/history-apple-1997-1998-first-imac.jpg"
+        url: 'https://igotoffer.com/apple/wp-content/uploads/2016/08/history-apple-1997-1998-first-imac.jpg',
     },
     {
         type: 'text',
@@ -212,12 +220,10 @@ const blocks: DataBlocks[] = [
             <h2>Conclusion</h2>
             <p>Apple's impact on technology and culture is undeniable. From its humble beginnings in a garage to becoming one of the most valuable companies in the world, Apple's products have changed the way people live, work, and play.</p>
         `,
-    }
-];
-
+    },
+]
 
 function Page() {
-
     const {
         currentPage,
         setPageData,
@@ -225,44 +231,58 @@ function Page() {
         setMembers,
         titleVisible,
         // setTitleVisible
-    } = usePage();
+    } = usePage()
 
-    const { title, data: { icon } } = currentPage;
+    const {
+        title,
+        data: { icon },
+    } = currentPage
 
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true)
 
-    const sensors = useSensors(
-        useSensor(MouseSensor), 
-        useSensor(PointerSensor)
-    );
+    const sensors = useSensors(useSensor(MouseSensor), useSensor(PointerSensor))
 
     const generateSortableItems = (blocks) => {
         return blocks.map((block) => {
-          const rowIndex = block.row - 1;
-          const colIndex = block.orderX - 1;
-          const blockIndex = block.orderY - 1;
-          const blockId = block.id;
-          return `${rowIndex}-${colIndex}-${blockIndex}-${blockId}`;
-        });
-      };
+            const rowIndex = block.row - 1
+            const colIndex = block.orderX - 1
+            const blockIndex = block.orderY - 1
+            const blockId = block.id
+            return `${rowIndex}-${colIndex}-${blockIndex}-${blockId}`
+        })
+    }
 
     useEffect(() => {
-        document.title = title || "Sem título";
+        document.title = title || 'Sem título'
         if (icon !== '') {
-            let link = document.querySelector("link[rel='icon']") as HTMLLinkElement;
+            let link = document.querySelector(
+                "link[rel='icon']"
+            ) as HTMLLinkElement
             // link.href = pageData.data.icon;
-            link.href = `${twiconsPath}/${icon}.svg`;
+            link.href = `${twiconsPath}/${icon}.svg`
         }
-    }, [currentPage]);
+    }, [currentPage])
 
     useEffect(() => {
         if (loading) {
-            setBranch(branch);
+            setBranch(branch)
             setPageData(branch[0])
             setMembers([
-                { name: "Helder Martins", icon: "cervo", email: "helder@gmail.com" },
-                { name: "Gabriel Nogueira", icon: "gorila", email: "nogs@gmail.com" },
-                { name: "Augusto Kawashima", icon: "panda", email: "gutin@hotmail.com" }
+                {
+                    name: 'Helder Martins',
+                    icon: 'cervo',
+                    email: 'helder@gmail.com',
+                },
+                {
+                    name: 'Gabriel Nogueira',
+                    icon: 'gorila',
+                    email: 'nogs@gmail.com',
+                },
+                {
+                    name: 'Augusto Kawashima',
+                    icon: 'panda',
+                    email: 'gutin@hotmail.com',
+                },
             ])
             // if (titleVisible === true) setTitleVisible(false)
             setLoading(false)
@@ -272,35 +292,43 @@ function Page() {
     return (
         <React.Fragment>
             <Header />
-            {titleVisible && <div className="px-4 flex items-center gap-x-3 my-3">
-                {icon && <IconPicker
-                    icon={icon}
-                    setIcon={(icon) => {
-                        setPageData({
-                            data: {
-                                icon: icon as string
+            {titleVisible && (
+                <div className="px-4 flex items-center gap-x-3 my-3">
+                    {icon && (
+                        <IconPicker
+                            icon={icon}
+                            setIcon={(icon) => {
+                                setPageData({
+                                    data: {
+                                        icon: icon as string,
+                                    },
+                                })
+                            }}
+                            size={42}
+                            classNames={
+                                'p-1 rounded-md text-2xl hover:bg-light-300 dark:hover:bg-dark-700 flex items-center justify-center cursor-pointer'
                             }
-                        })
-                    }}
-                    size={42}
-                    classNames={"p-1 rounded-md text-2xl hover:bg-light-300 dark:hover:bg-dark-700 flex items-center justify-center cursor-pointer"}
-                    hide={!icon}
-                />}
+                            hide={!icon}
+                        />
+                    )}
 
-                <TextArea
-                    value={currentPage.title}
-                    placeholder={"Sem título"}
-                    handle={(title) => setPageData({ title })}
-                    classNames="!w-[calc(100%-48px)] text-4xl font-bold break-words !px-0"
-                    outlineDisabled
-                />
-            </div>}
+                    <TextArea
+                        value={currentPage.title}
+                        placeholder={'Sem título'}
+                        handle={(title) => setPageData({ title })}
+                        classNames="!w-[calc(100%-48px)] text-4xl font-bold break-words !px-0"
+                        outlineDisabled
+                    />
+                </div>
+            )}
 
             <main>
-                <DndContext 
-                    sensors={sensors} 
+                <DndContext
+                    sensors={sensors}
                     collisionDetection={rectIntersection}
-                    onDragEnd={({ active, over }) => console.log(active.id, over?.id)}
+                    onDragEnd={({ active, over }) =>
+                        console.log(active.id, over?.id)
+                    }
                 >
                     <SortableContext items={generateSortableItems(blocks)}>
                         <Blocks blocks={blocks} />
@@ -313,4 +341,4 @@ function Page() {
     )
 }
 
-export default Page;
+export default Page
