@@ -7,8 +7,10 @@
     --green-600: #16a34a;
     --red-400: #f87171;
     --red-600: #dc2626;
-    --yellow-400: #fbbf24;
-    --yellow-600: #f59e0b;
+    --yellow-400: #facc15;
+    --yellow-600: #eab308;
+    --orange-400: #fb923c;
+    --orange-600: #f97316;
 }
 
 .tiptap {
@@ -114,6 +116,14 @@ ul[data-type="taskList"] {
 
 .dark-text-yellow-600 {
     color: var(--yellow-600);
+}
+
+.text-orange-400 {
+    color: var(--orange-400);
+}
+
+.dark-text-orange-600 {
+    color: var(--orange-600);
 }
 
 .text-red-400 {

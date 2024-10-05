@@ -26,7 +26,7 @@ export const DropBlocks = ({ isCol, blockIndex, colIndex, rowIndex, ...block }: 
             {isCol && (
                 <DropIndicator 
                     ref={setNodeRef} 
-                    classNames={clsx("w-full h-1 bg-purple-500 mt-1 opacity-0", {
+                    classNames={clsx("w-full h-1 bg-purple-500 opacity-0", {
                         "opacity-0": !isOver,
                         "opacity-100": isOver
                     })} 

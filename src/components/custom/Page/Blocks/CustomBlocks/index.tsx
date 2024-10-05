@@ -1,4 +1,4 @@
-import { Editor } from "../../../TextEditor";
+import { Editor } from "../../../RichEditor";
 import { Image } from "./Image";
 
 export const types = {

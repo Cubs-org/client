@@ -24,8 +24,8 @@ export const DropRow = ({ row, rowIndex }: DropBlocksProps) => {
     });
 
     return (
-        <div className="flex flex-col flex-grow">
-          <DropIndicator classNames={clsx("w-full h-1 bg-purple-500 mt-1 opacity-0", {
+        <div className="max-w-full flex flex-col flex-grow">
+          <DropIndicator classNames={clsx("w-full h-1 bg-purple-500 opacity-0", {
             "opacity-0": !isBfRowOver,
             "opacity-100": isBfRowOver
           })} ref={setBfRowRef} />
@@ -36,7 +36,7 @@ export const DropRow = ({ row, rowIndex }: DropBlocksProps) => {
                 <DropCol key={_c} isCol={isCol} rowIndex={rowIndex} colIndex={_c} col={col} />
               );
             })}
-            <DropIndicator classNames={clsx("min-w-[5px] bg-purple-500 ml-1 opacity-0", {
+            <DropIndicator classNames={clsx("min-w-[5px] bg-purple-500 opacity-0", {
                 "opacity-0": !isAfColOver,
                 "opacity-100": isAfColOver
             })} ref={setAfColRef} />
