@@ -25,13 +25,14 @@ const AuthProvider = ({ children }) => {
 
   const signIn = (newToken: string) => {
     cookies.set('token', newToken, {
+      path: '/',
       expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 7), // 7 dias
     });
     setToken(newToken);
   };
 
   const signOut = () => {
-    cookies.remove('token');
+    cookies.remove('token', { path: '/' });
     setToken(null);
   };
 

@@ -15,9 +15,17 @@ import Loading from "../Loading";
 import { PageProvider } from "../../contexts/pageContext";
 import { useSocket } from "../../contexts/socketContext";
 
+type TokenDecoded = {
+    user: {
+        id: string;
+    };
+    hubId: string;
+}
+
 export const Layout = () => {
     const { setUser } = useUser();
     const { listener } = useSocket();
+    const { modalState:{ visible, content }, closeModal } = useModal();
 
     const { token } = useAuth();
     const navigate = useNavigate();
@@ -26,76 +34,66 @@ export const Layout = () => {
     const [userFetched, setUserFetched] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-
-        if (!userFetched) {
-            const userId = (jwtDecode(token as string) as any).user.id;
-            // setUser({ data:{...user.data}, hubId: (jwtDecode(token as any) as any).hubId});
-
-            getUser(userId)
-                .then(res => {
-                    const userData = res.data.user;
-                    setUser({data:{...userData}, hubId: (jwtDecode(token as any) as any).hubId});
-                }).finally(() => {
-                    setUserFetched(true);
-                });
-        }
-    }, [userFetched]);
-
-    useEffect(() => {
-        if (token) {
-            let user;
-            user = localStorage.getItem("user");
-
-            user = (jwtDecode(token as string) as any).user;
-            
-            if (user.id) {
-                let workspaceId, currentPath;
-
-                fetchWorkspace(user.id)
-                    .then(workspace => {
-                        workspaceId = workspace.id;
-                        currentPath = pathname.split("/");
-                        currentPath.shift();
-
-                        if (
-                            workspaceId 
-                            && (currentPath[0] === "workspace" || currentPath[0] === "")
-                            || currentPath[0] === "login" || currentPath[0] === "register") {
-                            navigate(`/workspace/${workspaceId}`);
-                        }
-                    }).then(() => {
-                        currentPath = pathname.split("/").filter(Boolean);
-                        currentPath.shift();
-                        
-                        if (
-                            (currentPath[0] === "workspace" && currentPath[1] !== workspaceId) 
-                            && (currentPath[0] !== "not-found" && currentPath[1] !== "")
-                        ) {
-                            navigate(`/not-found`);
-                        }
-                    }).finally(() => {
-                        setLoading(true);
-                    })
-            }
-        }
-
-    }, [token]);
-    
+    const [tokenDecoded, setTokenDecoded] = useState<TokenDecoded | null>(null);
     const [layout, setLayout] = useState(true);
-    
-    useEffect(() => {
-        setLayout(JSON.parse(localStorage.getItem("layout") || "true"))
-
-        if (listener) listener.on("updateUser", (user) => setUser(user));
-    }, []);
 
     const handleSetLayout = () => {
         setLayout(!layout)
         localStorage.setItem("layout", JSON.stringify(!layout))
     }
 
-    const { modalState:{ visible, content }, closeModal } = useModal();
+    useEffect(() => {
+        if (token && !tokenDecoded) {
+            setTokenDecoded(jwtDecode(token as string) as TokenDecoded);
+        }
+    }, [token]);
+
+    useEffect(() => {
+
+        if (!userFetched && tokenDecoded) {
+            const { user, hubId } = tokenDecoded;
+
+            getUser(user.id)
+                .then(res => {
+                    const { user:data } = res.data;
+                    setUser({ data, hubId });
+                }).finally(() => {
+                    setUserFetched(true);
+                });
+        }
+    }, [userFetched, tokenDecoded]);
+
+    useEffect(() => {
+        if (tokenDecoded) {
+            const { user } = tokenDecoded;
+            
+            if (user.id) {
+                fetchWorkspace(user.id)
+                    .then(workspace => {
+                        const workspaceId = workspace.id;
+                        const currentPath = pathname.split("/");
+                        currentPath.shift();
+
+                        const redirectToWorkspace = ["", "workspace", "login", "register"].includes(currentPath[0]);
+
+                        if (workspaceId && redirectToWorkspace) {
+                            navigate(`/workspace/${workspaceId}`);
+                        }
+
+                        // navigate(`/not-found`);
+                    }).finally(() => {
+                        setLoading(true);
+                    })
+            }
+        }
+
+    }, [tokenDecoded]);
+    
+    useEffect(() => {
+        setLayout(JSON.parse(localStorage.getItem("layout") || "true"))
+
+        if (listener) listener.on("updateUser", (user) => setUser(user));
+    }, []);
 
     return (
         <div className="w-screen h-screen flex items-center justify-center bg-light-100 dark:bg-dark-900">

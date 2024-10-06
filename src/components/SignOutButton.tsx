@@ -14,13 +14,13 @@ const AlertSignOut = () => {
     // @ts-ignore
     const { modalState:{ visible, content }, openModal, closeModal } = useModal();
 
-    const { signOut }:any = useAuth();
+    const { signOut } = useAuth();
     const navigate = useNavigate();
 
     const handleSignOut = () => {
         signOut();
-        navigate("/login");
         closeModal && closeModal();
+        navigate("/login");
     }
 
     return (
@@ -41,7 +41,6 @@ const AlertSignOut = () => {
 }
 
 export const SignOutButton = ({ children, classNames }:SignOutButtonProps) => {
-    // @ts-ignore
     const { openModal }:IModal = useModal();
     
     return (
