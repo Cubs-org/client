@@ -15,7 +15,7 @@ export const initialBlocks: DataBlocks[] = [
     {
         type: 'text',
         id: '124',
-        orderY: 2,
+        orderY: 1,
         orderX: 1,
         row: 2,
         content: `

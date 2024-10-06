@@ -3,7 +3,8 @@ import { DataBlocks } from "../../../../interfaces/page";
 import { DropIndicator } from "./DropIndicator";
 import { DropRow } from "./DropRow";
 import clsx from "clsx";
-import createGroupedBlocks from "./shared/createGroupedBlocks";
+import createGroupedBlocks from "../../../../utils/dnd/blocks/createGroupedBlocks";
+import { useEffect, useState } from "react";
 
 interface BlockProps {
   blocks: DataBlocks[];
@@ -13,9 +14,13 @@ export const Blocks = ({ blocks }: BlockProps) => {
   const {
     setNodeRef: setRowLastRef,
     isOver: isRowLastOver,
-  } = useDroppable({ id: "row-last" });
+  } = useDroppable({ id: `row-${blocks.length + 1}` });
 
-  const groupedBlocks = createGroupedBlocks(blocks);
+  const [groupedBlocks, setGroupedBlocks] = useState<DataBlocks[][][] | null>(null);
+
+  useEffect(() => {
+    setGroupedBlocks(createGroupedBlocks(blocks)); // Define o estado com a cópia profunda
+  }, [blocks]);
 
   return (
     <div className="flex flex-col gap-2 group/row">
@@ -24,7 +29,7 @@ export const Blocks = ({ blocks }: BlockProps) => {
           :Block:
         </span>
       </DragOverlay>
-      {groupedBlocks.map((row, _r) => (
+      {(groupedBlocks ?? []).map((row, _r) => (
         <DropRow key={_r} row={row} rowIndex={_r} />
       ))}
       <DropIndicator classNames={clsx("w-full h-1 bg-purple-500 opacity-0", {

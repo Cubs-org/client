@@ -3,7 +3,6 @@ import React, { useEffect, useReducer, useState } from 'react'
 import { IconPicker } from '../components/IconPicker'
 import { TextArea } from '../components/TextArea'
 import { NewTool } from '../components/custom/Page/NewTool/NewTool'
-import { DataBlocks } from '../interfaces/page'
 import { Blocks } from '../components/custom/Page/Blocks'
 import { Header } from '../components/custom/Page/Header'
 import { usePage } from '../contexts/pageContext'
@@ -19,64 +18,9 @@ import {
 import { branch } from '../lib/skeleton.json'
 import { SortableContext } from '@dnd-kit/sortable'
 import { initialBlocks } from '../lib/initialBlocks'
+import { blockReducer } from '../utils/dnd/blocks/blockReducer'
 
 const twiconsPath = '/twicons/'
-
-// Construir um parser para tratar os dados linearmente
-const initialBlocksState = initialBlocks
-
-type BlockAction = {
-    type: 'ADD' | 'REMOVE' | 'UPDATE' | 'MOVEROW' | 'MOVECOL' | 'MOVEBLOCK'
-    payload: DataBlocks
-}
-
-const reducer = (state: DataBlocks[], action: BlockAction) => {
-    const { type, payload } = action;
-    const { id, row, orderX, orderY } = payload;
-
-    const actions = {
-        ADD: () => {
-            return [...state, payload];
-        },
-        REMOVE: () => {
-            return state.filter((block) => block.id !== id);
-        },
-        UPDATE: () => {
-            return state.map((block) => {
-                if (block.id === id) {
-                    return { ...block, ...payload };
-                }
-                return block;
-            });
-        },
-        MOVEROW: () => {
-            return state.map((block) => {
-                if (block.id === id) {
-                    return { ...block, row };
-                }
-                return block;
-            });
-        },
-        MOVECOL: () => {
-            return state.map((block) => {
-                if (block.id === id) {
-                    return { ...block, orderX };
-                }
-                return block;
-            });
-        },
-        MOVEBLOCK: () => {
-            return state.map((block) => {
-                if (block.id === id) {
-                    return { ...block, orderY };
-                }
-                return block;
-            });
-        },
-    };
-
-    return actions[type]();
-}
 
 function Page() {
     const {
@@ -94,19 +38,41 @@ function Page() {
     } = currentPage
 
     const [loading, setLoading] = useState<boolean>(true)
-    // TODO: Implementar o estado de blocos
-    const [blocks, _] = useReducer(reducer, initialBlocksState)
+    // Construir um parser para tratar os dados linearmente
+    const data = initialBlocks
 
-    const sensors = useSensors(useSensor(MouseSensor), useSensor(PointerSensor))
+    const [blocks, dispatch] = useReducer(blockReducer, data);
+
+    const sensors = useSensors(useSensor(MouseSensor, {
+        activationConstraint: {
+            delay: 200,
+            tolerance: 5
+        }
+    }), useSensor(PointerSensor, {
+        activationConstraint: {
+            delay: 200,
+            tolerance: 5
+        }
+    }))
 
     const generateSortableItems = (blocks) => {
         return blocks.map((block) => {
-            const rowIndex = block.row - 1
-            const colIndex = block.orderX - 1
-            const blockIndex = block.orderY - 1
+            const rowIndex = block.row
+            const colIndex = block.orderX
+            const blockIndex = block.orderY
             const blockId = block.id
             return `${rowIndex}-${colIndex}-${blockIndex}-${blockId}`
         })
+    }
+
+    const handleDragEnd = ({ active, over }) => {
+        const id = active.id
+        const targetRow = over.id.split('-')[1]
+        console.log(over.id)
+
+        console.log('id', id, 'targetRow', targetRow)
+
+        dispatch({ type: 'MOVEROW', payload: { id, targetRow } })
     }
 
     useEffect(() => {
@@ -183,9 +149,7 @@ function Page() {
                 <DndContext
                     sensors={sensors}
                     collisionDetection={rectIntersection}
-                    onDragEnd={({ active, over }) =>
-                        console.log(active.id, over?.id)
-                    }
+                    onDragEnd={handleDragEnd}
                 >
                     <SortableContext items={generateSortableItems(blocks)}>
                         <Blocks blocks={blocks} />

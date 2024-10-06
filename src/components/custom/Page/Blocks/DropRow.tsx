@@ -13,14 +13,14 @@ export const DropRow = ({ row, rowIndex }: DropBlocksProps) => {
         setNodeRef: setBfRowRef,
         isOver: isBfRowOver
     } = useDroppable({
-        id: `top:row-${rowIndex}`
+        id: `row-${rowIndex + 1}`
     });
 
     const {
         setNodeRef: setAfColRef,
         isOver: isAfColOver
     } = useDroppable({
-        id: `right:col-${rowIndex}`
+        id: `right:col-${rowIndex + 1}`
     });
 
     return (

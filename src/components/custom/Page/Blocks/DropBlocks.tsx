@@ -16,10 +16,10 @@ export const DropBlocks = ({ isCol, blockIndex, colIndex, rowIndex, ...block }: 
         setNodeRef,
         isOver
     } = useDroppable({ 
-        id: `top:col-${block.id}-${blockIndex}`
+        id: `col-${block.id}-${blockIndex + 1}`
     });
 
-    const sortableId = `${rowIndex}-${colIndex}-${blockIndex}-${block.id}`;
+    const sortableId = `${rowIndex + 1}-${colIndex + 1}-${blockIndex + 1}-${block.id}`;
 
     return (
         <div className="flex flex-col flex-grow gap-0.5 group/y" key={blockIndex}>

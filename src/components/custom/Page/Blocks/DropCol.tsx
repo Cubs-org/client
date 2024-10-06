@@ -17,11 +17,11 @@ export const DropCol = ({
     col,
 }: DropBlocksProps) => {
     const { setNodeRef: setBfColRef, isOver: isBfColOver } = useDroppable({
-        id: `left:col-${rowIndex}-${colIndex}`,
+        id: `left:col-${rowIndex + 1}-${colIndex + 1}`,
     })
 
     const { setNodeRef: setAfColRef, isOver: isAfColOver } = useDroppable({
-        id: `bottom:col-${rowIndex}-${colIndex}`,
+        id: `bottom:col-${rowIndex + 1}-${colIndex + 1}`,
     })
 
     return (
@@ -35,7 +35,6 @@ export const DropCol = ({
             />
             <div className="flex flex-col flex-grow">
                 {col.map((block, _b) => (
-                    // { isCol, _b, _r, _c, ...block }
                     <DropBlocks
                         key={_b}
                         isCol={isCol}
