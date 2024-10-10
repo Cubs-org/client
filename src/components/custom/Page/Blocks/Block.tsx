@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { LuGripVertical } from 'react-icons/lu';
-import { DataBlocks } from '../../../../interfaces/page';
+import { DataBlocks } from '../../../../types/page';
 import { CSSProperties } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { RenderBlocks } from './RenderBlocks';
@@ -25,8 +25,8 @@ export const Block = ({ id, data = { align: 'left' }, ...rest }: DataBlocks) => 
             ref={setNodeRef}
             className={clsx('relative max-w-full w-full h-fit p-1 flex flex-grow items-start rounded-md group')}
             style={{
-                minWidth: `${data.width}%`,
-                width: `${data.width}%`,
+                // minWidth: `${data.width}%`,
+                // width: `${data.width}%`,
                 ...styles
             }}
         >
@@ -37,6 +37,7 @@ export const Block = ({ id, data = { align: 'left' }, ...rest }: DataBlocks) => 
                 />
             </button>
             <div className="w-full relative">
+                :{id}:{data.width}:
                 <RenderBlocks {...rest} />
             </div>
         </div>

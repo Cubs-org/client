@@ -10,7 +10,7 @@ import { Check } from "../Check";
 import { DatePicker } from "../TimeControls/DatePicker";
 import { useModal } from "../../contexts/modalContext";
 import { useSocket } from "../../contexts/socketContext";
-import { PagePropertiesProps, PageProps } from "../../interfaces/page";
+import { PagePropertiesProps, PageProps } from "../../types/page";
 
 interface EditCalendarItemProps extends PageProps {
     setPages: Dispatch<SetStateAction<PageProps[]>>

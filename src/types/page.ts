@@ -66,3 +66,5 @@ export type DataBlocks = {
     content?: any;
     url?: string;
 };
+
+export type GroupedBlocks = DataBlocks[][][];

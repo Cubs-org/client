@@ -1,4 +1,4 @@
-import { PageProps } from "../../../interfaces/page";
+import { PageProps } from "../../../types/page";
 import { formatDateToPreview } from "../../datetime/formatDateToPreview";
 
 const getPropertyValue = (rowPage:PageProps, relationName) => {

@@ -1,4 +1,4 @@
-import { DataBlocks } from '../interfaces/page'
+import { DataBlocks } from '../types/page'
 
 export const initialBlocks: DataBlocks[] = [
     {
@@ -14,7 +14,7 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'text',
-        id: '124',
+        id: '456',
         orderY: 1,
         orderX: 1,
         row: 2,
@@ -26,7 +26,7 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'image',
-        id: '125',
+        id: '789',
         data: {
             align: 'center',
         },
@@ -37,7 +37,7 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'text',
-        id: '126',
+        id: '101112',
         orderY: 1,
         orderX: 1,
         row: 3,
@@ -48,7 +48,7 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'text',
-        id: '127',
+        id: '131415',
         orderY: 2,
         orderX: 1,
         row: 3,
@@ -59,7 +59,7 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'text',
-        id: '128',
+        id: '161718',
         orderY: 1,
         orderX: 2,
         row: 3,
@@ -82,7 +82,7 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'image',
-        id: '129',
+        id: '192021',
         data: {
             align: 'center',
         },
@@ -93,7 +93,7 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'text',
-        id: '130',
+        id: '222324',
         orderY: 1,
         orderX: 1,
         row: 5,
@@ -104,7 +104,7 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'image',
-        id: '189',
+        id: '252627',
         orderY: 1,
         orderX: 2,
         row: 5,
@@ -112,7 +112,17 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'text',
-        id: '987',
+        id: '343536',
+        orderY: 2,
+        orderX: 1,
+        row: 5,
+        content: `
+            <p><strong>The "Think Different" Campaign</strong> - One of Apple's most famous ad campaigns, launched in 1997, featured a series of print and TV ads that emphasized the creativity of people who "think different."</p>
+        `,
+    },
+    {
+        type: 'text',
+        id: '282930',
         orderY: 2,
         orderX: 2,
         row: 5,
@@ -120,31 +130,21 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'image',
-        id: '131',
+        id: '313233',
         data: {
             align: 'right',
         },
         orderX: 1,
-        orderY: 2,
-        row: 9,
+        orderY: 1,
+        row: 6,
         url: 'https://via.placeholder.com/200x200?text=Steve+Jobs+Image',
     },
     {
         type: 'text',
-        id: '132',
-        orderY: 2,
-        orderX: 1,
-        row: 9,
-        content: `
-            <p><strong>The "Think Different" Campaign</strong> - One of Apple's most famous ad campaigns, launched in 1997, featured a series of print and TV ads that emphasized the creativity of people who "think different."</p>
-        `,
-    },
-    {
-        type: 'text',
-        id: '133',
+        id: '373839',
         orderY: 1,
         orderX: 1,
-        row: 10,
+        row: 7,
         content: `
             <h2>Apple in the 21st Century</h2>
             <p>Under Jobs' leadership, Apple introduced the iPod in 2001, the iPhone in 2007, and the iPad in 2010, redefining consumer electronics and influencing how technology is used in everyday life.</p>
@@ -152,21 +152,22 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'image',
-        id: '134',
+        id: '404142',
         data: {
-            align: 'center',
+            align: 'left',
+            width: 50,
         },
         orderX: 1,
-        orderY: 3,
-        row: 11,
+        orderY: 1,
+        row: 8,
         url: 'https://via.placeholder.com/400x200?text=iPhone+Image',
     },
     {
         type: 'text',
-        id: '135',
+        id: '434445',
         orderY: 1,
-        orderX: 1,
-        row: 12,
+        orderX: 2,
+        row: 8,
         content: `
             <h3>Modern Apple Products</h3>
             <ul>
@@ -179,21 +180,31 @@ export const initialBlocks: DataBlocks[] = [
     },
     {
         type: 'image',
-        id: '136',
+        id: '464748',
         data: {
             align: 'center',
         },
         orderX: 1,
-        orderY: 3,
-        row: 13,
+        orderY: 1,
+        row: 9,
         url: 'https://via.placeholder.com/400x200?text=Apple+Watch+Image',
     },
     {
         type: 'text',
-        id: '137',
+        id: '495051',
         orderY: 1,
         orderX: 1,
-        row: 14,
+        row: 10,
+        content: `
+            <p>lorem ipsum dolor color imet</p>
+        `,
+    },
+    {
+        type: 'text',
+        id: '525354',
+        orderY: 1,
+        orderX: 1,
+        row: 11,
         content: `
             <h2>Conclusion</h2>
             <p>Apple's impact on technology and culture is undeniable. From its humble beginnings in a garage to becoming one of the most valuable companies in the world, Apple's products have changed the way people live, work, and play.</p>

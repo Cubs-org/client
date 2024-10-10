@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { IUserAccount } from "../../../interfaces/user";
+import { IUserAccount } from "../../../types/user";
 import { formatDateToPreview } from "../../../utils/datetime/formatDateToPreview";
 
 interface IHeaderProfileProps {

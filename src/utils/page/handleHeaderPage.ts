@@ -1,4 +1,4 @@
-import { ChangeAction, PageData } from "../../interfaces/page";
+import { ChangeAction, PageData } from "../../types/page";
 
 export default function handlePage(pageData:PageData, setPageData:ChangeAction) {
     switch (setPageData.type) {

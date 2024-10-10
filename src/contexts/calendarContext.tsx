@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
-import { PageProps } from "../interfaces/page";
+import { PageProps } from "../types/page";
 
 type CalendarFilter = {
     start?: Date | string;

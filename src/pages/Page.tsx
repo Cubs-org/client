@@ -19,6 +19,7 @@ import { branch } from '../lib/skeleton.json'
 import { SortableContext } from '@dnd-kit/sortable'
 import { initialBlocks } from '../lib/initialBlocks'
 import { blockReducer } from '../utils/dnd/blocks/blockReducer'
+import createGroupedBlocks from '../utils/dnd/blocks/createGroupedBlocks'
 
 const twiconsPath = '/twicons/'
 
@@ -38,10 +39,9 @@ function Page() {
     } = currentPage
 
     const [loading, setLoading] = useState<boolean>(true)
-    // Construir um parser para tratar os dados linearmente
-    const data = initialBlocks
 
-    const [blocks, dispatch] = useReducer(blockReducer, data);
+    const [sortables, setSortables] = useState([]);
+    const [blocks, dispatch] = useReducer(blockReducer, []);
 
     const sensors = useSensors(useSensor(MouseSensor, {
         activationConstraint: {
@@ -68,7 +68,6 @@ function Page() {
     const handleDragEnd = ({ active, over }) => {
         const id = active.id
         const targetRow = over.id.split('-')[1]
-        console.log(over.id)
 
         console.log('id', id, 'targetRow', targetRow)
 
@@ -84,7 +83,7 @@ function Page() {
             // link.href = pageData.data.icon;
             link.href = `${twiconsPath}/${icon}.svg`
         }
-    }, [currentPage])
+    }, [currentPage]);
 
     useEffect(() => {
         if (loading) {
@@ -110,7 +109,13 @@ function Page() {
             // if (titleVisible === true) setTitleVisible(false)
             setLoading(false)
         }
-    }, [loading])
+    }, [loading]);
+
+    useEffect(() => {
+        const data = createGroupedBlocks(initialBlocks)
+        dispatch({ type: 'LOAD', payload: { data } })
+        setSortables(generateSortableItems(initialBlocks))
+    }, [initialBlocks]);
 
     return (
         <React.Fragment>
@@ -151,10 +156,11 @@ function Page() {
                     collisionDetection={rectIntersection}
                     onDragEnd={handleDragEnd}
                 >
-                    <SortableContext items={generateSortableItems(blocks)}>
+                    <SortableContext items={sortables}>
                         <Blocks blocks={blocks} />
                     </SortableContext>
                 </DndContext>
+                :{JSON.stringify(blocks)}
 
                 <NewTool />
             </main>

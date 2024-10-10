@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { FaTriangleExclamation, FaX, FaCheck, FaCircleInfo } from "react-icons/fa6";
-import { AlertProps } from "../interfaces/alert";
+import { AlertProps } from "../types/alert";
 
 export const Alert = ({ message, type }:AlertProps) => {
     return (

@@ -8,7 +8,7 @@ import { SignInButton } from "../../components/SignInButton";
 import { FaGoogle } from "react-icons/fa";
 import { useAuth } from "../../contexts/authProvider";
 import { Alert } from "../../components/Alert";
-import { AlertProps } from "../../interfaces/alert";
+import { AlertProps } from "../../types/alert";
 import createUser from "../../api/user/createUser";
 
 export default function Register() {

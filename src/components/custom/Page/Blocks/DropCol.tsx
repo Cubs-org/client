@@ -24,8 +24,18 @@ export const DropCol = ({
         id: `bottom:col-${rowIndex + 1}-${colIndex + 1}`,
     })
 
+    const colWidth = Math.max(...col.map((b) => Number(b?.data?.width || 0)))
+
     return (
-        <div className="flex flex-grow" key={colIndex}>
+        <div
+            key={colIndex}
+            className="flex flex-grow"
+            style={
+                colWidth > 0
+                    ? { minWidth: `${colWidth}%`, width: `${colWidth}%` }
+                    : {}
+            }
+        >
             <DropIndicator
                 classNames={clsx('h-full min-w-[5px] bg-purple-500 opacity-0', {
                     'opacity-0': !isBfColOver,
@@ -46,13 +56,10 @@ export const DropCol = ({
                 ))}
                 {isCol && (
                     <DropIndicator
-                        classNames={clsx(
-                            'w-full h-1 bg-purple-500 opacity-0',
-                            {
-                                'opacity-0': !isAfColOver,
-                                'opacity-100': isAfColOver,
-                            }
-                        )}
+                        classNames={clsx('w-full h-1 bg-purple-500 opacity-0', {
+                            'opacity-0': !isAfColOver,
+                            'opacity-100': isAfColOver,
+                        })}
                         ref={setAfColRef}
                     />
                 )}

@@ -2,7 +2,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { Button, ButtonProps } from "./Button";
 import { useAuth } from "../contexts/authProvider";
 import API from "../api";
-import { IGoogleUserResponse } from "../interfaces/user";
+import { IGoogleUserResponse } from "../types/user";
 
 interface SignInButtonProps extends ButtonProps {
   provider: string;

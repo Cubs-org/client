@@ -1,5 +1,5 @@
 import React from "react"
-import { IModal } from "../interfaces/modal"
+import { IModal } from "../types/modal"
 import { useModal } from "../contexts/modalContext"
 import { Button } from "./Button"
 import { useNavigate } from "react-router-dom"

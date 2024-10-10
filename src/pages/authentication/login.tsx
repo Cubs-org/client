@@ -7,7 +7,7 @@ import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/authProvider";
 import { Alert } from "../../components/Alert";
-import { AlertProps } from "../../interfaces/alert";
+import { AlertProps } from "../../types/alert";
 import API from "../../api";
 
 export default function Login() {

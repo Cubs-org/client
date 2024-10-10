@@ -1,4 +1,4 @@
-import { DateProps } from "../../interfaces/calendar";
+import { DateProps } from "../../types/calendar";
 
 export default function rangeDifferenceBetweenDates({initialDate, finalDate}:DateProps) {
   const start = +new Date(initialDate);

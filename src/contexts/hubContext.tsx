@@ -1,7 +1,7 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { PageProps } from "../interfaces/page";
+import { PageProps } from "../types/page";
 import { useContext, useState } from "react";
-import { HubView } from "../interfaces/hub";
+import { HubView } from "../types/hub";
 
 type HubSettingsProps = {
     order?: {

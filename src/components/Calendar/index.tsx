@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CalendarProps } from "../../interfaces/calendar";
+import { CalendarProps } from "../../types/calendar";
 import { splitDt } from "../../utils/datetime/splitDate";
 import { HeaderCalendar } from "./HeaderCalendar";
 import { GridMonthCalendar } from "./GridMonthCalendar";

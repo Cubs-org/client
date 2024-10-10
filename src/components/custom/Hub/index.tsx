@@ -3,10 +3,10 @@ import { CgBoard, CgMathPlus, CgSortAz, CgViewDay, CgViewGrid, CgViewList } from
 
 import clsx from "clsx";
 import { Table } from "./Table";
-import { HubView, IHubProps } from "../../../interfaces/hub";
+import { HubView, IHubProps } from "../../../types/hub";
 import { Skeleton } from "../Skeleton";
 import { useEffect } from "react";
-import { PageProps } from "../../../interfaces/page";
+import { PageProps } from "../../../types/page";
 import { Tooltip } from "../../Tooltip";
 import { useUser } from "../../../contexts/userContext";
 import { useSocket } from "../../../contexts/socketContext";

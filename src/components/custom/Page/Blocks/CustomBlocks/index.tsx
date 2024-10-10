@@ -1,9 +1,9 @@
-import { Editor } from "../../../RichEditor";
+// import { Editor } from "../../../../RichEditor";
 import { Image } from "./Image";
 
-// const Text = ({content}) => <p>{content}</p>
+const Text = ({ content }) => <p>{content}</p>
 
 export const types = {
-    text: Editor,
+    text: Text,
     image: Image,
 };

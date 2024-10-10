@@ -3,7 +3,7 @@ import { Popover } from "../../../Popover";
 import clsx from "clsx";
 import minimizeText from "../../../../utils/minimizeText";
 import { usePage } from "../../../../contexts/pageContext";
-import { PageData } from "../../../../interfaces/page";
+import { PageData } from "../../../../types/page";
 
 export const PageLocation = () => {
 

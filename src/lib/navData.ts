@@ -1,4 +1,4 @@
-import { LinksProps } from "../interfaces/nav";
+import { LinksProps } from "../types/nav";
 
 export const links = [
     {

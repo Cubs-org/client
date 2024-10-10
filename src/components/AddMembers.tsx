@@ -1,7 +1,7 @@
 import { Button } from "./Button";
 import { EditTask } from "./Calendar/EditItem";
-import { IModal } from "../interfaces/modal";
-import { Task } from "../interfaces/task";
+import { IModal } from "../types/modal";
+import { Task } from "../types/task";
 import { useModal } from "../contexts/modalContext";
 
 interface AddMembers {

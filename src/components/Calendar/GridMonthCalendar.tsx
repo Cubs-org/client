@@ -1,4 +1,4 @@
-import { CalendarProps } from "../../interfaces/calendar";
+import { CalendarProps } from "../../types/calendar";
 
 import rangeGridCalendar from "../../utils/calendar/rangeGridCalendar";
 

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-import { IUserContext, IUserAccount } from '../interfaces/user';
+import { IUserContext, IUserAccount } from '../types/user';
 
 const userContext = createContext<IUserContext>({} as IUserContext);
 

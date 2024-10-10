@@ -1,4 +1,4 @@
-import { PagePropertiesProps, PageProps } from "../../../interfaces/page";
+import { PagePropertiesProps, PageProps } from "../../../types/page";
 
 import { BsHash, BsType } from "react-icons/bs";
 import { LuSigma } from "react-icons/lu";

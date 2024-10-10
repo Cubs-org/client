@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { PageData } from "../interfaces/page";
+import { PageData } from "../types/page";
 import { useContext, useState } from "react";
 
 export interface PageContextProps {

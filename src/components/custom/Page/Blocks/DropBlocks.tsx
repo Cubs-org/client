@@ -2,7 +2,7 @@ import { DropIndicator } from './DropIndicator';
 import { Block } from './Block';
 import clsx from 'clsx';
 import { useDroppable } from '@dnd-kit/core';
-import { DataBlocks } from '../../../../interfaces/page';
+import { DataBlocks } from '../../../../types/page';
 
 interface DropBlocksProps extends DataBlocks {
     isCol: boolean

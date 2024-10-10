@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { formatDate } from "../../utils/profilePage";
 import { EditItem } from "./EditItem";
 import { useModal } from "../../contexts/modalContext";
-import { Task } from "../../interfaces/task";
+import { Task } from "../../types/task";
 import { FaCheck } from "react-icons/fa";
 
 interface IRemaingTasks {
