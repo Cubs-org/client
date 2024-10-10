@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { IconPicker } from '../components/IconPicker'
 import { TextArea } from '../components/TextArea'
@@ -18,8 +18,8 @@ import {
 import { branch } from '../lib/skeleton.json'
 import { SortableContext } from '@dnd-kit/sortable'
 import { initialBlocks } from '../lib/initialBlocks'
-import { blockReducer } from '../utils/dnd/blocks/blockReducer'
 import createGroupedBlocks from '../utils/dnd/blocks/createGroupedBlocks'
+import { moveRow } from '../utils/dnd/blocks/moveRow'
 
 const twiconsPath = '/twicons/'
 
@@ -41,7 +41,7 @@ function Page() {
     const [loading, setLoading] = useState<boolean>(true)
 
     const [sortables, setSortables] = useState([]);
-    const [blocks, dispatch] = useReducer(blockReducer, []);
+    const [groupedBlocks, setGroupedBlocks] = useState([]);
 
     const sensors = useSensors(useSensor(MouseSensor, {
         activationConstraint: {
@@ -71,7 +71,9 @@ function Page() {
 
         console.log('id', id, 'targetRow', targetRow)
 
-        dispatch({ type: 'MOVEROW', payload: { id, targetRow } })
+        const updated = moveRow(id, targetRow, groupedBlocks) as any;
+        // @ts-ignore
+        setGroupedBlocks([...updated]);
     }
 
     useEffect(() => {
@@ -113,7 +115,7 @@ function Page() {
 
     useEffect(() => {
         const data = createGroupedBlocks(initialBlocks)
-        dispatch({ type: 'LOAD', payload: { data } })
+        setGroupedBlocks(data);
         setSortables(generateSortableItems(initialBlocks))
     }, [initialBlocks]);
 
@@ -157,10 +159,9 @@ function Page() {
                     onDragEnd={handleDragEnd}
                 >
                     <SortableContext items={sortables}>
-                        <Blocks blocks={blocks} />
+                        <Blocks key={JSON.stringify(groupedBlocks)} blocks={groupedBlocks} />
                     </SortableContext>
                 </DndContext>
-                :{JSON.stringify(blocks)}
 
                 <NewTool />
             </main>

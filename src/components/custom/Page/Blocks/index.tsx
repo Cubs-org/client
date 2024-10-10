@@ -9,10 +9,18 @@ interface BlockProps {
 };
 
 export const Blocks = ({ blocks }: BlockProps) => {
+
+  // const [blocks, setBlocks] = useState<GroupedBlocks>([]);
+
   const {
     setNodeRef: setRowLastRef,
     isOver: isRowLastOver,
   } = useDroppable({ id: `row-${blocks.length + 1}` });
+
+  // useEffect(() => {
+  //   console.log('>> ', data)
+  //   setBlocks([...data]);
+  // }, [data])
 
   return (
     <div className="flex flex-col gap-2 group/row">
