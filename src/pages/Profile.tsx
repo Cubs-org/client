@@ -1,8 +1,8 @@
-import { FooterProfile } from "../components/custom/Profile/FooterProfile";
-import { HeaderProfile } from "../components/custom/Profile/HeaderProfile";
+import { FooterProfile } from "../components/Profile/FooterProfile";
+import { HeaderProfile } from "../components/Profile/HeaderProfile";
 import { useUser } from "../contexts/userContext";
 import { Popover } from "../components/Popover";
-import { ChoiceAnimalImage } from "../components/custom/Profile/ChoiceAnimalImage";
+import { ChoiceAnimalImage } from "../components/Profile/ChoiceAnimalImage";
 import { Avatar } from "../components/Avatar";
 import { 
     formatDate, 

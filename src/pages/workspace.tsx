@@ -1,6 +1,6 @@
 import { Search } from "../components/Search"
 import { SharedPages } from "../components/Shared";
-import { Hub } from "../components/custom/Hub";
+import { Hub } from "../components/Hub";
 import { useUser } from "../contexts/userContext";
 import { HubProvider, useHub } from "../contexts/hubContext";
 

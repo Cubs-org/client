@@ -2,24 +2,13 @@ import React, { useEffect, useState } from 'react'
 
 import { IconPicker } from '../components/IconPicker'
 import { TextArea } from '../components/TextArea'
-import { NewTool } from '../components/custom/Page/NewTool/NewTool'
-import { Blocks } from '../components/custom/Page/Blocks'
-import { Header } from '../components/custom/Page/Header'
+import { NewTool } from '../components/Page/NewTool/NewTool'
+import { Header } from '../components/Page/Header'
 import { usePage } from '../contexts/pageContext'
-import {
-    DndContext,
-    MouseSensor,
-    PointerSensor,
-    rectIntersection,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core'
 
 import { branch } from '../lib/skeleton.json'
-import { SortableContext } from '@dnd-kit/sortable'
 import { initialBlocks } from '../lib/initialBlocks'
-import createGroupedBlocks from '../utils/dnd/blocks/createGroupedBlocks'
-import { moveRow } from '../utils/dnd/blocks/moveRow'
+import { GroupedBlocks } from '../components/Page/Blocks'
 
 const twiconsPath = '/twicons/'
 
@@ -40,41 +29,7 @@ function Page() {
 
     const [loading, setLoading] = useState<boolean>(true)
 
-    const [sortables, setSortables] = useState([]);
-    const [groupedBlocks, setGroupedBlocks] = useState([]);
-
-    const sensors = useSensors(useSensor(MouseSensor, {
-        activationConstraint: {
-            delay: 200,
-            tolerance: 5
-        }
-    }), useSensor(PointerSensor, {
-        activationConstraint: {
-            delay: 200,
-            tolerance: 5
-        }
-    }))
-
-    const generateSortableItems = (blocks) => {
-        return blocks.map((block) => {
-            const rowIndex = block.row
-            const colIndex = block.orderX
-            const blockIndex = block.orderY
-            const blockId = block.id
-            return `${rowIndex}-${colIndex}-${blockIndex}-${blockId}`
-        })
-    }
-
-    const handleDragEnd = ({ active, over }) => {
-        const id = active.id
-        const targetRow = over.id.split('-')[1]
-
-        console.log('id', id, 'targetRow', targetRow)
-
-        const updated = moveRow(id, targetRow, groupedBlocks) as any;
-        // @ts-ignore
-        setGroupedBlocks([...updated]);
-    }
+    const [blocks, _] = useState(initialBlocks);
 
     useEffect(() => {
         document.title = title || 'Sem título'
@@ -113,12 +68,6 @@ function Page() {
         }
     }, [loading]);
 
-    useEffect(() => {
-        const data = createGroupedBlocks(initialBlocks)
-        setGroupedBlocks(data);
-        setSortables(generateSortableItems(initialBlocks))
-    }, [initialBlocks]);
-
     return (
         <React.Fragment>
             <Header />
@@ -153,15 +102,7 @@ function Page() {
             )}
 
             <main className='w-full'> {/** md:w-4/5 lg:w-4/6 m-auto */}
-                <DndContext
-                    sensors={sensors}
-                    collisionDetection={rectIntersection}
-                    onDragEnd={handleDragEnd}
-                >
-                    <SortableContext items={sortables}>
-                        <Blocks key={JSON.stringify(groupedBlocks)} blocks={groupedBlocks} />
-                    </SortableContext>
-                </DndContext>
+                <GroupedBlocks blocks={blocks} />
 
                 <NewTool />
             </main>

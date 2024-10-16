@@ -1,28 +1,15 @@
-import { useEffect, useState } from "react";
-import { useSocket } from "../contexts/socketContext"
+import { useState } from "react";
+import { initialBlocks } from "../lib/initialBlocks";
+import { GroupedBlocks } from "../components/Page/Blocks";
 
 function Test() {
 
-    const { listener, subscribe, unsubscribe } = useSocket();
-    const [value, setValue]= useState<string>('Hello from client');
-
-    const onClick = () => {
-        listener?.emit('tagsTest', { message: 'Hello from client' });
-    }
-
-    useEffect(() => {
-        subscribe('tagsTest', (data: any) => {
-            setValue(data.message);
-        });
-
-        return () => {
-            unsubscribe('tagsTest');
-        }
-    }, [value, listener]);
+    const [blocks, _] = useState(initialBlocks);
 
     return (
-        <div className="w-[98%] m-auto">
-            <span className="text-green-500 font-semibold" onClick={onClick}>{value}</span>
+        <div className="w-full md:w-4/5 lg:w-4/6 m-auto">
+            <h1 className="my-3 font-extrabold text-4xl px-4">Untitled</h1>
+            <GroupedBlocks blocks={blocks} />
         </div>
     )
 }

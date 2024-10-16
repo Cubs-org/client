@@ -19,7 +19,7 @@ import {
 import { MdFontDownload, MdOutlineFontDownload  } from "react-icons/md";
 import { Popover } from '../Popover'
 
-import { useExtensions } from '../custom/Skeleton/useExtensions'
+import { useExtensions } from '../Skeleton/useExtensions'
 
 import { COLORS } from './colors'
 import './editor.css'
@@ -288,6 +288,7 @@ export const Editor = ({
                         )}
 
                         <Popover
+                            direction='bottom-end'
                             content={
                                 <div className="flex flex-col gap-0.5">
                                     <button

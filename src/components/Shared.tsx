@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Container } from "./Container";
-import { Skeleton } from "./custom/Skeleton";
+import { Skeleton } from "./Skeleton";
 import clsx from "clsx";
 import { Emoji } from "emoji-picker-react";
 import { Link } from "react-router-dom";
