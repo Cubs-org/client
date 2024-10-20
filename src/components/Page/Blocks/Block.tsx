@@ -4,6 +4,7 @@ import { DataBlocks } from '../../../types/page';
 import { CSSProperties } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { RenderBlocks } from './RenderBlocks';
+import { Popover } from '@/components/Popover';
 
 export const Block = ({ id, data = { align: 'left' }, ...rest }: DataBlocks) => {
 
@@ -23,20 +24,24 @@ export const Block = ({ id, data = { align: 'left' }, ...rest }: DataBlocks) => 
     return (
         <div
             ref={setNodeRef}
-            className={clsx('relative max-w-full w-full h-fit p-1 flex flex-grow items-start rounded-md group')}
-            style={{
-                // minWidth: `${data.width}%`,
-                // width: `${data.width}%`,
-                ...styles
-            }}
-        >
-            <button {...attributes} {...listeners}>
+            className={clsx('relative max-w-full w-full h-fit flex flex-grow items-start rounded-md group')}
+            style={styles}
+        >            
+            <Popover 
+                content="Drag to move"
+                direction='right-start'
+                btnProps={{
+                    ...attributes,
+                    ...listeners,
+                }}
+            >
                 <LuGripVertical
                     size={24}
                     className="opacity-0 cursor-grab rounded-md hover:bg-light-200 text-light-900 dark:hover:bg-dark-800 dark:text-dark-100 text-xs font-bold group-hover:opacity-100"
                 />
-            </button>
+            </Popover>
             <div className="w-full relative">
+                {/* <span>:{id}</span> */}
                 <RenderBlocks {...rest} />
             </div>
         </div>

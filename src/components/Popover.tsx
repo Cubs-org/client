@@ -2,7 +2,7 @@ import {
   Popover as PopoverContainer,
   PopoverHandler,
   PopoverContent,
-  Button,
+  Button
 } from "@material-tailwind/react";
 import clsx from "clsx";
 
@@ -14,9 +14,10 @@ interface PopoverProps {
     height?: string;
     offset?: number;
     classNames?: string;
+    btnProps?: any;
 }
  
-export const Popover = ({ children, content, direction, width, height, offset, classNames }:PopoverProps) => {
+export const Popover = ({ children, content, direction, width, height, offset, classNames, btnProps }:PopoverProps) => {
     return (
         <PopoverContainer
             placement={direction} 
@@ -27,10 +28,14 @@ export const Popover = ({ children, content, direction, width, height, offset, c
             offset={offset || 10}
         >
         <PopoverHandler>
-            <Button style={{
-                width: width || "fit-content",
-                minHeight: height || "fit-content",
-            }} className={clsx("p-0 shadow-none text-dark-600 dark:text-light-300", classNames)}>
+            <Button 
+                style={{
+                    width: width || "fit-content",
+                    minHeight: height || "fit-content",
+                }}
+                className={clsx("p-0 shadow-none text-dark-600 dark:text-light-300", classNames)}
+                {...btnProps}
+            >
                 {children}
             </Button>
         </PopoverHandler>

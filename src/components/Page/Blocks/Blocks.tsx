@@ -3,6 +3,8 @@ import { DataBlocks } from "../../../types/page";
 import { DropIndicator } from "./DropIndicator";
 import { DropRow } from "./DropRow";
 import clsx from "clsx";
+import { CharLoading } from "@/components/CharLoading";
+import { Skeleton } from "@/components/Skeleton";
 
 interface BlockProps {
   blocks: DataBlocks[][][];
@@ -15,11 +17,12 @@ export const Blocks = ({ blocks }: BlockProps) => {
   } = useDroppable({ id: `row-${blocks.length + 1}` });
 
   return (
-    <div className="flex flex-col gap-2 group/row">
+    <div className="flex flex-col group/row">
+      {!(blocks.length > 0) && <Skeleton.Blocks />}
       <DragOverlay>
-        <span className="bg-red-500 text-white p-3 rounded-md">
-          :Block:
-        </span>
+        <div className="min-w-[200px] max-w-[200px] py-2 text-center rounded-md bg-light-200 text-dark-700 dark:bg-dark:800 dark:text-light-300 border border-dashed border-light-400 dark:border-dark-700">
+          <CharLoading isLoading type="..." text="Movendo" />
+        </div>
       </DragOverlay>
       {(blocks ?? []).map((row, _r) => (
         <DropRow key={_r} row={row} rowIndex={_r} />

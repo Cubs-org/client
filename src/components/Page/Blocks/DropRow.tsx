@@ -25,7 +25,7 @@ export const DropRow = ({ row, rowIndex }: DropBlocksProps) => {
     });
 
     return (
-        <div className="max-w-full flex flex-col flex-grow bg-blue-400">
+        <div className="max-w-full flex flex-col flex-grow">
           <DropIndicator classNames={clsx("w-full h-1 bg-purple-500 opacity-0", {
             "opacity-0": !isBfRowOver,
             "opacity-100": isBfRowOver
