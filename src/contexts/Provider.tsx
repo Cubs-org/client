@@ -1,11 +1,9 @@
-import { GoogleOAuthProvider } from "@react-oauth/google"
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
-import { ModalProvider } from "./modalContext"
-import { ThemeProvider } from "./themeContext"
-import { CookiesProvider } from "react-cookie"
-import AuthProvider from "./authProvider"
-import { UserProvider } from "./userContext"
-import { SocketProvider } from "./socketContext"
+import { ModalProvider } from './modalContext'
+import { CookiesProvider } from 'react-cookie'
+import AuthProvider from './authProvider'
+import { UserProvider } from './userContext'
 
 export default ({ children }) => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string
@@ -14,15 +12,9 @@ export default ({ children }) => {
         <CookiesProvider>
             <AuthProvider>
                 <GoogleOAuthProvider clientId={clientId}>
-                    <ThemeProvider>
-                        <SocketProvider>
-                            <ModalProvider>
-                                <UserProvider>
-                                    {children}
-                                </UserProvider>
-                            </ModalProvider>
-                        </SocketProvider>
-                    </ThemeProvider>
+                    <ModalProvider>
+                        <UserProvider>{children}</UserProvider>
+                    </ModalProvider>
                 </GoogleOAuthProvider>
             </AuthProvider>
         </CookiesProvider>

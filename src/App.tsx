@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "./contexts/authProvider";
 import { jwtDecode } from "jwt-decode";
 import fetchWorkspace from "./api/fetchWorkspace";
+import { TokenDecoded } from "./types/user";
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
     const { token } = useAuth();
 
     async function fetchData() {
-        const user = (jwtDecode(token as string) as any).user;
+        const { user } = (jwtDecode(token as string) as TokenDecoded);
         const workspace = await fetchWorkspace(user.id);
     
         setAuthenticated({

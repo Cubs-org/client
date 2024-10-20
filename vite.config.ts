@@ -4,4 +4,16 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      "@": "/src",  // Mapeia "@" para "src"
+      "@/pages": "/src/pages",
+      "@/components": "/src/components",
+      "@/public": "/public",
+      "@/assets": "/src/assets",
+      "@/types": "/src/types",
+      "@/utils": "/src/utils",
+      "@/contexts": "/src/contexts",
+    }
+  }
 })

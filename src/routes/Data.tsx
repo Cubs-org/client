@@ -1,6 +1,4 @@
 // Main App
-import { Layout } from "../components/Layouts/Layout";
-
 // Pages
 import App from "../App";
 import CalendarPage from "../pages/Calendar.tsx";
@@ -13,6 +11,7 @@ import Login from "../pages/authentication/Login.tsx";
 import Register from "../pages/authentication/Register.tsx";
 import Workspace from "../pages/Workspace.tsx";
 import { CalendarProvider } from "../contexts/calendarContext.tsx";
+import Layout from "../components/Layout";
 
 export const data = {
     notAuthenticated: [
@@ -35,7 +34,7 @@ export const data = {
               {
                 path: "*",
                 element: <section className="w-full h-[80vh]"><NotFoundPage /></section>
-              }
+              },
             ]
         }
     ],

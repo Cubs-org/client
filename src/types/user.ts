@@ -31,3 +31,10 @@ export interface IUserContext {
     user: IUserAccount;
     setUser: ({}:IUserAccount) => void;
 }
+
+export type TokenDecoded = {
+    user: {
+        id: string;
+    };
+    hubId: string;
+}

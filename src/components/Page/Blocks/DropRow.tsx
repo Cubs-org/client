@@ -1,7 +1,8 @@
 import { DropIndicator } from './DropIndicator';
-import clsx from 'clsx';
-import { useDroppable } from '@dnd-kit/core';
 import { DropCol } from './DropCol';
+
+import { useDroppable } from '@dnd-kit/core';
+import clsx from 'clsx';
 
 interface DropBlocksProps {
     rowIndex: number
@@ -24,7 +25,7 @@ export const DropRow = ({ row, rowIndex }: DropBlocksProps) => {
     });
 
     return (
-        <div className="max-w-full flex flex-col flex-grow">
+        <div className="max-w-full flex flex-col flex-grow bg-blue-400">
           <DropIndicator classNames={clsx("w-full h-1 bg-purple-500 opacity-0", {
             "opacity-0": !isBfRowOver,
             "opacity-100": isBfRowOver
