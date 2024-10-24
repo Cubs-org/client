@@ -51,19 +51,19 @@ const blockMenu = [
     {
         name: 'edit',
         label: 'Edit',
-        icon: <LuGripVertical size={24} />,
+        // icon: <LuGripVertical size={24} />,
         onClick: () => {},
     },
     {
         name: 'copy',
         label: 'Copy',
-        icon: <LuGripVertical size={24} />,
+        // icon: <LuGripVertical size={24} />,
         onClick: () => {},
     },
     {
         name: 'delete',
         label: 'Delete',
-        icon: <LuGripVertical size={24} />,
+        // icon: <LuGripVertical size={24} />,
         color: 'red',
         onClick: () => {},
     },

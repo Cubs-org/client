@@ -5,23 +5,27 @@ import clsx from 'clsx'
 export interface MoreMenuItemProps {
     name: string
     label: string
-    icon: React.ReactNode
+    icon?: string
     color?: string
-    onClick: () => void
+    onClick?: () => void
     disabled?: boolean
     classNames?: string
 }
 
 // const TextField = () => {}
 
-export const MoreMenuItem = ({ label, color }: MoreMenuItemProps) => {
+export const MoreMenuItem = ({
+    label,
+    color,
+    icon = 'mdi:trash-can',
+}: MoreMenuItemProps) => {
     return (
         <div
             className={clsx('w-full flex items-center', {
                 ...(color && textColors(color)),
             })}
         >
-            <Icon icon="mdi:trash-can" className="mr-1" />
+            <Icon icon={icon} className="mr-1" />
             <span>{label}</span>
         </div>
     )

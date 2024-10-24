@@ -1,1 +1,5 @@
-export type Sizes = `${number}px` | `${number}em` | `${number}rem`
+export type Sizes =
+    | `${number}px`
+    | `${number}%`
+    | `${number}em`
+    | `${number}rem`

@@ -3,21 +3,24 @@ import { MoreMenu, MoreMenuProps } from './MoreMenu'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 
 interface ContextMenuProps extends MoreMenuProps {
-    btnProps: any
+    btnProps?: any
     children: React.ReactNode
+    classNames?: string
 }
 
 export const ContextMenu = ({
     children,
     btnProps,
+    classNames,
     ...props
 }: ContextMenuProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const popoverRef = useRef<HTMLDivElement | null>(null) // Reference for the popover
+    const triggerRef = useRef<HTMLDivElement | null>(null) // Reference for the trigger
 
     const handleOpen = (e: React.MouseEvent) => {
         e.preventDefault()
-        setIsOpen(!isOpen)
+        setIsOpen((prev) => !prev)
     }
 
     const closePopover = () => {
@@ -25,10 +28,11 @@ export const ContextMenu = ({
     }
 
     const handleClickOutside = (event: MouseEvent) => {
-        // Check if the click was outside of the popover and trigger
         if (
             popoverRef.current &&
-            !popoverRef.current.contains(event.target as Node)
+            !popoverRef.current.contains(event.target as Node) &&
+            triggerRef.current &&
+            !triggerRef.current.contains(event.target as Node)
         ) {
             closePopover()
         }
@@ -36,15 +40,12 @@ export const ContextMenu = ({
 
     useEffect(() => {
         if (isOpen) {
-            // Attach the click event listener to the document when the popover is open
             document.addEventListener('mousedown', handleClickOutside)
         } else {
-            // Cleanup the event listener
             document.removeEventListener('mousedown', handleClickOutside)
         }
 
         return () => {
-            // Cleanup on component unmount
             document.removeEventListener('mousedown', handleClickOutside)
         }
     }, [isOpen])
@@ -56,7 +57,12 @@ export const ContextMenu = ({
 
     return (
         <Popover open={isOpen}>
-            <PopoverTrigger {...triggers}>
+            <PopoverTrigger
+                /* @ts-ignore */
+                ref={triggerRef}
+                className={classNames}
+                {...triggers}
+            >
                 <div {...btnProps}>{children}</div>
             </PopoverTrigger>
             <PopoverContent ref={popoverRef}>
