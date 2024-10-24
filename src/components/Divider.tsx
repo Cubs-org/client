@@ -1,0 +1,1 @@
+export const Divider = () => <hr className="my-0.5 border-light-300 dark:border-dark-100" />
