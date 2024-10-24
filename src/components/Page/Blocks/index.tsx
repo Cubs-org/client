@@ -1,5 +1,5 @@
 import {
-  DndContext,
+    DndContext,
     MouseSensor,
     PointerSensor,
     rectIntersection,
@@ -9,21 +9,27 @@ import {
 } from '@dnd-kit/core'
 import { useEffect, useState } from 'react'
 import createGroupedBlocks from '../../../utils/dnd/blocks/createGroupedBlocks'
-import { DataBlocks, GroupedBlocks as TypeOfGroupedBlocks } from '../../../types/page'
+import {
+    DataBlocks,
+    GroupedBlocks as TypeOfGroupedBlocks,
+} from '../../../types/page'
 import { moveRow } from '../../../utils/dnd/blocks/moveRow'
 import { SortableContext } from '@dnd-kit/sortable'
 import { Blocks } from './Blocks'
 
 function detectSensor() {
-    const isWebEntry = JSON.parse(sessionStorage.getItem('isWebEntry') as string)
+    const isWebEntry = JSON.parse(
+        sessionStorage.getItem('isWebEntry') as string
+    )
     return isWebEntry ? PointerSensor : TouchSensor
 }
 
 function setSensors() {
     const options = {
         activationConstraint: {
-            delay: 200,
-            tolerance: 5,
+            delay: 300,
+            tolerance: 6,
+            distance: 8,
         },
     }
     return [useSensor(MouseSensor, options), useSensor(detectSensor(), options)]
@@ -54,6 +60,7 @@ export const GroupedBlocks = ({ blocks }: GroupedBlocksProps) => {
     const sensors = useSensors(...setSensors())
 
     const handleDragEnd = ({ active, over }) => {
+        console.log(active.id, over?.id)
         const id = active.id
         const [handlerKey, targetRow] = over.id.split('-')
 

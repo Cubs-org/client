@@ -2,18 +2,18 @@ import clsx from 'clsx'
 import { LuGripVertical } from 'react-icons/lu'
 import { DataBlocks } from '../../../types/page'
 import { CSSProperties } from 'react'
-import { useSortable } from '@dnd-kit/sortable'
+// import { useSortable } from '@dnd-kit/sortable'
 import { RenderBlocks } from './RenderBlocks'
 import { ContextMenu } from '@/components/ContextMenu'
+import { useDraggable } from '@dnd-kit/core'
 
 export const Block = ({
     id,
     data = { align: 'left' },
     ...rest
 }: DataBlocks) => {
-    const { setNodeRef, attributes, listeners, isDragging } = useSortable({
-        id,
-    })
+    const dndContext = useDraggable({ id })
+    const { attributes, listeners, setNodeRef, isDragging } = dndContext
 
     const styles: CSSProperties = {
         opacity: isDragging ? 0.5 : 1,
