@@ -6,12 +6,16 @@ interface ContextMenuProps extends MoreMenuProps {
     btnProps?: any
     children: React.ReactNode
     classNames?: string
+    direction?: 'center' | 'end' | 'start'
+    disableClick?: boolean
 }
 
 export const ContextMenu = ({
     children,
     btnProps,
     classNames,
+    direction = 'center',
+    disableClick = false,
     ...props
 }: ContextMenuProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -51,8 +55,8 @@ export const ContextMenu = ({
     }, [isOpen])
 
     const triggers = {
-        onClick: handleOpen,
         onContextMenu: handleOpen,
+        ...(disableClick ? {} : { onClick: handleOpen }),
     }
 
     return (
@@ -65,7 +69,7 @@ export const ContextMenu = ({
             >
                 <div {...btnProps}>{children}</div>
             </PopoverTrigger>
-            <PopoverContent ref={popoverRef}>
+            <PopoverContent ref={popoverRef} align={direction}>
                 <MoreMenu {...props} />
             </PopoverContent>
         </Popover>
