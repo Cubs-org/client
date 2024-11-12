@@ -12,11 +12,8 @@ import {
     FaListOl,
     FaListUl,
 } from 'react-icons/fa6'
-import {
-    RiContractLeftLine,
-    RiContractRightLine
-} from 'react-icons/ri'
-import { MdFontDownload, MdOutlineFontDownload  } from "react-icons/md";
+import { RiContractLeftLine, RiContractRightLine } from 'react-icons/ri'
+import { MdFontDownload, MdOutlineFontDownload } from 'react-icons/md'
 import { Popover } from '../Popover'
 
 import { useExtensions } from '../Skeleton/useExtensions'
@@ -72,10 +69,11 @@ export const Editor = ({
         if (editor) {
             if (editor.isActive('highlight')) {
                 const textStyle = editor.getAttributes('highlight')
-                return String(textStyle.class).replace(
-                    ' px-1 py-0.5 rounded-sm',
-                    ''
-                ).replace('text-sm', '').replace(/bg/g, 'text').replace('text-black dark:text-white', '')
+                return String(textStyle.class)
+                    .replace(' px-1 py-0.5 rounded-sm', '')
+                    .replace('text-sm', '')
+                    .replace(/bg/g, 'text')
+                    .replace('text-black dark:text-white', '')
             }
         }
     }
@@ -117,24 +115,30 @@ export const Editor = ({
                                                     .run()
                                             }
                                             className={clsx(
-                                                'h-9 px-3 py-1 rounded-md hover:bg-purple-600 align-bottom hover:text-light-200 text-base',
+                                                'h-9 px-3 py-1 rounded-md hover:bg-violet-600 align-bottom hover:text-light-200 text-base',
                                                 editor.isActive('heading', {
                                                     level,
                                                 })
-                                                    ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                                    ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                                     : ''
                                             )}
                                         >
-                                            Título{' '}<small>{level}</small>
+                                            Título <small>{level}</small>
                                         </button>
                                     ))}
                                 </div>
                             }
                         >
-                            <div className={clsx("w-fit h-9 px-2 py-0.5 rounded-md hover:bg-purple-600 flex justify-center gap-0.5 items-center text-base", {
-                                'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200': editor.isActive('heading')
-                            })}>
-                                <span className='mr-1'>
+                            <div
+                                className={clsx(
+                                    'w-fit h-9 px-2 py-0.5 rounded-md hover:bg-violet-600 flex justify-center gap-0.5 items-center text-base',
+                                    {
+                                        'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200':
+                                            editor.isActive('heading'),
+                                    }
+                                )}
+                            >
+                                <span className="mr-1">
                                     {editor.isActive('heading')
                                         ? `Título ${editor.getAttributes('heading').level}`
                                         : 'Texto'}
@@ -147,9 +151,9 @@ export const Editor = ({
                                 editor.chain().focus().toggleBold().run()
                             }
                             className={clsx(
-                                'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                 editor.isActive('bold')
-                                    ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                    ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                     : ''
                             )}
                         >
@@ -160,9 +164,9 @@ export const Editor = ({
                                 editor.chain().focus().toggleItalic().run()
                             }
                             className={clsx(
-                                'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                 editor.isActive('italic')
-                                    ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                    ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                     : ''
                             )}
                         >
@@ -173,9 +177,9 @@ export const Editor = ({
                                 editor.chain().focus().toggleStrike().run()
                             }
                             className={clsx(
-                                'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                 editor.isActive('strike')
-                                    ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                    ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                     : ''
                             )}
                         >
@@ -195,9 +199,9 @@ export const Editor = ({
                                                 .run()
                                         }
                                         className={clsx(
-                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                             editor.isActive('bulletList')
-                                                ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                                ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                                 : ''
                                         )}
                                     >
@@ -212,9 +216,9 @@ export const Editor = ({
                                                 .run()
                                         }
                                         className={clsx(
-                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                             editor.isActive('orderedList')
-                                                ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                                ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                                 : ''
                                         )}
                                     >
@@ -230,9 +234,9 @@ export const Editor = ({
                                                 .run()
                                         }
                                         className={clsx(
-                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                             editor.isActive('taskList')
-                                                ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                                ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                                 : ''
                                         )}
                                     >
@@ -241,7 +245,7 @@ export const Editor = ({
                                 </div>
                             }
                         >
-                            <span className="w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center gap-0.5 items-center">
+                            <span className="w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center gap-0.5 items-center">
                                 <FaListUl size={24} />
                                 <FaAngleDown />
                             </span>
@@ -259,7 +263,7 @@ export const Editor = ({
                                             .run()
                                     }
                                     className={clsx(
-                                        'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200'
+                                        'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200'
                                     )}
                                     disabled={
                                         !editor.can().liftListItem('taskItem')
@@ -276,7 +280,7 @@ export const Editor = ({
                                             .run()
                                     }
                                     className={clsx(
-                                        'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200'
+                                        'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200'
                                     )}
                                     disabled={
                                         !editor.can().sinkListItem('taskItem')
@@ -288,7 +292,7 @@ export const Editor = ({
                         )}
 
                         <Popover
-                            direction='bottom-end'
+                            direction="bottom-end"
                             content={
                                 <div className="flex flex-col gap-0.5">
                                     <button
@@ -300,11 +304,11 @@ export const Editor = ({
                                                 .run()
                                         }
                                         className={clsx(
-                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                             editor.isActive({
                                                 textAlign: 'left',
                                             })
-                                                ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                                ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                                 : ''
                                         )}
                                     >
@@ -319,11 +323,11 @@ export const Editor = ({
                                                 .run()
                                         }
                                         className={clsx(
-                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                             editor.isActive({
                                                 textAlign: 'center',
                                             })
-                                                ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                                ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                                 : ''
                                         )}
                                     >
@@ -338,11 +342,11 @@ export const Editor = ({
                                                 .run()
                                         }
                                         className={clsx(
-                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                             editor.isActive({
                                                 textAlign: 'right',
                                             })
-                                                ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                                ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                                 : ''
                                         )}
                                     >
@@ -357,11 +361,11 @@ export const Editor = ({
                                                 .run()
                                         }
                                         className={clsx(
-                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center hover:text-light-200',
+                                            'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center hover:text-light-200',
                                             editor.isActive({
                                                 textAlign: 'justify',
                                             })
-                                                ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500'
+                                                ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500'
                                                 : ''
                                         )}
                                     >
@@ -370,14 +374,18 @@ export const Editor = ({
                                 </div>
                             }
                         >
-                            <span className="w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center gap-0.5 items-center">
+                            <span className="w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center gap-0.5 items-center">
                                 {editor.isActive('textAlign', {
                                     align: 'right',
-                                }) ? <FaAlignRight size={24} /> : editor.isActive('textAlign', {
-                                    align: 'center',
-                                }) ? <FaAlignCenter size={24} /> : editor.isActive('textAlign', {
-                                    align: 'justify',
                                 }) ? (
+                                    <FaAlignRight size={24} />
+                                ) : editor.isActive('textAlign', {
+                                      align: 'center',
+                                  }) ? (
+                                    <FaAlignCenter size={24} />
+                                ) : editor.isActive('textAlign', {
+                                      align: 'justify',
+                                  }) ? (
                                     <FaAlignJustify size={24} />
                                 ) : (
                                     <FaAlignLeft size={24} />
@@ -387,7 +395,7 @@ export const Editor = ({
                         </Popover>
 
                         <Popover
-                            direction='bottom-start'
+                            direction="bottom-start"
                             content={
                                 <div className="flex flex-col gap-1">
                                     {COLORS.map((color) => {
@@ -402,12 +410,12 @@ export const Editor = ({
                                                     handleColorChange(param)
                                                 }
                                                 className={clsx(
-                                                    'px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center',
+                                                    'px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center',
                                                     editor.isActive(
                                                         'textStyle',
                                                         { class: param }
                                                     )
-                                                        ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500 text-light-200'
+                                                        ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500 text-light-200'
                                                         : ''
                                                 )}
                                             >
@@ -417,7 +425,7 @@ export const Editor = ({
                                                         param
                                                     )}
                                                 >
-                                                    <MdOutlineFontDownload  />
+                                                    <MdOutlineFontDownload />
                                                 </span>
                                             </button>
                                         )
@@ -425,23 +433,35 @@ export const Editor = ({
                                 </div>
                             }
                         >
-                            <div className="px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center gap-0.5 items-center">
+                            <div className="px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center gap-0.5 items-center">
                                 <span
-                                    className={clsx("text-base ", getCurrentColorClass() ? getCurrentColorClass()?.replace('dark-', '!dark:') : 'text-light-400 dark:text-dark-400')}
+                                    className={clsx(
+                                        'text-base ',
+                                        getCurrentColorClass()
+                                            ? getCurrentColorClass()?.replace(
+                                                  'dark-',
+                                                  '!dark:'
+                                              )
+                                            : 'text-light-400 dark:text-dark-400'
+                                    )}
                                 >
-                                    <MdOutlineFontDownload  />
+                                    <MdOutlineFontDownload />
                                 </span>
                                 <FaAngleDown />
                             </div>
                         </Popover>
 
                         <Popover
-                            direction='bottom-start'
+                            direction="bottom-start"
                             content={
                                 <div className="flex flex-col gap-1">
                                     {COLORS.map((color) => {
                                         const param = `${color.class.replace(/\[color\]/g, 'bg')} px-1 py-0.5 rounded-sm text-sm text-black dark:text-white`
-                                        const replacedColorClass = color.class.replace(/\[color\]/g, 'text')
+                                        const replacedColorClass =
+                                            color.class.replace(
+                                                /\[color\]/g,
+                                                'text'
+                                            )
                                         return (
                                             <button
                                                 key={color.name}
@@ -449,12 +469,12 @@ export const Editor = ({
                                                     handleHighlightChange(param)
                                                 }
                                                 className={clsx(
-                                                    'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center items-center',
+                                                    'w-9 h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center items-center',
                                                     editor.isActive(
                                                         'highlight',
                                                         { class: param }
                                                     )
-                                                        ? 'bg-purple-600 hover:!bg-purple-500 hover:shadow-full hover:shadow-purple-500'
+                                                        ? 'bg-violet-600 hover:!bg-violet-500 hover:shadow-full hover:shadow-violet-500'
                                                         : ''
                                                 )}
                                             >
@@ -472,11 +492,16 @@ export const Editor = ({
                                 </div>
                             }
                         >
-                            <div className="h-9 px-1.5 py-1 rounded-md hover:bg-purple-600 flex justify-center gap-0.5 items-center relative">
+                            <div className="h-9 px-1.5 py-1 rounded-md hover:bg-violet-600 flex justify-center gap-0.5 items-center relative">
                                 <span
                                     className={clsx(
                                         'flex items-center justify-center text-base',
-                                        getCurrentHighlightClass() ? getCurrentHighlightClass()?.replace('dark-', '!dark:') : 'text-light-400 dark:text-dark-400'
+                                        getCurrentHighlightClass()
+                                            ? getCurrentHighlightClass()?.replace(
+                                                  'dark-',
+                                                  '!dark:'
+                                              )
+                                            : 'text-light-400 dark:text-dark-400'
                                     )}
                                 >
                                     <MdFontDownload />

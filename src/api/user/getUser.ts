@@ -1,19 +1,19 @@
-import API from "..";
+import API from '..'
 
 async function getUser(userId: string) {
     try {
-        const user = await API.get(`/user/getUser?userId=${userId}`) as any;
+        const user = (await API.get(`/user/getUser?userId=${userId}`)) as any
 
         if (user.status !== 200) {
-            throw new Error(user.message);
+            throw new Error(user.message)
         } else if (!user.data) {
-            throw new Error(user.message);
+            throw new Error(user.message)
         }
 
-        return user;
+        return user
     } catch (error) {
-        console.error("Error while getting user: ", error);
+        console.error('Error while getting user: ', error)
     }
 }
 
-export default getUser;
+export default getUser

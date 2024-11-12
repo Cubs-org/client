@@ -1,22 +1,22 @@
-import { Project } from "./project";
-import { Task } from "./task";
+import { Project } from './project'
+import { Task } from './task'
 
 export interface CalendarItems {
-  tasks: Task[];
-  projects: Project[];
-};
+    tasks: Task[]
+    projects: Project[]
+}
 
 export interface CalendarProps {
-  year?: number;
-  month?: number;
-  day?: number;
-  num?: number;
-  event?: (e: any) => void;
-  items?: CalendarItems | [];
-  isPage?: boolean;
+    year?: number
+    month?: number
+    day?: number
+    num?: number
+    event?: (e: any) => void
+    items?: CalendarItems | []
+    isPage?: boolean
 }
 
 export interface DateProps {
-    initialDate: string;
-    finalDate: string;
+    initialDate: string
+    finalDate: string
 }

@@ -26,7 +26,7 @@ export const Blocks = ({ blocks }: BlockProps) => {
                 <DropRow key={_r} row={row} rowIndex={_r} />
             ))}
             <DropIndicator
-                classNames={clsx('w-full h-1 bg-purple-500 opacity-0', {
+                classNames={clsx('w-full h-1 bg-violet-500 opacity-0', {
                     'opacity-0': !isRowLastOver,
                     'opacity-100': isRowLastOver,
                 })}

@@ -37,7 +37,7 @@ export const DropCol = ({
             }
         >
             <DropIndicator
-                classNames={clsx('h-full min-w-[5px] bg-purple-500 opacity-0', {
+                classNames={clsx('h-full min-w-[5px] bg-violet-500 opacity-0', {
                     'opacity-0': !isBfColOver,
                     'opacity-100': isBfColOver,
                 })}
@@ -56,7 +56,7 @@ export const DropCol = ({
                 ))}
                 {isCol && (
                     <DropIndicator
-                        classNames={clsx('w-full h-1 bg-purple-500 opacity-0', {
+                        classNames={clsx('w-full h-1 bg-violet-500 opacity-0', {
                             'opacity-0': !isAfColOver,
                             'opacity-100': isAfColOver,
                         })}

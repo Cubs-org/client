@@ -14,7 +14,7 @@ export const TableContent = ({ tableData }: TableContentProps) => {
                 <table className="border-collapse border-spacing-0 border border-light-300 dark:border-dark-800">
                     <Thead headerData={headerData} />
                 </table>
-                <Button classNames="bg-light-300 hover:bg-light-400 text-dark-700 py-0.5 text-sm">
+                <Button classNames="bg-light-300 hover:bg-light-400 text-dark-700 py-0.5 text-sm mt-1">
                     + Adicionar nova linha
                 </Button>
             </div>

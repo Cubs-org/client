@@ -14,7 +14,7 @@ export const tableData = {
     header: {
         id: {
             type: 'number',
-            width: 100,
+            width: 80,
         },
         title: {
             type: 'text',
@@ -22,7 +22,7 @@ export const tableData = {
         },
         verified: {
             type: 'checkbox',
-            width: 100,
+            width: 120,
         },
         author: {
             type: 'text',
@@ -30,11 +30,11 @@ export const tableData = {
         },
         'created At': {
             type: 'date',
-            width: 120,
+            width: 140,
         },
         'updated At': {
             type: 'date',
-            width: 100,
+            width: 140,
         },
     },
     body: [{}],

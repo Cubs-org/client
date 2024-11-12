@@ -1,10 +1,9 @@
-function minimizeText(text:string, limit:number) {
-    var _text = text;
+function minimizeText(text: string, limit: number) {
+    var _text = text
 
-    if (text.length > limit)
-        _text = `${text.substring(0, limit)}...`;
+    if (text.length > limit) _text = `${text.substring(0, limit)}...`
 
-    return _text;
+    return _text
 }
 
-export default minimizeText;
+export default minimizeText

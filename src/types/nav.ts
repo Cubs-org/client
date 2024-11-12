@@ -1,10 +1,10 @@
 export interface ChildLinksProps {
-    section: string;
-    links: LinksProps[];
+    section: string
+    links: LinksProps[]
 }
 
 export interface LinksProps {
-    name: string;
-    path: string;
-    child?: ChildLinksProps[];
-};
+    name: string
+    path: string
+    child?: ChildLinksProps[]
+}

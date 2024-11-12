@@ -23,7 +23,7 @@ export const Tab = ({ id, title, active, onChangeTab }: NavTabProps) => (
             className={clsx(
                 'flex items-center gap-1.5 whitespace-nowrap text-ellipsis px-2 py-0.5 rounded-md border border-light-900 text-light-900 text-sm',
                 {
-                    'bg-light-400 dark:bg-dark-600': active,
+                    'bg-light-300 !text-dark-700 dark:bg-dark-600': active,
                 }
             )}
             onClick={() => onChangeTab?.(id)}

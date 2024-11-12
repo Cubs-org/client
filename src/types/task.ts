@@ -1,45 +1,45 @@
 export interface Task {
-  // default
-  id?: string;
-  // data
-  title: string;
-  description?:string;
+    // default
+    id?: string
+    // data
+    title: string
+    description?: string
 
-  properties: {
-    date: {
-      start: string;
-      end: string;
-    };
-    // status: "pending" | "completed" | "canceled" | "in progress";
-    completed: boolean;
-    itemType: {
-      title: string;
-      color: string;
+    properties: {
+        date: {
+            start: string
+            end: string
+        }
+        // status: "pending" | "completed" | "canceled" | "in progress";
+        completed: boolean
+        itemType: {
+            title: string
+            color: string
+        }
     }
-  }
 
-  timeline?: {
-    day: string;
-    range: number;
-    hierarchy: number;
-  }[];
+    timeline?: {
+        day: string
+        range: number
+        hierarchy: number
+    }[]
 
-  // details
-  owner: string;
+    // details
+    owner: string
 
-  createdAt: string;
-  updatedAt: string;
-};
+    createdAt: string
+    updatedAt: string
+}
 
 export interface Member {
-  id: string;
-  userId: string;
-  taskId: string;
-};
+    id: string
+    userId: string
+    taskId: string
+}
 
 export interface MemberData {
-  name: string;
-  email: string;
-  icon: string;
-  isAdmin: boolean;
-};
+    name: string
+    email: string
+    icon: string
+    isAdmin: boolean
+}

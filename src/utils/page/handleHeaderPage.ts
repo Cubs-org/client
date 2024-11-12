@@ -1,23 +1,26 @@
-import { ChangeAction, PageData } from "../../types/page";
+import { ChangeAction, PageData } from '../../types/page'
 
-export default function handlePage(pageData:PageData, setPageData:ChangeAction) {
+export default function handlePage(
+    pageData: PageData,
+    setPageData: ChangeAction
+) {
     switch (setPageData.type) {
-        case "title":
+        case 'title':
             // console.log("title", setPageData.payload)
             return {
                 ...pageData,
-                title: setPageData.payload
+                title: setPageData.payload,
             }
-        case "icon":
+        case 'icon':
             // console.log("icon", setPageData.payload)
             return {
                 ...pageData,
                 data: {
                     ...pageData.data,
-                    icon: setPageData.payload
-                }
+                    icon: setPageData.payload,
+                },
             }
         default:
-            return pageData;
+            return pageData
     }
 }

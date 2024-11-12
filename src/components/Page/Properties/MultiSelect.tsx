@@ -62,7 +62,7 @@ export const MultiSelect = ({ tags, items }) => {
                                             item.color === 'yellow',
                                         'bg-orange-500':
                                             item.color === 'orange',
-                                        'bg-purple-500':
+                                        'bg-violet-500':
                                             item.color === 'purple',
                                         'bg-pink-500': item.color === 'pink',
                                         'bg-indigo-500':

@@ -1,14 +1,14 @@
-import API from "."
+import API from '.'
 
 export default async function fetchWorkspace(userId: string) {
     try {
-        const response = await API.get(`/workspace?userId=${userId}`);
+        const response = await API.get(`/workspace?userId=${userId}`)
         if (response.data.status === 200) {
-            return response.data.workspace;
+            return response.data.workspace
         } else {
-            throw new Error(response.data.message);
+            throw new Error(response.data.message)
         }
-    } catch(error) {
-        (error)
+    } catch (error) {
+        error
     }
 }

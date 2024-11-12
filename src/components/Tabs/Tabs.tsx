@@ -25,7 +25,7 @@ export const NavTabs = ({ tabs, onChangeTab }: NavTabsProps) => {
                     onChangeTab={() => handleClick(item.id)}
                 />
             ))}
-            <Button classNames="bg-light-900 py-0">+</Button>
+            <Button classNames="bg-light-900 px-2 py-0">+</Button>
         </div>
     )
 }

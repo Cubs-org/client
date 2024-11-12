@@ -1,14 +1,14 @@
 export default function parseFormula(formula) {
-    const regex = /(?:text=([^;]+);)?(?:color=([^;]+))?/;
+    const regex = /(?:text=([^;]+);)?(?:color=([^;]+))?/
 
-    const matches = !formula ? "" : formula.match(regex);
+    const matches = !formula ? '' : formula.match(regex)
 
-    let text, color;
+    let text, color
 
-    text = matches[1] || formula || "";
-    color = matches[2] || null;
+    text = matches[1] || formula || ''
+    color = matches[2] || null
 
-    text = !text ? text : text.replace(/text=/, '');
-    
-    return { text, color };
+    text = !text ? text : text.replace(/text=/, '')
+
+    return { text, color }
 }

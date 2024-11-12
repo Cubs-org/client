@@ -1,5 +1,5 @@
 type PageMember = {
-    name: string;
-    icon: string;
-    email: string;
-};
+    name: string
+    icon: string
+    email: string
+}

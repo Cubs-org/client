@@ -17,7 +17,7 @@ export const Input = ({
             value={value}
             placeholder={placeholder || 'Escreva aqui...'}
             className={clsx(
-                'w-full px-2 py-1 focus:outline-none rounded-md focus:border-purple-500 text-dark-700 dark:text-light-300',
+                'w-full px-2 py-1 focus:outline-none rounded-md focus:border-violet-500 text-dark-700 dark:text-light-300',
                 {
                     'border border-light-300 dark:border-dark-800 bg-transparent':
                         variant === 'outline',

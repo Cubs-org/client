@@ -7,6 +7,7 @@ const tabs: NavTabProps[] = [
     { id: 2, title: 'Table', type: 'table' },
     { id: 3, title: 'List', type: 'list' },
     { id: 4, title: 'Grid', type: 'grid' },
+    { id: 5, title: 'Metas (Financeiras)', type: 'table' },
 ]
 
 function Test() {

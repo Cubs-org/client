@@ -1,11 +1,10 @@
-import { AxiosResponse } from "axios";
-import API from ".";
+import { AxiosResponse } from 'axios'
+import API from '.'
 
-export async function getDatahubId(wkspId:string): Promise<AxiosResponse>{
-    
-    const { data } = await API.get(`/workspace/datahub?workspaceId=${wkspId}`);
+export async function getDatahubId(wkspId: string): Promise<AxiosResponse> {
+    const { data } = await API.get(`/workspace/datahub?workspaceId=${wkspId}`)
 
-    if (!data.dataHubId) console.error("DatahubId not found");
+    if (!data.dataHubId) console.error('DatahubId not found')
 
-    return data.dataHubId;
+    return data.dataHubId
 }

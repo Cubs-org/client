@@ -20,8 +20,11 @@ export const Tabs = ({ children, tabs, onChangeTab }: TabsProps) => (
                     placeholder="Procure por títulos aqui..."
                     readOnly
                 />
-                <Button classNames="bg-transparent" variant="filled">
-                    Filtrar
+                <Button
+                    classNames="bg-violet-500 hover:bg-violet-600 px-2 py-1"
+                    variant="split"
+                >
+                    Novo
                 </Button>
             </div>
         </div>

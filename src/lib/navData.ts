@@ -1,55 +1,55 @@
-import { LinksProps } from "../types/nav";
+import { LinksProps } from '../types/nav'
 
 export const links = [
     {
-        name: "Página inicial",
-        path: "/"
+        name: 'Página inicial',
+        path: '/',
     },
     {
-        name: "Serviços",
-        path: "/services"
+        name: 'Serviços',
+        path: '/services',
     },
     {
-        name: "Mais opções",
+        name: 'Mais opções',
         child: [
             {
-                section: "Apps & Plataformas",
+                section: 'Apps & Plataformas',
                 links: [
                     {
-                        name: "Web",
-                        path: "/"
+                        name: 'Web',
+                        path: '/',
                     },
                     {
-                        name: "App Desktop",
-                        path: "/microsoftstore"
+                        name: 'App Desktop',
+                        path: '/microsoftstore',
                     },
                     {
-                        name: "App Mobile",
-                        path: "/googleplay"
-                    }
+                        name: 'App Mobile',
+                        path: '/googleplay',
+                    },
                 ],
             },
             {
-                section: "Mais Informações",
+                section: 'Mais Informações',
                 links: [
                     {
-                        name: "Sobre nós",
-                        path: "/about"
+                        name: 'Sobre nós',
+                        path: '/about',
                     },
                     {
-                        name: "Contato",
-                        path: "/contact"
-                    }
-                ]
-            }
-        ]
+                        name: 'Contato',
+                        path: '/contact',
+                    },
+                ],
+            },
+        ],
     },
     {
-        name: "Entre",
-        path: "/login"
+        name: 'Entre',
+        path: '/login',
     },
     {
-        name: "Cadastre-se",
-        path: "/register"
-    }
-] as LinksProps[];
+        name: 'Cadastre-se',
+        path: '/register',
+    },
+] as LinksProps[]
