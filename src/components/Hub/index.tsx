@@ -20,7 +20,7 @@ interface HubViewProps {
     body: any
 }
 
-const Placeholder = () => <div>PlaceHolder</div>
+const Placeholder = () => <div>View does not supported yet.</div>
 
 export const HubView = ({ type, body }: HubViewProps) => {
     const view = {
