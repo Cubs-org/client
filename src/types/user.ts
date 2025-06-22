@@ -8,6 +8,12 @@ export interface IUser {
     updatedAt?: Date | string
 }
 
+export type UserViewer = {
+    name: string
+    email: string
+    icon?: string
+}
+
 export type IUserAccount = {
     data: IAccount & IUser
     hubId: string

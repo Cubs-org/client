@@ -1,3 +1,5 @@
+import { UserViewer } from './user'
+
 export interface PageProps {
     id: string
     title: string
@@ -7,6 +9,10 @@ export interface PageProps {
     trash: boolean
 
     properties: PagePropertiesProps[]
+}
+
+export type PageViewer = Omit<PageProps, 'ownerId'> & {
+    owner: UserViewer
 }
 
 type Data = {
@@ -30,7 +36,7 @@ type Data = {
 
 export interface PagePropertiesProps {
     id: string
-    type: string
+    type: PagePropertyType
     title: string
     data: Data
     trash: boolean
@@ -45,6 +51,22 @@ export type PageData = {
         next?: string | undefined | null
     }
 }
+
+export type PagePropertyType =
+    | 'text'
+    | 'number'
+    | 'date'
+    | 'datetime'
+    | 'formula'
+    | 'selection'
+    | 'multi_selection'
+    | 'relation'
+    | 'rollup'
+    | 'assign'
+    | 'checkbox'
+    | 'status'
+    | 'button'
+    | 'calendar'
 
 export type ChangeAction = {
     type: 'title' | 'icon'

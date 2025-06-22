@@ -17,7 +17,7 @@ export const getHeaderGroup = (headerData: TableData['header']) =>
                 className="min-w-[30px] relative"
                 style={styles}
             >
-                <DropIndicator classNames="absolute top-0 right-0 w-[3px] h-full bg-light-400 cursor-col-resize hover:bg-violet-500" />
+                <DropIndicator classNames="absolute top-0 right-0 w-[2px] h-full bg-light-400 cursor-col-resize hover:bg-violet-500" />
                 <ContextMenu
                     width="100%"
                     direction="start"

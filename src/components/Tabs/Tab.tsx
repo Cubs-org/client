@@ -21,9 +21,10 @@ export const Tab = ({ id, title, active, onChangeTab }: NavTabProps) => (
     >
         <div
             className={clsx(
-                'flex items-center gap-1.5 whitespace-nowrap text-ellipsis px-2 py-0.5 rounded-md border border-light-900 text-light-900 text-sm',
+                'flex items-center gap-1.5 whitespace-nowrap text-ellipsis px-2 py-0.5 rounded-md border border-light-900 text-light-900 text-sm cursor-pointer',
                 {
                     'bg-light-300 !text-dark-700 dark:bg-dark-600': active,
+                    'hover:bg-light-200 dark:hover:bg-dark-500': !active,
                 }
             )}
             onClick={() => onChangeTab?.(id)}
